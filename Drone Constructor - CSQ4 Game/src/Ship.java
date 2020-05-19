@@ -12,6 +12,7 @@ public abstract class Ship {
 	double mass = 1;
 	double rotation = 0;
 	ArrayList<Part> parts = new ArrayList<Part>();
+	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 
 	public Ship(Point pos, double rotation, ArrayList<Part> parts) {
 		this.pos = pos;
@@ -36,6 +37,8 @@ public abstract class Ship {
 		Camera.toScreen(cm).fillCircle(g, (int) (2 * Camera.scale));
 		g.setColor(Color.BLACK);
 	}
+	public abstract void update(Sector s);
+	
 	public void addPart(Part... ps) {
 		for(Part p : ps) {
 		double tlx = pos.x + p.pos.x * Part.SQUARE_WIDTH;

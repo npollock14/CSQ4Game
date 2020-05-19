@@ -9,7 +9,7 @@ public class PlayerShip extends Ship{
 		super(pos, 0);
 	}
 
-	public void update() {
+	public void update(Sector s) {
 		pos.add(vel);
 		rotation += rVel;
 		for(Part p : parts) {
@@ -17,6 +17,10 @@ public class PlayerShip extends Ship{
 			p.bounds.rotate(rVel);
 		}
 		cm.add(vel);
+		addProjectiles(s);
+	}
+	public void addProjectiles(Sector s) {
+		
 	}
 	
 }

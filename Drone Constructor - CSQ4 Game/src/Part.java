@@ -1,4 +1,5 @@
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 public abstract class Part {
 	public static final double SQUARE_WIDTH = 20;
@@ -7,6 +8,7 @@ public abstract class Part {
 	Point pos; // in blocks from center of ship
 	String type;
 	Poly bounds;
+	ArrayList<Projectile> projectilesToAdd = new ArrayList<Projectile>();
 
 	public Part(int width, int height, int health, Point pos, String type, Point sPos, Point cm) {
 		this.width = width;

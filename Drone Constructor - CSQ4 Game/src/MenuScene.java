@@ -3,17 +3,19 @@ import java.util.ArrayList;
 
 public class MenuScene extends Scene {
 	PlayerShip p;
+	TestSector s = new TestSector();
 
 	@Override
 	public void draw(Graphics2D g) {
 		g.setFont(Misc.f);
 		g.drawString("MENU", 100, 100);
-		p.draw(g);
+		s.draw(g);
 
 	}
 
 	@Override
 	public void update() {
+		
 		Camera.changeScale(InputManager.scroll / 2);
 		if (InputManager.keys[81])
 			p.rVel += .001;
@@ -35,11 +37,10 @@ public class MenuScene extends Scene {
 			Camera.xOff -= 3;
 		if (InputManager.keys[65])
 			Camera.xOff += 3;
+		
+		
 
-		if (InputManager.keys[32])
-			p.cm.x += 3;
-
-		p.update();
+		s.update();
 		// Camera.focus(p.pos);
 	}
 
@@ -61,6 +62,8 @@ public class MenuScene extends Scene {
 		p.addPart(new Hull(new Point(0, 0)), new Hull(new Point(1, 0)), new Hull(new Point(-1, 0)),
 				new Hull(new Point(0, 1)), new Hull(new Point(0, -1)), new Armor(new Point(0, 2)),
 				new Laser(new Point(1, -2)), new Laser(new Point(-1, -2)));
+		
+		s.ships.add(p);
 	}
 
 }

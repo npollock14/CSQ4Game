@@ -22,4 +22,5 @@ public class Hull extends Part{
 		g.rotate(-sRot, sPos.x, sPos.y);
 	}
 	
+	
 }

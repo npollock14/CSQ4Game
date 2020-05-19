@@ -21,6 +21,7 @@ public abstract class Ship {
 		for (Part p : parts) {
 			g.setStroke(new BasicStroke((float) (3*Camera.scale)));
 			p.draw(g, Camera.toScreen(pos), rotation);
+			
 		}
 		g.setColor(Color.RED);
 		Camera.toScreen(pos).fillCircle(g, (int) (2 * Camera.scale));

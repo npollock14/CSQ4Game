@@ -18,7 +18,8 @@ public class Armor extends Part{
 		g.setColor(Color.BLACK);
 		g.rotate(sRot, sPos.x, sPos.y);
 		g.drawRect((int) (sPos.x + pos.x * SQUARE_WIDTH * Camera.scale - (Camera.scale *SQUARE_WIDTH/2)), (int) (sPos.y + pos.y * Camera.scale * SQUARE_WIDTH - (Camera.scale *SQUARE_WIDTH/2)),
-				(int) (width * Camera.scale * SQUARE_WIDTH), (int) (height * Camera.scale * SQUARE_WIDTH)); 
+				(int) (width * Camera.scale * SQUARE_WIDTH), (int) (height * Camera.scale * SQUARE_WIDTH));
+		
 		g.rotate(-sRot, sPos.x, sPos.y);
 	}
 	

@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -31,32 +32,15 @@ public class Driver extends JPanel
 	static Font fs = new Font("Press Start", 0, 11);
 	static int screenWidth = 1920;
 	static int screenHeight = 1040;
-	static Point windowLoc = new Point();
-	static JFrame frame;
-	static int level = 0;
-	
-	Image test;
-	
 	ArrayList<Long> fps = new ArrayList<Long>();
 	long frameStart = 0;
-	static boolean invisCursor = false;
-	BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-	Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new java.awt.Point(0, 0),
-			"blank cursor");
-	Cursor def = Cursor.getDefaultCursor();
-	static ArrayList<Boolean> changeInvis = new ArrayList<Boolean>();
-
-	static int lives = 3;
-	
-	static long gameTimer = 0;
 
 	// ============== end of settings ==================
 
-	public void paint(Graphics g) { // main paint		
-		super.paintComponent(g);
-		SceneManager.draw(g);
-		
-		g.drawImage(test, 0, 0, this);
+	public void paint(Graphics g) { // main paint
+		Graphics2D g2 = (Graphics2D) g;
+		super.paintComponent(g2);
+		SceneManager.draw(g2);
 
 		g.setFont(fs);
 		fps.add((long) (1 / ((System.nanoTime() - frameStart) / Math.pow(10, 9))));
@@ -75,68 +59,19 @@ public class Driver extends JPanel
 
 	public void update() throws InterruptedException { // main update
 		SceneManager.update();
-		windowLoc.setXY(frame.getLocation().x, frame.getLocation().y);
-		if (changeInvis.size() >= 1) {
-			setCursorInvis(changeInvis.get(0));
-			changeInvis.clear();
-		}
-		// System.out.println(windowLoc.toString());
 
-	}
-
-	public void setCursorInvis(boolean b) {
-		invisCursor = b;
-		this.setCursor(b ? blankCursor : def);
 	}
 
 	private void init() {
+		System.out.println("Initializing...");
 		SceneManager.initManager();
 		SceneManager.ms.init();
 		SceneManager.ms.setActive(true);
-		
-		try {
-			test = ImageIO.read(new File(getClass().getResource("/test.gif").getFile()));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.println("Done");
+
 	}
 
 	// ==================code above ===========================
-
-	public static void loseLife() {
-		lives--;
-		if(lives == 0) {
-			lives = 3;
-			SceneManager.setAll(false);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			SceneManager.ds.init();
-			SceneManager.ds.setActive(true);
-			
-		}
-	}
-	
-	public static void drawUI(Graphics g) {
-		g.setFont(Misc.titleFont);
-		g.drawString("Level: " + Driver.level, Driver.screenWidth - 300, 80);
-		g.setFont(Misc.fancyTitleFont);
-		g.drawString("" + (System.currentTimeMillis() - Driver.gameTimer) / 1000.0, Driver.screenWidth - 300, 150);
-		g.drawString(lives + " Lives", Driver.screenWidth - 300, 300);
-	}
-
-	public static void nextLevel() {
-		InputManager.mouseReleased[1] = false;
-		level++;
-		for (int i = 0; i < SceneManager.scenes.size(); i++) {
-			if (SceneManager.scenes.get(i).drawing) {
-				SceneManager.scenes.get(i).setActive(false);
-				SceneManager.scenes.get(i + 1).init();
-				SceneManager.scenes.get(i + 1).setActive(true);
-				return;
-			}
-		}
-
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -167,11 +102,11 @@ public class Driver extends JPanel
 	}
 
 	public Driver() {
-
+		JFrame frame;
 		init();
 
 		frame = new JFrame();
-		frame.setTitle("CS Q3 Game");
+		frame.setTitle("CS Q4 Game");
 		frame.setSize(screenWidth, screenHeight);
 		frame.setBackground(Color.BLACK);
 		frame.setResizable(false);

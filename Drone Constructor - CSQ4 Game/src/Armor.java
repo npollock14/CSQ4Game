@@ -10,6 +10,9 @@ public class Armor extends Part {
 	public Armor(Point pos, Point sPos, Point cm) {
 		super(width, height, health, pos, type, sPos, cm);
 	}
+	public Armor(Point pos) {
+		super(width, height, health, pos, type);
+	}
 
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
 		g.setColor(Color.green);

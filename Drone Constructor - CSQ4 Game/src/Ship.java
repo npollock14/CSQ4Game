@@ -19,6 +19,12 @@ public abstract class Ship {
 		this.rotation = rotation;
 		this.parts = parts;
 	}
+	public Ship(Point pos, double rotation) {
+		this.pos = pos;
+		this.cm = new Point(pos.x + Part.SQUARE_WIDTH/2, pos.y);
+		this.rotation = rotation;
+	}
+	
 
 	public void draw(Graphics2D g) {
 		for (Part p : parts) {
@@ -27,7 +33,17 @@ public abstract class Ship {
 			
 		}
 		g.setColor(Color.RED);
-		Camera.toScreen(pos).fillCircle(g, (int) (2 * Camera.scale));
+		Camera.toScreen(cm).fillCircle(g, (int) (2 * Camera.scale));
 		g.setColor(Color.BLACK);
+	}
+	public void addPart(Part... ps) {
+		for(Part p : ps) {
+		double tlx = pos.x + p.pos.x * Part.SQUARE_WIDTH;
+		double tly = pos.y + p.pos.y * Part.SQUARE_WIDTH;
+		p.bounds = new Poly(tlx, tly, tlx + Part.SQUARE_WIDTH * p.width, tly, tlx + Part.SQUARE_WIDTH * p.width,
+				tly + Part.SQUARE_WIDTH * p.height, tlx, tly + Part.SQUARE_WIDTH * p.height, tlx, tly);
+		p.bounds.setCenter(cm);
+		parts.add(p);
+		}
 	}
 }

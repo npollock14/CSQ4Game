@@ -13,6 +13,9 @@ public class Hull extends Part{
 	public Hull(Point pos, Point sPos, Point cm) {
 		super(width, height, health, pos,type, sPos, cm);
 	}
+	public Hull(Point pos) {
+		super(width, height, health, pos, type);
+	}
 	
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
 		g.setColor(Color.green);
@@ -26,3 +29,4 @@ public class Hull extends Part{
 	
 	
 }
+

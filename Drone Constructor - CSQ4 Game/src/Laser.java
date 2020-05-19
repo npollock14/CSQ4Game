@@ -10,6 +10,9 @@ public class Laser extends Part {
 	public Laser(Point pos, Point sPos, Point cm) {
 		super(width, height, health, pos, type, sPos, cm);
 	}
+	public Laser(Point pos) {
+		super(width, height, health, pos, type);
+	}
 
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
 		g.setColor(Color.green);

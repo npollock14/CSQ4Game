@@ -5,6 +5,9 @@ public class PlayerShip extends Ship{
 	public PlayerShip(Point pos, ArrayList<Part> parts) {
 		super(pos, 0, parts);
 	}
+	public PlayerShip(Point pos) {
+		super(pos, 0);
+	}
 
 	public void update() {
 		pos.add(vel);

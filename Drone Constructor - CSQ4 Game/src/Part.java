@@ -20,6 +20,13 @@ public abstract class Part {
 				tly + SQUARE_WIDTH * height, tlx, tly + SQUARE_WIDTH * height, tlx, tly);
 		bounds.setCenter(cm);
 	}
+	public Part(int width, int height, int health, Point pos, String type) {
+		this.width = width;
+		this.height = height;
+		this.health = health;
+		this.pos = pos;
+		this.type = type;	
+	}
 
 	public abstract void draw(Graphics2D g, Point sPos, double sRot, Point cm);
 

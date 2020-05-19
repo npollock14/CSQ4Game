@@ -5,18 +5,17 @@ public abstract class Part {
 	int width, height; // in blocks
 	int health;
 	Point pos; // in blocks from center of ship
+	String type;
 	
-	public Part(int width, int height, int health, Point pos) {
+	public Part(int width, int height, int health, Point pos, String type) {
 		this.width = width;
 		this.height = height;
 		this.health = health;
 		this.pos = pos;
+		this.type = type;
 	}
+	public abstract void draw(Graphics2D g, Point sPos, double sRot);
 
-	public void draw(Graphics2D g, Point sPos, double sRot) {
-		g.rotate(sRot);
-		g.drawRect((int) (sPos.x + pos.x * SQUARE_WIDTH), (int) (sPos.y + pos.y * SQUARE_WIDTH),
-				(int) (width * SQUARE_WIDTH), (int) (height * SQUARE_WIDTH)); //TODO add camera
-	}
+	
 
 }

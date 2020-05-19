@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class Point {
 	double x, y;
@@ -49,6 +50,10 @@ public class Point {
 	public String toString() {
 		return "(" + x + ", " + y + ")";
 	}
+	public void fillCircle(Graphics2D g, int r) {
+		g.fillOval((int)(x - r), (int)(y-r),r*2, r*2);
+	}
+	
 	public void drawLine(Graphics g, Point p) {
 		g.drawLine((int)this.x, (int)this.y, (int)p.x, (int)p.y);
 	}

@@ -80,7 +80,7 @@ public class Driver extends JPanel
 			InputManager.mPos = getMousePos();
 
 			update();
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		repaint();
@@ -143,6 +143,7 @@ public class Driver extends JPanel
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
+		InputManager.scroll = e.getPreciseWheelRotation();
 	}
 
 	@Override

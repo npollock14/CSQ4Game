@@ -9,9 +9,11 @@ public abstract class InputManager {
 	static boolean[] keysToggled = new boolean[300];
 	static boolean resetKeysReleased = false;
 	static boolean resetMouseReleased = false;
+	static double scroll = 0.0;
 
 	public static void update() {
 		updateReleased();
+		if(scroll != 0) scroll = 0;
 	}
 
 	private static void updateReleased() {

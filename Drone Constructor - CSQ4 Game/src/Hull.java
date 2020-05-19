@@ -10,16 +10,18 @@ public class Hull extends Part{
 
 	
 	
-	public Hull(Point pos) {
-		super(width, height, health, pos,type);
+	public Hull(Point pos, Point sPos, Point cm) {
+		super(width, height, health, pos,type, sPos, cm);
 	}
 	
-	public void draw(Graphics2D g, Point sPos, double sRot) {
+	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
+		g.setColor(Color.green);
+		bounds.draw(g, false);
 		g.setColor(Color.GRAY);
-		g.rotate(sRot, sPos.x, sPos.y);
-		g.drawRect((int) (sPos.x + pos.x * SQUARE_WIDTH * Camera.scale - (Camera.scale *SQUARE_WIDTH/2)), (int) (sPos.y + pos.y * Camera.scale * SQUARE_WIDTH - (Camera.scale *SQUARE_WIDTH/2)),
+		g.rotate(sRot, cm.x, cm.y);
+		g.drawRect((int) (sPos.x + pos.x * SQUARE_WIDTH * Camera.scale), (int) (sPos.y + pos.y * Camera.scale * SQUARE_WIDTH),
 				(int) (width * Camera.scale * SQUARE_WIDTH), (int) (height * Camera.scale * SQUARE_WIDTH)); 
-		g.rotate(-sRot, sPos.x, sPos.y);
+		g.rotate(-sRot, cm.x, cm.y);
 	}
 	
 	

@@ -32,6 +32,9 @@ public class Point {
 		}
 		return 0;
 	}
+	public double relDistanceTo(Point p2) {
+		return ((this.x - p2.x) * (this.x - p2.x) + (this.y - p2.y) * (this.y - p2.y));
+	}
 
 	public boolean inside(Rect r) {
 

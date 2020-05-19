@@ -15,7 +15,8 @@ PlayerShip p;
 	@Override
 	public void update() {
 		Camera.changeScale(InputManager.scroll/2);
-		if(InputManager.keys[32]) p.rotation += .1;
+		if(InputManager.keys[81]) p.rVel += .001;
+		if(InputManager.keys[69]) p.rVel -= .001;
 		if(InputManager.keys[38]) p.vel.y -= .1;
 		if(InputManager.keys[40]) p.vel.y += .1;
 		if(InputManager.keys[37]) p.vel.x -= .1;
@@ -28,15 +29,17 @@ PlayerShip p;
 	@Override
 	public void init() {
 		ArrayList<Part> playerParts = new ArrayList<Part>();
-		playerParts.add(new Hull(new Point(0,0)));
-		playerParts.add(new Hull(new Point(1,0)));
-		playerParts.add(new Hull(new Point(-1,0)));
-		playerParts.add(new Hull(new Point(0,1)));
-		playerParts.add(new Hull(new Point(0,-1)));
-		playerParts.add(new Armor(new Point(0,2)));
-		playerParts.add(new Laser(new Point(1,-2)));
-		playerParts.add(new Laser(new Point(-1,-2)));
-		p = new PlayerShip(new Point(Driver.screenWidth/2, Driver.screenHeight/2), 0, playerParts);
+		Point sPos = new Point(Driver.screenWidth/2, Driver.screenHeight/2);
+		Point cm = new Point(sPos.x + Part.SQUARE_WIDTH/2, sPos.y);
+		playerParts.add(new Hull(new Point(0,0),sPos,cm));
+		playerParts.add(new Hull(new Point(1,0),sPos,cm));
+		playerParts.add(new Hull(new Point(-1,0),sPos,cm));
+		playerParts.add(new Hull(new Point(0,1),sPos,cm));
+		playerParts.add(new Hull(new Point(0,-1),sPos,cm));
+		playerParts.add(new Armor(new Point(0,2),sPos,cm));
+		playerParts.add(new Laser(new Point(1,-2),sPos,cm));
+		playerParts.add(new Laser(new Point(-1,-2),sPos,cm));
+		p = new PlayerShip(sPos, playerParts);
 	}
 
 }

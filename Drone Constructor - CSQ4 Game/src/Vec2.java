@@ -1,3 +1,4 @@
+
 public class Vec2 {
 	double x, y;
 

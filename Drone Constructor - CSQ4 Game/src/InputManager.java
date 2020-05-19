@@ -1,4 +1,5 @@
 
+
 public abstract class InputManager {
 
 	static Point mPos = new Point(0, 0); // updating in driver constantly

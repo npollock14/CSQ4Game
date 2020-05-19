@@ -1,3 +1,4 @@
+
 public class Camera {
 	public static double xOff = 0;
 	public static double yOff = 0;

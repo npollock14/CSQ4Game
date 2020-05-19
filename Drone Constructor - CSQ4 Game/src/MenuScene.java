@@ -34,6 +34,8 @@ PlayerShip p;
 		playerParts.add(new Hull(new Point(0,1)));
 		playerParts.add(new Hull(new Point(0,-1)));
 		playerParts.add(new Armor(new Point(0,2)));
+		playerParts.add(new Laser(new Point(1,-2)));
+		playerParts.add(new Laser(new Point(-1,-2)));
 		p = new PlayerShip(new Point(Driver.screenWidth/2, Driver.screenHeight/2), 0, playerParts);
 	}
 

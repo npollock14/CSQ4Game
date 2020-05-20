@@ -29,6 +29,8 @@ public abstract class Part {
 		this.pos = pos;
 		this.type = type;	
 	}
+	
+	public abstract void update(Ship s);
 
 	public abstract void draw(Graphics2D g, Point sPos, double sRot, Point cm);
 

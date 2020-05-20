@@ -4,9 +4,6 @@ public class TestSector extends Sector{
 
 	@Override
 	public void update() {
-		for(Projectile p : projectiles) {
-			p.update();
-		}
 		for(Ship s : ships) {
 			s.update(this);
 		}
@@ -14,9 +11,6 @@ public class TestSector extends Sector{
 
 	@Override
 	public void draw(Graphics2D g) {
-		for(Projectile p : projectiles) {
-			p.update();
-		}
 		for(Ship s : ships) {
 			s.draw(g);
 		}

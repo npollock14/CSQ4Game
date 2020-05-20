@@ -26,6 +26,11 @@ public class Hull extends Part{
 				(int) (width * Camera.scale * SQUARE_WIDTH), (int) (height * Camera.scale * SQUARE_WIDTH)); 
 		g.rotate(-sRot, cm.x, cm.y);
 	}
+	@Override
+	public void update(Ship s) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

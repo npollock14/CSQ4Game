@@ -8,11 +8,14 @@ public abstract class Ship {
 	Point pos = new Point(0, 0);
 	Point cm = new Point(0,0);
 	Vec2 vel = new Vec2(0, 0);
+	boolean isPlayer = false;
 	double rVel = 0;
 	double mass = 1;
 	double rotation = 0;
 	ArrayList<Part> parts = new ArrayList<Part>();
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+	boolean shoot = false;
+	Point target;
 
 	public Ship(Point pos, double rotation, ArrayList<Part> parts) {
 		this.pos = pos;
@@ -49,4 +52,13 @@ public abstract class Ship {
 		parts.add(p);
 		}
 	}
+	
+	public void shoot(Point p) {
+		shoot = true;
+		target = p;
+	}
+	public void ceaseFire() {
+		shoot = false;
+	}
+	
 }

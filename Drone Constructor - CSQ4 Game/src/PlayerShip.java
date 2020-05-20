@@ -4,9 +4,11 @@ public class PlayerShip extends Ship{
 
 	public PlayerShip(Point pos, ArrayList<Part> parts) {
 		super(pos, 0, parts);
+		isPlayer = true;
 	}
 	public PlayerShip(Point pos) {
 		super(pos, 0);
+		isPlayer = true;
 	}
 
 	public void update(Sector s) {
@@ -19,8 +21,11 @@ public class PlayerShip extends Ship{
 		cm.add(vel);
 		addProjectiles(s);
 	}
-	public void addProjectiles(Sector s) {
-		
+	private void addProjectiles(Sector s) {
+for(Projectile p : projectiles) {
+	s.projectiles.add(p);
+}
+projectiles.clear();
 	}
 	
 }

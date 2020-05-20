@@ -6,6 +6,10 @@ public class Laser extends Part {
 	static int height = 2;
 	static int health = 10;
 	static String type = "Lazer";
+	double timeSinceLastShot = 0;
+	double fireRate = 60; //dps = fireRate * damage
+	double damage = 3;
+	boolean active = true;
 
 	public Laser(Point pos, Point sPos, Point cm) {
 		super(width, height, health, pos, type, sPos, cm);
@@ -23,6 +27,12 @@ public class Laser extends Part {
 				(int) (sPos.y + pos.y * Camera.scale * SQUARE_WIDTH), (int) (width * Camera.scale * SQUARE_WIDTH),
 				(int) (height * Camera.scale * SQUARE_WIDTH));
 		g.rotate(-sRot, cm.x, cm.y);
+	}
+	
+	@Override
+	public void update(Ship s) {
+		
+		
 	}
 
 }

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 
 public class MenuScene extends Scene {
 	PlayerShip p;
+	
 	TestSector s = new TestSector();
 
 	@Override

@@ -15,8 +15,8 @@ public class Armor extends Part {
 	}
 
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
-		g.setColor(Color.green);
-		bounds.draw(g, false);
+		//g.setColor(Color.green);
+		//bounds.draw(g, false);
 		g.setColor(Color.BLACK);
 		g.rotate(sRot, cm.x, cm.y);
 		g.drawRect((int) (sPos.x + pos.x * SQUARE_WIDTH * Camera.scale),

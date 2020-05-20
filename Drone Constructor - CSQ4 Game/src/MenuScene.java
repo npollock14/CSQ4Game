@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
@@ -11,7 +12,8 @@ public class MenuScene extends Scene {
 		g.setFont(Misc.f);
 		g.drawString(p.shoot + " " + s.projectiles.size(), 100, 100);
 		s.draw(g);
-
+		g.setColor(Color.BLACK);
+		Camera.toScreen(new Point(0,0)).fillCircle(g, 20);
 	}
 
 	@Override

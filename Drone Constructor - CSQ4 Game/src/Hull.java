@@ -18,8 +18,8 @@ public class Hull extends Part{
 	}
 	
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
-		g.setColor(Color.green);
-		bounds.draw(g, false);
+		//g.setColor(Color.green);
+		//bounds.draw(g, false);
 		g.setColor(Color.GRAY);
 		g.rotate(sRot, cm.x, cm.y);
 		g.drawRect((int) (sPos.x + pos.x * SQUARE_WIDTH * Camera.scale), (int) (sPos.y + pos.y * Camera.scale * SQUARE_WIDTH),

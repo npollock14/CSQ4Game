@@ -45,14 +45,33 @@ public class Laser extends Part {
 		
 	}
 	private Vec2 getVel(Point target, Point source, Vec2 sVel, Vec2 tVel) {
-		double a =  target.x - source.x;
-		double b = target.y - source.y;
-		double k = (a*sVel.y - b*sVel.x) / projectileSpeed;
-		double angle = Math.asin(k/(a-b));
-		System.out.println(Math.toDegrees(angle));
+		Vec2 overall = tVel.subtract(sVel);
 		
-	    return new Vec2(projectileSpeed * Math.cos(angle), projectileSpeed * Math.sin(angle));
-	    //return true;
+		Vec2 totarget =  target.subtract(source).toVec2();
+
+		double a = Math.pow(overall.getMagnitude(),2) - (projectileSpeed * projectileSpeed);
+		double b = 2 * overall.dot(totarget);
+		double c = totarget.dot(totarget);
+
+		double p = -b / (2 * a);
+		double q = Math.sqrt((b * b) - 4 * a * c) / (2 * a);
+
+		double t1 = p - q;
+		double t2 = p + q;
+		double t;
+
+		if (t1 > t2 && t2 > 0)
+		{
+		    t = t2;
+		}
+		else
+		{
+		    t = t1;
+		}
+
+		Vec2 aimSpot = target.toVec2().add(overall.simpleMult(t));
+		double angle = source.angleTo(aimSpot.toPoint());
+		return new Vec2(-Math.cos(angle) * projectileSpeed, -Math.sin(angle) * projectileSpeed);
 	}
 private boolean canHitTarget(Point target, Point currPos, Vec2 sVel) {
 		return true;

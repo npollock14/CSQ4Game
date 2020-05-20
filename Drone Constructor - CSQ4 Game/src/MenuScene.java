@@ -9,7 +9,7 @@ public class MenuScene extends Scene {
 	@Override
 	public void draw(Graphics2D g) {
 		g.setFont(Misc.f);
-		g.drawString("MENU", 100, 100);
+		g.drawString(p.shoot + " " + s.projectiles.size(), 100, 100);
 		s.draw(g);
 
 	}
@@ -38,6 +38,10 @@ public class MenuScene extends Scene {
 			Camera.xOff -= 3;
 		if (InputManager.keys[65])
 			Camera.xOff += 3;
+		
+		if(InputManager.keysToggled[32]) p.shoot(new Point(0,0));
+		if(!InputManager.keysToggled[32] && p.shoot) p.ceaseFire();
+		
 		
 		
 

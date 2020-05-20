@@ -17,6 +17,7 @@ public class PlayerShip extends Ship{
 		for(Part p : parts) {
 			p.bounds.translate(vel);
 			p.bounds.rotate(rVel);
+			p.update(this);
 		}
 		cm.add(vel);
 		addProjectiles(s);

@@ -9,7 +9,7 @@ public abstract class Projectile {
 	double damage;
 
 	public Projectile(Point pos, Vec2 vel, double maxLifeSpan, double damage) {
-		this.pos = pos;
+		this.pos = new Point(pos.x, pos.y);
 		this.vel = vel;
 		this.maxLifeSpan = maxLifeSpan;
 		this.damage = damage;

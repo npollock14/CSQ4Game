@@ -31,7 +31,12 @@ public class Laser extends Part {
 	
 	@Override
 	public void update(Ship s) {
-		
+		if(s.shoot && timeSinceLastShot >= fireRate && active) {
+			s.projectiles.add(new LaserBolt(bounds.segs.get(0).getP1(), new Vec2(0,-1), 1000, damage));
+			timeSinceLastShot = 0;
+		}else {
+			timeSinceLastShot++;
+		}
 		
 	}
 

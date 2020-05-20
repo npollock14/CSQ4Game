@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
-public class PlayerShip extends Ship {
+public class EnemyShip extends Ship {
 
-	public PlayerShip(Point pos, ArrayList<Part> parts) {
+	public EnemyShip(Point pos, ArrayList<Part> parts) {
 		super(pos, 0, parts);
 		isPlayer = true;
 	}
 
-	public PlayerShip(Point pos) {
+	public EnemyShip(Point pos) {
 		super(pos, 0);
 		isPlayer = true;
 	}

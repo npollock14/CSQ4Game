@@ -94,6 +94,21 @@ public class Poly {
 		center.y = cY;
 
 	}
+	public Point getCenter() {
+		updateArea();
+		double cX = 0.0;
+		double cY = 0.0;
+		for (int i = 0; i < verts.size() - 1; i++) {
+			Point c = verts.get(i);
+			Point n = verts.get(i + 1);
+			cX += (c.x + n.x) * (c.x * n.y - n.x * c.y);
+			cY += (c.y + n.y) * (c.x * n.y - n.x * c.y);
+		}
+		cX /= (6 * area);
+		cY /= (6 * area);
+		return new Point(cX,cY);
+		
+	}
 	public void setCenter(Point p) {
 		distances.clear();
 		rotations.clear();

@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class TestSector extends Sector{
@@ -16,13 +17,13 @@ public class TestSector extends Sector{
 				projectiles.remove(p);
 				break;
 			}
-			
 		}
 		
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
+		
 		for(Ship s : ships) {
 			s.draw(g);
 		}

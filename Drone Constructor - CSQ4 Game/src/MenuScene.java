@@ -4,8 +4,12 @@ import java.util.ArrayList;
 
 public class MenuScene extends Scene {
 	PlayerShip p;
+	EnemyShip e1;
 	
 	TestSector s = new TestSector();
+	
+	int num = 0;
+	int num2 = 0;
 
 	@Override
 	public void draw(Graphics2D g) {
@@ -13,7 +17,7 @@ public class MenuScene extends Scene {
 		g.drawString(p.shoot + " " + s.projectiles.size(), 100, 100);
 		s.draw(g);
 		g.setColor(Color.BLACK);
-		Camera.toScreen(new Point(0,0)).fillCircle(g, 20);
+		Camera.toScreen(new Point(0,0)).fillCircle(g, (int) (20*Camera.scale));
 	}
 
 	@Override
@@ -44,32 +48,26 @@ public class MenuScene extends Scene {
 		if(InputManager.keysToggled[32]) p.shoot(new Point(0,0));
 		if(!InputManager.keysToggled[32] && p.shoot) p.ceaseFire();
 		
-		
-		
 
 		s.update();
-		// Camera.focus(p.pos);
+		//Camera.focus(p.cm);
 	}
 
 	@Override
 	public void init() {
-		// ArrayList<Part> playerParts = new ArrayList<Part>();
 		Point sPos = new Point(Driver.screenWidth / 2, Driver.screenHeight / 2);
-		// Point cm = new Point(sPos.x + Part.SQUARE_WIDTH/2, sPos.y);
-		// playerParts.add(new Hull(new Point(0,0),sPos,cm));
-		// playerParts.add(new Hull(new Point(1,0),sPos,cm));
-		// playerParts.add(new Hull(new Point(-1,0),sPos,cm));
-		// playerParts.add(new Hull(new Point(0,1),sPos,cm));
-		// playerParts.add(new Hull(new Point(0,-1),sPos,cm));
-		// playerParts.add(new Armor(new Point(0,2),sPos,cm));
-		// playerParts.add(new Laser(new Point(1,-2),sPos,cm));
-		// playerParts.add(new Laser(new Point(-1,-2),sPos,cm));
-		// p = new PlayerShip(sPos, playerParts);
+		
 		p = new PlayerShip(sPos);
 		p.addPart(new Hull(new Point(0, 0)), new Hull(new Point(1, 0)), new Hull(new Point(-1, 0)),
 				new Hull(new Point(0, 1)), new Hull(new Point(0, -1)), new Armor(new Point(0, 2)),
 				new Laser(new Point(1, -2)), new Laser(new Point(-1, -2)));
 		
+		
+		e1 = new EnemyShip(new Point(300, 200));
+		e1.addPart(new Hull(new Point(0, 0)), new Hull(new Point(1, 0)), new Hull(new Point(-1, 0)),
+				new Hull(new Point(0, 1)));
+		
+		s.ships.add(e1);
 		s.ships.add(p);
 	}
 

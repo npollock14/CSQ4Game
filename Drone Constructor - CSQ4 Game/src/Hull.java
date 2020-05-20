@@ -6,20 +6,23 @@ public class Hull extends Part{
 	static int width = 1; // in blocks
 	static int height = 1;
 	static int health = 10;
+	static double mass = 10;
 	static String type = "Hull";
 
 	
 	
-	public Hull(Point pos, Point sPos, Point cm) {
-		super(width, height, health, pos,type, sPos, cm);
+	public Hull(Point pos, Point sPos, Point cm, double mass) {
+		super(width, height, health, pos,type, sPos, cm,mass);
 	}
 	public Hull(Point pos) {
-		super(width, height, health, pos, type);
+		super(width, height, health, pos, type,mass);
 	}
 	
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
-		//g.setColor(Color.green);
+		g.setColor(Color.green);
+		Camera.toScreen(getCM()).fillCircle(g, (int) (2*Camera.scale));
 		//bounds.draw(g, false);
+		
 		g.setColor(Color.GRAY);
 		g.rotate(sRot, cm.x, cm.y);
 		g.drawRect((int) (sPos.x + pos.x * SQUARE_WIDTH * Camera.scale), (int) (sPos.y + pos.y * Camera.scale * SQUARE_WIDTH),

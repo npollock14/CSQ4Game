@@ -50,5 +50,9 @@ public class Camera {
 		return ((y - center.y) / scale) + center.y - yOff;
 
 	}
+	
+	public static Point toMap(double x, double y) {
+		return new Point(toXMap(x), toYMap(y));
+	}
 
 }

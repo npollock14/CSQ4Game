@@ -9,7 +9,16 @@ public class TestSector extends Sector{
 		}
 		for(Projectile p : projectiles) {
 			p.update();
+			
 		}
+		for(Projectile p : projectiles) {
+			if(!p.alive) {
+				projectiles.remove(p);
+				break;
+			}
+			
+		}
+		
 	}
 
 	@Override

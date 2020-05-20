@@ -10,11 +10,10 @@ public class LaserBolt extends Projectile{
 	@Override
 	public void update() {
 		pos.add(vel);
-		if(age < maxLifeSpan) {
 			age++;
-		}else {
+		if(age > maxLifeSpan)
 			alive = false;
-		}
+		
 	}
 
 	@Override

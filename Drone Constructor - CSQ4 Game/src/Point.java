@@ -19,6 +19,9 @@ public class Point {
 		this.x = x;
 		this.y = y;
 	}
+	public Vec2 toVec2() {
+		return new Vec2(x,y);
+	}
 
 	public double distanceTo(Point p2) {
 		return Math.sqrt((this.x - p2.x) * (this.x - p2.x) + (this.y - p2.y) * (this.y - p2.y));
@@ -49,6 +52,9 @@ public class Point {
 
 	public boolean isSame(Point p) {
 		return p.x == this.x && p.y == this.y;
+	}
+	public Point subtract(Point p) {
+		return new Point(this.x - p.x , this.y - p.y);
 	}
 
 	public String toString() {

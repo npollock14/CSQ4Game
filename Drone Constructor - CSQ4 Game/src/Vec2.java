@@ -6,6 +6,9 @@ public class Vec2 {
 		this.x = x;
 		this.y = y;
 	}
+	public Vec2 clone() {
+		return new Vec2(this.x,this.y);
+	}
 
 	public Vec2() {
 		this.x = Math.random() * 2 - 1;
@@ -15,9 +18,28 @@ public class Vec2 {
 		this.y /= mag;
 
 	}
+	public Point toPoint() {
+		return new Point(x,y);
+	}
+	public double dot(Vec2 v) {
+		return (x*v.x + y*v.y);
+	}
 
 	public double getMagnitude() {
 		return Math.sqrt(x * x + y * y);
+	}
+	public Vec2 setMagnitude(double m) {
+		return new Vec2(m*x/(Math.sqrt(x*x + y*y)),m*y/(Math.sqrt(x*x + y*y)));
+	}
+	public Vec2 simpleMult(double d) {
+		return new Vec2(x*d,y*d);
+	}
+	public Vec2 normalize() {
+		double mag = this.getMagnitude();
+		return new Vec2(x/mag,y/mag);
+	}
+	public int getSign(double i) {
+		return i > 0 ? 1 : -1;
 	}
 
 	public double getAngle() {
@@ -27,6 +49,12 @@ public class Vec2 {
 
 		}
 		return 0;
+	}
+	public Vec2 add(Vec2 v) {
+		return new Vec2(this.x + v.x, this.y + v.y);
+	}
+	public Vec2 subtract(Vec2 v) {
+		return new Vec2(this.x - v.x, this.y - v.y);
 	}
 	public void print() {
 		System.out.println("<" + this.x + "," + this.y + ">");

@@ -22,6 +22,9 @@ public class Point {
 	public Vec2 toVec2() {
 		return new Vec2(x,y);
 	}
+	public Point avg(Point p) {
+		return new Point((x+p.x)/2, (y+p.y)/2);
+	}
 
 	public double distanceTo(Point p2) {
 		return Math.sqrt((this.x - p2.x) * (this.x - p2.x) + (this.y - p2.y) * (this.y - p2.y));

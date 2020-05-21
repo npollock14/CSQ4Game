@@ -42,6 +42,16 @@ public class Poly {
 		drawCenter(g, 20);
 		}
 	}
+	public void fill(Graphics2D g) {
+		int[] xs = new int[verts.size()];
+		int[] ys = new int[verts.size()];
+		for(int i = 0; i < verts.size(); i++) {
+			xs[i] = (int) verts.get(i).x;
+			ys[i] = (int) verts.get(i).y;
+		}
+		g.fillPolygon(xs, ys, verts.size());
+		
+	}
 	
 	public void deIntersectSimple(Poly p) {
 		//for()

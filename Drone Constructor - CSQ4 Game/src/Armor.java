@@ -12,41 +12,53 @@ public class Armor extends Part {
 	public Armor(Point pos, Point sPos, Point cm, double mass) {
 		super(width, height, health, pos, type, sPos, cm, mass);
 	}
+
 	public Armor(Point pos) {
 		super(width, height, health, pos, type, mass);
 	}
 
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
-		//g.setColor(Color.green);
-		//bounds.draw(g, false);
-		
-		g.setColor(Color.green);
-		Camera.toScreen(getCM()).fillCircle(g, (int) (2*Camera.scale));
-		
-		g.setColor(Color.BLACK);
+
 		g.rotate(sRot, cm.x, cm.y);
-		g.drawRect((int) (sPos.x + pos.x * SQUARE_WIDTH * Camera.scale),
-				(int) (sPos.y + pos.y * Camera.scale * SQUARE_WIDTH),
-				(int) (width * Camera.scale * SQUARE_WIDTH), (int) (height * Camera.scale * SQUARE_WIDTH));
+
+		int x1 = (int) (sPos.x + pos.x * SQUARE_WIDTH * Camera.scale);
+		int y1 = (int) (sPos.y + pos.y * Camera.scale * SQUARE_WIDTH);
+		int w1 = (int) (width * Camera.scale * SQUARE_WIDTH);
+		int h1 = (int) (height * Camera.scale * SQUARE_WIDTH);
+
+		g.setColor(new Color(70, 70, 70));
+		g.fillRect(x1, y1, w1, h1);
+		g.setColor(new Color(40, 40, 40));
+		g.drawRect(x1, y1, w1, h1);
+
 		g.rotate(-sRot, cm.x, cm.y);
+
+		// g.setColor(Color.green);
+		// Camera.toScreen(getCM()).fillCircle(g, (int) (2*Camera.scale));
+		// bounds.draw(g, false);
 	}
+
 	@Override
 	public void update(Ship s) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 	@Override
 	public void checkProjectileCollision(Sector s) {
-		for(Projectile p : s.projectiles) {
-			if(bounds.surrounds(p.pos)) {
-				if(Math.random() < deflectionChance) {
+		for (Projectile p : s.projectiles) {
+			if (bounds.surrounds(p.pos)) {
+				if (Math.random() < deflectionChance) {
 					s.projectiles.remove(p);
-				}else {
+					break;
+				} else {
 					health -= p.damage;
+					s.projectiles.remove(p);
+					break;
 				}
 			}
 		}
-		
+
 	}
 
 }

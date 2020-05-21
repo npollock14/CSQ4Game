@@ -19,15 +19,26 @@ public class Hull extends Part{
 	}
 	
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
-		g.setColor(Color.green);
-		Camera.toScreen(getCM()).fillCircle(g, (int) (2*Camera.scale));
+		
+		g.rotate(sRot, cm.x, cm.y);
+		
+		int x1 = (int) (sPos.x + pos.x * SQUARE_WIDTH * Camera.scale);
+		int y1 = (int) (sPos.y + pos.y * Camera.scale * SQUARE_WIDTH);
+		int w1 = (int) (width * Camera.scale * SQUARE_WIDTH);
+		int h1 = (int) (height * Camera.scale * SQUARE_WIDTH);
+		
+		
+		g.setColor(new Color(220,220,220));
+		g.fillRect(x1,y1,w1,h1); 
+		g.setColor(Color.GRAY);
+		g.drawRect(x1, y1,w1, h1);
+		
+		g.rotate(-sRot, cm.x, cm.y);
+		
+		//g.setColor(Color.green);
+		//Camera.toScreen(getCM()).fillCircle(g, (int) (2*Camera.scale));
 		//bounds.draw(g, false);
 		
-		g.setColor(Color.GRAY);
-		g.rotate(sRot, cm.x, cm.y);
-		g.drawRect((int) (sPos.x + pos.x * SQUARE_WIDTH * Camera.scale), (int) (sPos.y + pos.y * Camera.scale * SQUARE_WIDTH),
-				(int) (width * Camera.scale * SQUARE_WIDTH), (int) (height * Camera.scale * SQUARE_WIDTH)); 
-		g.rotate(-sRot, cm.x, cm.y);
 	}
 	@Override
 	public void update(Ship s) {

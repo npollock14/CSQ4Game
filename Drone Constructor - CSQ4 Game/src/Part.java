@@ -2,7 +2,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 public abstract class Part {
-	public static final double SQUARE_WIDTH = 20;
+	public static final double SQUARE_WIDTH = 40;
 	int width, height; // in blocks
 	int health;
 	Point pos; // in blocks from center of ship

@@ -5,7 +5,7 @@ import java.util.Vector;
 public class Laser extends Part {
 	int width = 1; // in blocks
 	int height = 2;
-	static int health = 10;
+	static int baseHealth = 10;
 	static double mass = 15;
 	static String type = "Lazer";
 	double timeSinceLastShot = 0;
@@ -17,14 +17,14 @@ public class Laser extends Part {
 	int direction = 0; // 0 = up, 1 = right, 2 = down, 3 = left - clockwise pattern
 
 	public Laser(Point pos, Point sPos, Point cm, double mass, int dir) {
-		super(getW(dir), getH(dir), health, pos, type, sPos, cm, mass);
+		super(getW(dir), getH(dir), baseHealth, pos, type, sPos, cm, mass);
 		this.direction = dir;
 		this.width = getW(dir);
 		this.height = getH(dir);
 	}
 
 	public Laser(Point pos, int dir) {
-		super(getW(dir), getH(dir), health, pos, type, mass);
+		super(getW(dir), getH(dir), baseHealth, pos, type, mass);
 		this.direction = dir;
 		this.width = getW(dir);
 		this.height = getH(dir);
@@ -69,6 +69,10 @@ public class Laser extends Part {
 			g.drawLine((int) x1, (int) (y1 + SQUARE_WIDTH * 7 * Camera.scale / 4),
 					(int) (x1 + SQUARE_WIDTH * Camera.scale), (int) (y1 + SQUARE_WIDTH * 7 * Camera.scale / 4));
 		}
+		if (direction == 3) {
+			g.drawLine((int) (x1 + SQUARE_WIDTH*Camera.scale/4), (int) (y1),
+					(int) (x1 + SQUARE_WIDTH*Camera.scale/4), (int) (y1 + SQUARE_WIDTH * Camera.scale));
+		}
 
 		g.rotate(-sRot, cm.x, cm.y);
 
@@ -92,9 +96,11 @@ public class Laser extends Part {
 			if (direction == 2) {
 				firePoint = bounds.segs.get(2).getP1().avg(bounds.segs.get(2).getP2());
 			}
+			if (direction == 3) {
+				firePoint = bounds.segs.get(3).getP1().avg(bounds.segs.get(3).getP2());
+			}
 
 			if (canHitTarget(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel, s.rotation)) {
-				System.out.println("firing");
 				s.projectiles.add(new LaserBolt(firePoint,
 						getVel(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel).add(s.vel), 1000,
 						damage));
@@ -168,6 +174,9 @@ public class Laser extends Part {
 		if (direction == 2)
 			return Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(270))) % 360 < 60
 					|| Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(270))) % 360 > 300;
+		if (direction == 3)
+		return Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(0))) % 360 < 60
+		|| Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(0))) % 360 > 300;
 		return false;
 	}
 

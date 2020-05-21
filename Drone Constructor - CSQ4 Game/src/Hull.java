@@ -5,17 +5,17 @@ import java.awt.Graphics2D;
 public class Hull extends Part{
 	static int width = 1; // in blocks
 	static int height = 1;
-	static int health = 10;
+	static int baseHealth = 10;
 	static double mass = 10;
 	static String type = "Hull";
 
 	
 	
 	public Hull(Point pos, Point sPos, Point cm, double mass) {
-		super(width, height, health, pos,type, sPos, cm,mass);
+		super(width, height, baseHealth, pos,type, sPos, cm,mass);
 	}
 	public Hull(Point pos) {
-		super(width, height, health, pos, type,mass);
+		super(width, height, baseHealth, pos, type,mass);
 	}
 	
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {

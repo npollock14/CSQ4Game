@@ -16,7 +16,8 @@ public abstract class Ship {
 	ArrayList<Part> parts = new ArrayList<Part>();
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	boolean shoot = false;
-	Point target;
+	Ship target;
+	boolean destoryed = false;
 
 	public Ship(Point pos, double rotation, ArrayList<Part> parts) {
 		this.pos = pos;
@@ -62,6 +63,7 @@ public abstract class Ship {
 	public void checkDestroyed(Sector s) {
 		if(parts.size() == 0) {
 			s.ships.remove(this);
+			this.destoryed = true;
 		}
 	}
 	
@@ -91,9 +93,9 @@ public abstract class Ship {
 		
 	}
 	
-	public void shoot(Point p) {
+	public void shoot(Ship s) {
 		shoot = true;
-		target = p;
+		target = s;
 	}
 	public void ceaseFire() {
 		shoot = false;

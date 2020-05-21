@@ -45,12 +45,12 @@ public class MenuScene extends Scene {
 		if (InputManager.keys[65])
 			Camera.xOff += 3;
 		
-		if(InputManager.keysToggled[32]) p.shoot(new Point(0,0));
+		if(InputManager.keysToggled[32]) p.shoot(e1);
 		if(!InputManager.keysToggled[32] && p.shoot) p.ceaseFire();
 		
 
 		s.update();
-		//Camera.focus(p.cm);
+		Camera.focus(p.cm);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class MenuScene extends Scene {
 		e1 = new EnemyShip(new Point(300, 200));
 		e1.addPart(new Hull(new Point(0, 0)), new Hull(new Point(1, 0)), new Hull(new Point(-1, 0)),
 				new Hull(new Point(0, 1)));
-		
+		//e1.vel.x += 5;
 		s.ships.add(e1);
 		s.ships.add(p);
 	}

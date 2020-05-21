@@ -11,6 +11,7 @@ public class Laser extends Part {
 	double timeSinceLastShot = 0;
 	double fireRate = 60; //dps = fireRate * damage
 	double damage = 3;
+	double maxAngle = 60; //degrees
 	boolean active = true;
 	static double projectileSpeed = 12.0;
 
@@ -38,10 +39,12 @@ public class Laser extends Part {
 	
 	@Override
 	public void update(Ship s) {
-		if(s.shoot && timeSinceLastShot >= fireRate && active) {
+		
+		if(s.shoot && timeSinceLastShot >= fireRate && active && !s.target.destoryed) {
 			Point firePoint = new Point(bounds.segs.get(0).getP1().x + SQUARE_WIDTH/2, bounds.segs.get(0).getP1().y);
-			if(canHitTarget(s.target, firePoint, s.vel, new Vec2(0,0))) {
-			s.projectiles.add(new LaserBolt(firePoint, getVel(s.target, firePoint, s.vel, new Vec2(0,0)).add(s.vel), 1000, damage));
+			
+			if(canHitTarget(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel, s.rotation)) {
+			s.projectiles.add(new LaserBolt(firePoint, getVel(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel).add(s.vel), 1000, damage));
 			timeSinceLastShot = 0;
 			}
 		}else {
@@ -78,7 +81,7 @@ public class Laser extends Part {
 		double angle = source.angleTo(aimSpot.toPoint());
 		return new Vec2(-Math.cos(angle) * projectileSpeed, -Math.sin(angle) * projectileSpeed);
 	}
-private boolean canHitTarget(Point target, Point source, Vec2 sVel, Vec2 tVel) {
+private boolean canHitTarget(Point target, Point source, Vec2 sVel, Vec2 tVel, double sRot) {
 	Vec2 overall = tVel.subtract(sVel);
 	
 	Vec2 totarget =  target.subtract(source).toVec2();
@@ -102,7 +105,11 @@ private boolean canHitTarget(Point target, Point source, Vec2 sVel, Vec2 tVel) {
 	{
 	    t = t1;
 	}
-	return t > 0 && t < 180;
+	if(!(t > 0 && t < 180)) return false;
+	Vec2 aimSpot = target.toVec2().add(overall.simpleMult(t));
+	double angle = source.angleTo(aimSpot.toPoint());
+	//System.out.println("Delta Angle: " + Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(90))) % 360);
+	return Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(90))) % 360 < 60;
 	}
 
 	

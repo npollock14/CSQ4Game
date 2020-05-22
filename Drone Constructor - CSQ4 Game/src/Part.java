@@ -10,6 +10,8 @@ public abstract class Part {
 	Poly bounds;
 	double mass = 1;
 	ArrayList<Projectile> projectilesToAdd = new ArrayList<Projectile>();
+	double[] transForces = {0.0,0.0,0.0,0.0};
+	double rotForce = 0.0;
 
 	public Part(int width, int height, int health, Point pos, String type, Point sPos, Point cm, double mass) {
 		this.width = width;

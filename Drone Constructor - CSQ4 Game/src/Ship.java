@@ -19,8 +19,8 @@ public abstract class Ship {
 	Ship target;
 	boolean destoryed = false;
 	
-	double[] transForces = {5.0,5.0,5.0,5.0}; //up, right, down, left - clockwise
-	double rotForce = .1;
+	double[] transForces = {0.0,0.0,0.0,0.0}; //up, right, down, left - clockwise
+	double rotForce = 0.0;
 
 	public Ship(Point pos, double rotation, ArrayList<Part> parts) {
 		this.pos = pos;
@@ -40,11 +40,11 @@ public abstract class Ship {
 	}
 	public void cmdMove(int direction) { //up right down left
 		if(direction == 0 || direction == 2) {
-			vel.x += transForces[0] * Math.sin(rotation - (direction * Math.PI/2)) / mass;
-			vel.y -= transForces[0] * Math.cos(rotation - (direction * Math.PI/2)) / mass;		
+			vel.x += transForces[direction] * Math.sin(rotation - (direction * Math.PI/2)) / mass;
+			vel.y -= transForces[direction] * Math.cos(rotation - (direction * Math.PI/2)) / mass;		
 		}else {
-			vel.x -= transForces[0] * Math.sin(rotation - (direction * Math.PI/2)) / mass;
-			vel.y += transForces[0] * Math.cos(rotation - (direction * Math.PI/2)) / mass;	
+			vel.x -= transForces[direction] * Math.sin(rotation - (direction * Math.PI/2)) / mass;
+			vel.y += transForces[direction] * Math.cos(rotation - (direction * Math.PI/2)) / mass;	
 		}
 	}
 	
@@ -98,9 +98,15 @@ public abstract class Ship {
 		p.bounds = new Poly(tlx, tly, tlx + Part.SQUARE_WIDTH * p.width, tly, tlx + Part.SQUARE_WIDTH * p.width,
 				tly + Part.SQUARE_WIDTH * p.height, tlx, tly + Part.SQUARE_WIDTH * p.height, tlx, tly);
 		mass += p.mass;
+		for(int i = 0; i< transForces.length; i++) {
+			transForces[i] += p.transForces[i];
+		}
+		rotForce += p.rotForce;
+		
 		p.bounds.setCenter(cm);
 		parts.add(p);
 		}
+		//for(double d : transForces) System.out.println(d);
 		//System.out.println("New Mass: " + mass);
 		double sumX = 0;
 		double sumY = 0;

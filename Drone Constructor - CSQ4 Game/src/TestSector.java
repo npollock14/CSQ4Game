@@ -5,8 +5,12 @@ public class TestSector extends Sector{
 
 	@Override
 	public void update() {
+		try {
 		for(Ship s : ships) {
 			s.update(this);
+		}
+		}catch(Exception e) {
+			
 		}
 		for(Projectile p : projectiles) {
 			p.update();

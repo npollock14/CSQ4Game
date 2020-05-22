@@ -85,7 +85,7 @@ public class Laser extends Part {
 	@Override
 	public void update(Ship s) {
 
-		if (s.shoot && timeSinceLastShot >= fireRate && active && !s.target.destoryed) {
+		if (s.shoot && timeSinceLastShot >= fireRate && active && (s.target != null || s.pTarget != null)) {
 			Point firePoint = null;
 			if (direction == 0) {
 				firePoint = bounds.segs.get(0).getP1().avg(bounds.segs.get(0).getP2());
@@ -99,12 +99,20 @@ public class Laser extends Part {
 			if (direction == 3) {
 				firePoint = bounds.segs.get(3).getP1().avg(bounds.segs.get(3).getP2());
 			}
-
+			if(s.target != null) {
 			if (canHitTarget(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel, s.rotation)) {
 				s.projectiles.add(new LaserBolt(firePoint,
 						getVel(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel).add(s.vel), 1000,
 						damage));
 				timeSinceLastShot = 0;
+			}
+			}else if(s.pTarget != null) {
+				if (canHitTarget(s.pTarget, firePoint, s.vel, new Vec2(0,0), s.rotation)) {
+					s.projectiles.add(new LaserBolt(firePoint,
+							getVel(s.pTarget, firePoint, s.vel, new Vec2(0,0)).add(s.vel), 1000,
+							damage));
+					timeSinceLastShot = 0;
+				}
 			}
 		} else {
 			timeSinceLastShot++;

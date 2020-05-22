@@ -17,7 +17,8 @@ public abstract class Ship {
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	boolean shoot = false;
 	Ship target;
-	boolean destoryed = false;
+	Point pTarget;
+	boolean destroyed = false;
 	
 	double[] transForces = {0.0,0.0,0.0,0.0}; //up, right, down, left - clockwise
 	double rotForce = 0.0;
@@ -27,11 +28,13 @@ public abstract class Ship {
 		this.cm = new Point(pos.x + Part.SQUARE_WIDTH/2, pos.y);
 		this.rotation = rotation;
 		this.parts = parts;
+		this.addPart(new Reactor());
 	}
 	public Ship(Point pos, double rotation) {
 		this.pos = pos;
 		this.cm = new Point(pos.x + Part.SQUARE_WIDTH/2, pos.y);
 		this.rotation = rotation;
+		this.addPart(new Reactor());
 	}
 	
 	//commands
@@ -48,10 +51,7 @@ public abstract class Ship {
 		}
 	}
 	
-	public void cmdRotateTo(double deg) {
-		double curr = rotation;
-		System.out.println(Math.toDegrees(curr));
-	}
+	
 	
 	
 	
@@ -79,6 +79,7 @@ public abstract class Ship {
 		for(Part p : parts) {
 			if(p.health <= 0) {
 				mass -= p.mass;
+				if(p.type.equals("Reactor")) destroyed = true;
 				parts.remove(p);
 				updateCM();
 				checkBrokenParts();
@@ -88,9 +89,9 @@ public abstract class Ship {
 	}
 	
 	public void checkDestroyed(Sector s) {
-		if(parts.size() == 0) {
+		if(destroyed == true || parts.size() == 0) {
 			s.ships.remove(this);
-			this.destoryed = true;
+			this.destroyed = true;
 		}
 	}
 	
@@ -180,8 +181,14 @@ public abstract class Ship {
 		shoot = true;
 		target = s;
 	}
+	public void shoot(Point p) {
+		shoot = true;
+		pTarget = new Point(p.x,p.y);
+	}
 	public void ceaseFire() {
 		shoot = false;
+		target = null;
+		pTarget = null;
 	}
 	
 }

@@ -46,12 +46,13 @@ public class MenuScene extends Scene {
 			Camera.xOff += 3;
 
 		if (InputManager.keysToggled[32])
-			p.shoot(e1);
+			p.shoot(Camera.toMap(InputManager.mPos.x, InputManager.mPos.y));
 		if (!InputManager.keysToggled[32] && p.shoot)
 			p.ceaseFire();
+		
+		e1.shoot(p);
 
 		s.update();
-		p.cmdRotateTo(Math.toRadians(45));
 		// System.out.println(Math.toDegrees(p.rotation));
 		Camera.focus(p.cm);
 	}
@@ -61,19 +62,11 @@ public class MenuScene extends Scene {
 		Point sPos = new Point(Driver.screenWidth / 2, Driver.screenHeight / 2);
 
 		p = new PlayerShip(sPos);
-		p.addPart(new Hull(new Point(0, 0)), new Hull(new Point(1, 0)), new Hull(new Point(-1, 0)),
-				new Hull(new Point(0, 1)), new Hull(new Point(0, -1)), new Armor(new Point(0, 2)),
-				new Laser(new Point(-1, -2), 0), new Thruster(new Point(0, 3), 2), new Thruster(new Point(1, 3), 2),
-				new Thruster(new Point(-1, 3), 2),
-				new Thruster(new Point(-2, 0), 0),
-				new Thruster(new Point(2, 0), 0),
-				new Thruster(new Point(1, 1), 1),
-				new Thruster(new Point(-1, 1), 3),
-				new Laser(new Point(1, -2), 0));
+		p.addPart(new Thruster(new Point(0,2), 2), new Thruster(new Point(1,2), 2));
 
 		e1 = new EnemyShip(new Point(300, 200));
 		e1.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new Armor(new Point(-1, 0)),
-				new Armor(new Point(0, 1)));
+				new Armor(new Point(0, 1)), new Laser(new Point(0,2), 2));
 		// e1.vel.x += 5;
 		s.ships.add(e1);
 		s.ships.add(p);

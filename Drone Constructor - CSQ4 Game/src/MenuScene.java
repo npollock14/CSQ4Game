@@ -51,6 +51,7 @@ public class MenuScene extends Scene {
 			p.ceaseFire();
 
 		s.update();
+		p.cmdRotateTo(Math.toRadians(45));
 		// System.out.println(Math.toDegrees(p.rotation));
 		Camera.focus(p.cm);
 	}

@@ -48,6 +48,11 @@ public abstract class Ship {
 		}
 	}
 	
+	public void cmdRotateTo(double deg) {
+		double curr = rotation;
+		System.out.println(Math.toDegrees(curr));
+	}
+	
 	
 	
 	public void rotate(double amt) {

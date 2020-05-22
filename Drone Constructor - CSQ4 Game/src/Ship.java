@@ -8,16 +8,19 @@ public abstract class Ship {
 	Point pos = new Point(0, 0);
 	Point cm = new Point(0,0);
 	Vec2 vel = new Vec2(0, 0);
-	double friction = .95;
+	double friction = .95; //drag force = kv^2
 	boolean isPlayer = false;
 	double rVel = 0;
-	double mass = 0;
+	double mass = 0.0;
 	double rotation = 0;
 	ArrayList<Part> parts = new ArrayList<Part>();
 	ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	boolean shoot = false;
 	Ship target;
 	boolean destoryed = false;
+	
+	double[] transForces = {5.0,5.0,5.0,5.0}; //up, right, down, left - clockwise
+	double rotForce = .1;
 
 	public Ship(Point pos, double rotation, ArrayList<Part> parts) {
 		this.pos = pos;
@@ -30,6 +33,23 @@ public abstract class Ship {
 		this.cm = new Point(pos.x + Part.SQUARE_WIDTH/2, pos.y);
 		this.rotation = rotation;
 	}
+	
+	//commands
+	public void cmdRotate(boolean clockwise) {
+		rVel += (clockwise ? -1 : 1) * rotForce/mass;
+	}
+	public void cmdMove(int direction) { //up right down left
+		if(direction == 0 || direction == 2) {
+			vel.x += transForces[0] * Math.sin(rotation - (direction * Math.PI/2)) / mass;
+			vel.y -= transForces[0] * Math.cos(rotation - (direction * Math.PI/2)) / mass;		
+		}else {
+			vel.x -= transForces[0] * Math.sin(rotation - (direction * Math.PI/2)) / mass;
+			vel.y += transForces[0] * Math.cos(rotation - (direction * Math.PI/2)) / mass;	
+		}
+	}
+	
+	
+	
 	public void rotate(double amt) {
 		rotation += amt;
 		for(Part p : parts) {
@@ -53,7 +73,9 @@ public abstract class Ship {
 	public void checkBrokenParts() {
 		for(Part p : parts) {
 			if(p.health <= 0) {
+				mass -= p.mass;
 				parts.remove(p);
+				updateCM();
 				checkBrokenParts();
 				break;
 			}
@@ -79,10 +101,10 @@ public abstract class Ship {
 		p.bounds.setCenter(cm);
 		parts.add(p);
 		}
-		System.out.println("New Mass: " + mass);
+		//System.out.println("New Mass: " + mass);
 		double sumX = 0;
 		double sumY = 0;
-		for(Part p : parts) {
+		for(Part p : parts) { //TODO can keep running list of these values for efficiency on big ships
 			sumX += (p.getCM().x * p.mass);
 			sumY += (p.getCM().y * p.mass);
 		}
@@ -91,6 +113,56 @@ public abstract class Ship {
 		for(Part p : parts) p.bounds.setCenter(cm);
 		rotate(rot);
 		
+	}
+	public void updateCM(){
+		double rot = rotation;
+		rotate(-rot);
+		//System.out.println("New Mass: " + mass);
+		double sumX = 0;
+		double sumY = 0;
+		for(Part p : parts) { //TODO can keep running list of these values for efficiency on big ships
+			sumX += (p.getCM().x * p.mass);
+			sumY += (p.getCM().y * p.mass);
+		}
+		cm = new Point(sumX/mass, sumY/mass);
+		
+		for(Part p : parts) p.bounds.setCenter(cm);
+		rotate(rot);
+	}
+	
+	//n = 5 and edges = [[0, 1], [1, 2], [3, 4]], return 2
+	public int countComponents(int n, int[][] edges) { //stuff i pulled online
+	    int count = n;
+	 
+	    int[] root = new int[n];
+	    // initialize each node is an island
+	    for(int i=0; i<n; i++){
+	        root[i]=i;        
+	    }
+	 
+	    for(int i=0; i<edges.length; i++){
+	        int x = edges[i][0];
+	        int y = edges[i][1];
+	 
+	        int xRoot = getRoot(root, x);
+	        int yRoot = getRoot(root, y);
+	 
+	        if(xRoot!=yRoot){
+	            count--;
+	            root[xRoot]=yRoot;
+	        }
+	 
+	    }
+	 
+	    return count;
+	}
+	 
+	public int getRoot(int[] arr, int i){
+	    while(arr[i]!=i){
+	        arr[i]= arr[arr[i]];
+	        i=arr[i];
+	    }
+	    return i;
 	}
 	
 	public void shoot(Ship s) {

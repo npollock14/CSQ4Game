@@ -25,17 +25,17 @@ public class MenuScene extends Scene {
 		
 		Camera.changeScale(InputManager.scroll / 2);
 		if (InputManager.keys[81])
-			p.rVel += .001;
+			p.cmdRotate(true);
 		if (InputManager.keys[69])
-			p.rVel -= .001;
+			p.cmdRotate(false);
 		if (InputManager.keys[38])
-			p.vel.y -= .1;
+			p.cmdMove(0);
 		if (InputManager.keys[40])
-			p.vel.y += .1;
+			p.cmdMove(2);
 		if (InputManager.keys[37])
-			p.vel.x -= .1;
+			p.cmdMove(3);
 		if (InputManager.keys[39])
-			p.vel.x += .1;
+			p.cmdMove(1);
 		if (InputManager.keys[87])
 			Camera.yOff += 3;
 		if (InputManager.keys[83])
@@ -50,6 +50,7 @@ public class MenuScene extends Scene {
 		
 
 		s.update();
+		//System.out.println(Math.toDegrees(p.rotation));
 		Camera.focus(p.cm);
 	}
 
@@ -59,8 +60,7 @@ public class MenuScene extends Scene {
 		
 		p = new PlayerShip(sPos);
 		p.addPart(new Hull(new Point(0, 0)), new Hull(new Point(1, 0)), new Hull(new Point(-1, 0)),
-				new Hull(new Point(0, 1)), new Hull(new Point(0, -1)), new Armor(new Point(0, 2)),
-				new Laser(new Point(-2, 1),3));//, new Laser(new Point(-1, -2),0));
+				new Hull(new Point(0, 1)), new Hull(new Point(0, -1)), new Armor(new Point(0, 2)), new Laser(new Point(-1, -2),0));
 		
 		
 		e1 = new EnemyShip(new Point(300, 200));

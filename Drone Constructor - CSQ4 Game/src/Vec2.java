@@ -28,6 +28,14 @@ public class Vec2 {
 	public double getMagnitude() {
 		return Math.sqrt(x * x + y * y);
 	}
+	public int getQuadrant() {
+		double angle = Math.toDegrees(this.getAngle());
+		if(angle >= 0 && angle <= 90) return 1;
+		if(angle > 90 && angle <= 180) return 2;
+		if(angle < 0 && angle >= -90) return 4;
+		if(angle < -90 && angle >= -180) return 3;
+		return -1;
+	}
 	public Vec2 setMagnitude(double m) {
 		return new Vec2(m*x/(Math.sqrt(x*x + y*y)),m*y/(Math.sqrt(x*x + y*y)));
 	}

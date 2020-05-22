@@ -4,12 +4,10 @@ public class EnemyShip extends Ship {
 
 	public EnemyShip(Point pos, ArrayList<Part> parts) {
 		super(pos, 0, parts);
-		isPlayer = true;
 	}
 
 	public EnemyShip(Point pos) {
 		super(pos, 0);
-		isPlayer = true;
 	}
 
 	public void update(Sector s) {

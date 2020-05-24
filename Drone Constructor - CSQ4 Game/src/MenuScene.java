@@ -46,9 +46,8 @@ public class MenuScene extends Scene {
 			Camera.xOff += 3;
 
 		if (InputManager.keysToggled[32])
-			p.shoot(Camera.toMap(InputManager.mPos.x, InputManager.mPos.y));
-		if (!InputManager.keysToggled[32] && p.shoot)
-			p.ceaseFire();
+			p.cmdRotateTo(0);
+		
 		
 		e1.shoot(p);
 
@@ -70,6 +69,7 @@ public class MenuScene extends Scene {
 		// e1.vel.x += 5;
 		s.ships.add(e1);
 		s.ships.add(p);
+		
 	}
 
 }

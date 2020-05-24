@@ -54,23 +54,25 @@ public abstract class Ship {
 	}
 
 	public void cmdRotateTo(double angle) {
-		double timeToStopCCW = positiveLowQuadratic(-.5 * rotForce / mass, rVel, rotation);
+		double rot = rotation % 360;
+		double timeToStopCCW = rVel/(rotForce/mass);
+		double timeToStopCW = -timeToStopCCW;
 		double thetaAfterStopCCW = rotation + rVel * timeToStopCCW
 				- (.5 * rotForce * timeToStopCCW * timeToStopCCW / mass);
-		double timeToStopCW = positiveLowQuadratic(.5 * rotForce / mass, rVel, rotation);
 		double thetaAfterStopCW = rotation + rVel * timeToStopCW + (.5 * rotForce * timeToStopCW * timeToStopCW / mass);
-		if (thetaAfterStopCCW != Double.NaN
-				&& Math.abs(Math.toDegrees(angle) - Math.toDegrees(thetaAfterStopCW)) < 1.0) {
+
+		System.out.println("CCW: " + (int)Math.toDegrees(thetaAfterStopCCW) + "CW: " + (int)Math.toDegrees(thetaAfterStopCW));
+		
+		
+		if(Math.abs(angle - thetaAfterStopCW) < rVel*2) {
 			cmdStopRotate();
+		}else if(Math.abs(angle - thetaAfterStopCCW) < rVel*2){
+			cmdStopRotate();
+		}else {
+			cmdRotate(Math.abs(thetaAfterStopCCW - angle) > Math.abs(thetaAfterStopCW - angle));
 		}
-		if (thetaAfterStopCW != Double.NaN
-				&& Math.abs(Math.toDegrees(angle) - Math.toDegrees(thetaAfterStopCCW)) < 1.0) {
-			cmdStopRotate();
-		} else {
-			cmdRotate(rotation - angle > 0);
 		}
 
-	}
 
 	public double positiveLowQuadratic(double a, double b, double c) {
 		double t1 = -b / (2 * a) + (Math.sqrt(b * b - 4 * a * c) / (2 * a));

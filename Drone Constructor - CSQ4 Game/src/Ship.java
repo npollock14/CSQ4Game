@@ -54,13 +54,22 @@ public abstract class Ship {
 	}
 
 	public void cmdRotateTo(double angle) {
-		double timeToStop = positiveLowQuadratic(-.5 * rotForce / mass, rVel, rotation);
-		double thetaAfterStop = rotation + rVel * timeToStop - (.5 * rotForce * timeToStop * timeToStop / mass);
-		System.out.println("Desired Angle: " + angle + "\nTheta After Stop: " + thetaAfterStop);
-		if (Math.abs(Math.toDegrees(angle) - Math.toDegrees(thetaAfterStop)) < 10) {
+		double timeToStopCCW = positiveLowQuadratic(-.5 * rotForce / mass, rVel, rotation);
+		double thetaAfterStopCCW = rotation + rVel * timeToStopCCW
+				- (.5 * rotForce * timeToStopCCW * timeToStopCCW / mass);
+		double timeToStopCW = positiveLowQuadratic(.5 * rotForce / mass, rVel, rotation);
+		double thetaAfterStopCW = rotation + rVel * timeToStopCW + (.5 * rotForce * timeToStopCW * timeToStopCW / mass);
+		if (thetaAfterStopCCW != Double.NaN
+				&& Math.abs(Math.toDegrees(angle) - Math.toDegrees(thetaAfterStopCW)) < 1.0) {
 			cmdStopRotate();
-		} else
+		}
+		if (thetaAfterStopCW != Double.NaN
+				&& Math.abs(Math.toDegrees(angle) - Math.toDegrees(thetaAfterStopCCW)) < 1.0) {
+			cmdStopRotate();
+		} else {
 			cmdRotate(rotation - angle > 0);
+		}
+
 	}
 
 	public double positiveLowQuadratic(double a, double b, double c) {

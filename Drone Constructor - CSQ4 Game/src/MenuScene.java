@@ -49,6 +49,7 @@ public class MenuScene extends Scene {
 			p.cmdRotateTo(0);
 		
 		
+		System.out.println("Rotation: " + Math.toDegrees(p.rotation));
 		e1.shoot(p);
 
 		s.update();

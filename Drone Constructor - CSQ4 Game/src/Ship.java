@@ -54,22 +54,24 @@ public abstract class Ship {
 	}
 
 	public void cmdRotateTo(double angle) {
-		double rot = rotation % 360;
 		double timeToStopCCW = rVel/(rotForce/mass);
 		double timeToStopCW = -timeToStopCCW;
 		double thetaAfterStopCCW = rotation + rVel * timeToStopCCW
 				- (.5 * rotForce * timeToStopCCW * timeToStopCCW / mass);
 		double thetaAfterStopCW = rotation + rVel * timeToStopCW + (.5 * rotForce * timeToStopCW * timeToStopCW / mass);
+		
+		thetaAfterStopCCW %=360;
+		thetaAfterStopCW %=360;
 
 		System.out.println("CCW: " + (int)Math.toDegrees(thetaAfterStopCCW) + "CW: " + (int)Math.toDegrees(thetaAfterStopCW));
 		
 		
-		if(Math.abs(angle - thetaAfterStopCW) < rVel*2) {
+		if(Math.abs(angle - thetaAfterStopCW) < rVel*2 && timeToStopCW > 0) {
 			cmdStopRotate();
-		}else if(Math.abs(angle - thetaAfterStopCCW) < rVel*2){
+		}else if(Math.abs(angle - thetaAfterStopCCW) < rVel*2 && timeToStopCCW > 0){
 			cmdStopRotate();
 		}else {
-			cmdRotate(Math.abs(thetaAfterStopCCW - angle) > Math.abs(thetaAfterStopCW - angle));
+			cmdRotate(rotation - angle > 0);
 		}
 		}
 

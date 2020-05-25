@@ -56,7 +56,7 @@ public abstract class Ship {
 	public void cmdRotateTo(double angle) {
 		double aDiff = getAngleDiff(rotation, angle);
 		int sign = rVel > 0 ? -1 : 1;
-		double timeToStop = rVel/(rotForce/mass);
+		double timeToStop = rVel/(-sign*rotForce/mass);
 		double delta = rVel * timeToStop + (sign * .5 * (rotForce/mass) * timeToStop * timeToStop);
 		
 		if(Math.abs(aDiff - delta) < Math.toRadians(5)) {

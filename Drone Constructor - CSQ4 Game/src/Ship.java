@@ -40,7 +40,7 @@ public abstract class Ship {
 
 	// commands
 	public void cmdRotate(boolean clockwise) {
-		rVel += (clockwise ? -1 : 1) * rotForce / mass;
+		rVel += (clockwise ? 1 : -1) * rotForce / mass;
 	}
 
 	public void cmdMove(int direction) { // up right down left
@@ -54,23 +54,21 @@ public abstract class Ship {
 	}
 
 	public void cmdRotateTo(double angle) {
-		if (rVel == 0 && getAngleDiff(angle, rotation) < Math.toRadians(1)) {
-			cmdRotate(rotation % 360 - angle > 0);
-			return;
-		}
+		double aDiff = getAngleDiff(rotation, angle);
 		int sign = rVel > 0 ? -1 : 1;
-		double timeToStop = positiveLowQuadratic(sign * .5 * rotForce / mass, rVel, rotation % 360);
-		double thetaAfterStop = rotation % 360 + rVel * timeToStop
-				+ (sign * .5 * rotForce * timeToStop * timeToStop / mass) % 360;
-		// System.out.println(Math.toDegrees(thetaAfterStop));
-		// System.out.println(rVel);
-		if (Math.abs(Math.toDegrees(angle) - Math.toDegrees(thetaAfterStop)) < 1) {
-			System.out.println("stoping");
+		double timeToStop = rVel/(rotForce/mass);
+		double delta = rVel * timeToStop + (sign * .5 * (rotForce/mass) * timeToStop * timeToStop);
+		
+		if(Math.abs(aDiff - delta) < Math.toRadians(5)) {
 			cmdStopRotate();
-		} else {
-			System.out.println(rotation % 360 - angle > 0 ? "CW" : "CCW");
-			cmdRotate(rotation % 360 - angle > 0);
+		
+		}else {
+			cmdRotate(aDiff > 0);
 		}
+		
+		
+			
+		
 
 	}
 
@@ -99,7 +97,7 @@ public abstract class Ship {
 
 	public void cmdStopRotate() {
 		if (Math.abs(rVel) > .001) {
-			cmdRotate(rVel > 0);
+			cmdRotate(rVel < 0);
 		} else {
 			rVel = 0.0;
 		}

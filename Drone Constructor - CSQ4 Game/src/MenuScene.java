@@ -44,10 +44,11 @@ public class MenuScene extends Scene {
 			Camera.xOff -= 3;
 		if (InputManager.keys[65])
 			Camera.xOff += 3;
-
-		if (InputManager.keysToggled[32])
-			p.cmdRotateTo(Math.toRadians(-180));
 		
+		
+		if(InputManager.keysToggled[32]) {
+			p.cmdRotateTo(Math.toRadians(-45));
+		}
 		
 		//System.out.println("Rotation: " + Math.toDegrees(p.rotation));
 		e1.shoot(p);

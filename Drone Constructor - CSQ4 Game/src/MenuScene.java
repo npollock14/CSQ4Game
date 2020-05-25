@@ -71,6 +71,7 @@ public class MenuScene extends Scene {
 		s.ships.add(e1);
 		s.ships.add(p);
 		
+		
 	}
 
 }

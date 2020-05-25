@@ -54,25 +54,36 @@ public abstract class Ship {
 	}
 
 	public void cmdRotateTo(double angle) {
-		if(rVel == 0 && !(Math.abs(Math.toDegrees(angle) - Math.toDegrees(rotation)) < 1)) {
-			cmdRotate(rotation - angle > 0);
+		if (rVel == 0 && getAngleDiff(angle, rotation) < Math.toRadians(1)) {
+			cmdRotate(rotation % 360 - angle > 0);
 			return;
 		}
 		int sign = rVel > 0 ? -1 : 1;
-		double timeToStop = positiveLowQuadratic(sign*.5 * rotForce / mass, rVel, rotation);
-		double thetaAfterStop = rotation + rVel * timeToStop + (sign * .5 * rotForce * timeToStop * timeToStop / mass);
-		//System.out.println(Math.toDegrees(thetaAfterStop));
-		//System.out.println(rVel);
+		double timeToStop = positiveLowQuadratic(sign * .5 * rotForce / mass, rVel, rotation % 360);
+		double thetaAfterStop = rotation % 360 + rVel * timeToStop
+				+ (sign * .5 * rotForce * timeToStop * timeToStop / mass) % 360;
+		// System.out.println(Math.toDegrees(thetaAfterStop));
+		// System.out.println(rVel);
 		if (Math.abs(Math.toDegrees(angle) - Math.toDegrees(thetaAfterStop)) < 1) {
 			System.out.println("stoping");
 			cmdStopRotate();
 		} else {
-			System.out.println(rotation - angle > 0 ? "CW" : "CCW");
-			cmdRotate(rotation - angle > 0);
+			System.out.println(rotation % 360 - angle > 0 ? "CW" : "CCW");
+			cmdRotate(rotation % 360 - angle > 0);
 		}
-			
+
 	}
 
+	public static double getAngleDiff(double a1, double a2) { // from a1 to a2 - (final - initial) = (a2 - a1)
+		a1 %= (Math.PI * 2);
+		a2 %= (Math.PI * 2);
+		if (Math.abs(a2 - a1) < Math.toRadians(180)) {
+			return a2 - a1;
+		} else if (a1 > a2) {
+			return (a2 + (Math.PI * 2)) - a1;
+		}
+		return (a2 - (a1 + (Math.PI * 2)));
+	}
 
 	public double positiveLowQuadratic(double a, double b, double c) {
 		double t1 = -b / (2 * a) + (Math.sqrt(b * b - 4 * a * c) / (2 * a));

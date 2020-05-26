@@ -105,18 +105,21 @@ public class Laser extends Part {
 						getVel(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel).add(s.vel), 1000,
 						damage));
 				timeSinceLastShot = 0;
+				return;
 			}
-			}else if(s.pTarget != null) {
+			}
+			if(s.pTarget != null) {
 				if (canHitTarget(s.pTarget, firePoint, s.vel, new Vec2(0,0), s.rotation)) {
 					s.projectiles.add(new LaserBolt(firePoint,
 							getVel(s.pTarget, firePoint, s.vel, new Vec2(0,0)).add(s.vel), 1000,
 							damage));
 					timeSinceLastShot = 0;
+					return;
 				}
 			}
-		} else {
-			timeSinceLastShot++;
 		}
+		timeSinceLastShot++;
+		
 
 	}
 

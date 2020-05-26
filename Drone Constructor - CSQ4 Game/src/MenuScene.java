@@ -46,18 +46,12 @@ public class MenuScene extends Scene {
 			Camera.xOff += 3;
 		
 		
-		if(InputManager.keysToggled[32]) {
-			p.cmdMoveTo(new Point(0,0));
-		}
 		
 		
 		
-		//System.out.println("Rotation: " + Math.toDegrees(p.rotation));
-		e1.shoot(p);
-
+		//e1.shoot(p);
 		s.update();
-		// System.out.println(Math.toDegrees(p.rotation));
-		Camera.focus(p.cm);
+		Camera.focus(p.cm.avg(e1.cm));
 	}
 
 	@Override
@@ -69,11 +63,12 @@ public class MenuScene extends Scene {
 
 		e1 = new EnemyShip(new Point(300, 200));
 		e1.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new Armor(new Point(-1, 0)),
-				new Armor(new Point(0, 1)), new Laser(new Point(0,2), 2), new Thruster(new Point(0,-1), 0));
+				new Armor(new Point(0, 1)), new Laser(new Point(0,-2), 0), new Thruster(new Point(-1,2), 2), new Thruster(new Point(1,2), 2));
 		// e1.vel.x += 5;
 		s.ships.add(e1);
 		s.ships.add(p);
 		
+		p.cmdMove(0, 1);
 		
 	}
 

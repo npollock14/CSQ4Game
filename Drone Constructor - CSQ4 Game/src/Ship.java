@@ -56,7 +56,7 @@ public abstract class Ship {
 	public void applyDrag(double coeff) {
 		vel.x *= coeff;
 		vel.y *= coeff;
-		if(Math.abs(rVel) > Math.toRadians(5))
+		//if(Math.abs(rVel) > Math.toRadians(5))
 		rVel *= coeff;
 	}
 	
@@ -64,7 +64,6 @@ public abstract class Ship {
 		double mag = vel.getMagnitude();
 		double angle = this.cm.angleTo(p) - Math.PI/2;
 		double distance = cm.distanceTo(p);
-		System.out.println(distance);
 		cmdRotateTo(angle);
 		if(Math.abs(getAngleDiff(rotation, angle)) < Math.toRadians(30)) {
 			cmdMove(0, 1.0);

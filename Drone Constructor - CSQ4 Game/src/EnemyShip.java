@@ -10,19 +10,33 @@ public class EnemyShip extends Ship {
 		super(pos, 0);
 	}
 
-	public void update(Sector s) {
+	public void update(Sector sec) {
 		pos.add(vel);
 		rotation += rVel;
 		for (Part p : parts) {
 			p.bounds.translate(vel);
 			p.bounds.rotate(rVel);
 			p.update(this);
-			p.checkProjectileCollision(s);
+			p.checkProjectileCollision(sec);
 		}
 		checkBrokenParts();
-		checkDestroyed(s);
+		checkDestroyed(sec);
 		cm.add(vel);
-		addProjectiles(s);
+		addProjectiles(sec);
+		for(Ship s : sec.ships) {
+			if(s.isPlayer) {
+				this.shoot(s);
+				if(cm.distanceTo(s.cm) < 1500) {
+					if(cm.distanceTo(s.cm) > 800) {
+					this.cmdMoveTo(s.cm);
+					}else {
+						this.cmdRotateTo(cm.angleTo(s.cm) - Math.PI/2);
+					}
+				}
+				break;
+			}
+		}
+		
 	}
 
 	private void addProjectiles(Sector s) {

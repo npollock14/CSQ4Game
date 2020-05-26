@@ -100,7 +100,9 @@ public class Laser extends Part {
 				firePoint = bounds.segs.get(3).getP1().avg(bounds.segs.get(3).getP2());
 			}
 			if(s.target != null) {
+				System.out.println("Target AQUIRED");
 			if (canHitTarget(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel, s.rotation)) {
+				System.out.println("Fire");
 				s.projectiles.add(new LaserBolt(firePoint,
 						getVel(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel).add(s.vel), 1000,
 						damage));
@@ -109,7 +111,9 @@ public class Laser extends Part {
 			}
 			}
 			if(s.pTarget != null) {
+				System.out.println("Point AQUIRED");
 				if (canHitTarget(s.pTarget, firePoint, s.vel, new Vec2(0,0), s.rotation)) {
+					System.out.println("Fire");
 					s.projectiles.add(new LaserBolt(firePoint,
 							getVel(s.pTarget, firePoint, s.vel, new Vec2(0,0)).add(s.vel), 1000,
 							damage));

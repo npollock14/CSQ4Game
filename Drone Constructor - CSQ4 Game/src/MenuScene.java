@@ -25,17 +25,17 @@ public class MenuScene extends Scene {
 
 		Camera.changeScale(InputManager.scroll / 2);
 		if (InputManager.keys[81])
-			p.cmdRotate(true);
-		if (InputManager.keys[69])
 			p.cmdRotate(false);
+		if (InputManager.keys[69])
+			p.cmdRotate(true);
 		if (InputManager.keys[38])
-			p.cmdMove(0);
+			p.cmdMove(0,1);
 		if (InputManager.keys[40])
-			p.cmdMove(2);
+			p.cmdMove(2,1);
 		if (InputManager.keys[37])
-			p.cmdMove(3);
+			p.cmdMove(3,1);
 		if (InputManager.keys[39])
-			p.cmdMove(1);
+			p.cmdMove(1,1);
 		if (InputManager.keys[87])
 			Camera.yOff += 3;
 		if (InputManager.keys[83])
@@ -47,8 +47,10 @@ public class MenuScene extends Scene {
 		
 		
 		if(InputManager.keysToggled[32]) {
-			p.cmdRotateTo(p.cm.angleTo(Camera.toMap(InputManager.mPos.x,InputManager.mPos.y)) - Math.PI/2);
+			p.cmdMoveTo(new Point(0,0));
 		}
+		
+		
 		
 		//System.out.println("Rotation: " + Math.toDegrees(p.rotation));
 		e1.shoot(p);
@@ -67,7 +69,7 @@ public class MenuScene extends Scene {
 
 		e1 = new EnemyShip(new Point(300, 200));
 		e1.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new Armor(new Point(-1, 0)),
-				new Armor(new Point(0, 1)), new Laser(new Point(0,2), 2));
+				new Armor(new Point(0, 1)), new Laser(new Point(0,2), 2), new Thruster(new Point(0,-1), 0));
 		// e1.vel.x += 5;
 		s.ships.add(e1);
 		s.ships.add(p);

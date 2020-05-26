@@ -43,14 +43,51 @@ public abstract class Ship {
 		rVel += (clockwise ? 1 : -1) * rotForce / mass;
 	}
 
-	public void cmdMove(int direction) { // up right down left
+	public void cmdMove(int direction, double pow) { // up right down left
+		//if(pow > 1 || pow < 0) throw new IllegalArgumentException("Power > 1 or < 0");
 		if (direction == 0 || direction == 2) {
-			vel.x += transForces[direction] * Math.sin(rotation - (direction * Math.PI / 2)) / mass;
-			vel.y -= transForces[direction] * Math.cos(rotation - (direction * Math.PI / 2)) / mass;
+			vel.x += pow*(transForces[direction] * Math.sin(rotation - (direction * Math.PI / 2)) / mass);
+			vel.y -= pow*(transForces[direction] * Math.cos(rotation - (direction * Math.PI / 2)) / mass);
 		} else {
-			vel.x -= transForces[direction] * Math.sin(rotation - (direction * Math.PI / 2)) / mass;
-			vel.y += transForces[direction] * Math.cos(rotation - (direction * Math.PI / 2)) / mass;
+			vel.x -= pow*(transForces[direction] * Math.sin(rotation - (direction * Math.PI / 2)) / mass);
+			vel.y += pow*(transForces[direction] * Math.cos(rotation - (direction * Math.PI / 2)) / mass);
 		}
+	}
+	public void applyDrag(double coeff) {
+		vel.x *= coeff;
+		vel.y *= coeff;
+		if(Math.abs(rVel) > Math.toRadians(5))
+		rVel *= coeff;
+	}
+	
+	public void cmdMoveTo(Point p) {
+		double mag = vel.getMagnitude();
+		double angle = this.cm.angleTo(p) - Math.PI/2;
+		double distance = cm.distanceTo(p);
+		System.out.println(distance);
+		cmdRotateTo(angle);
+		if(Math.abs(getAngleDiff(rotation, angle)) < Math.toRadians(30)) {
+			cmdMove(0, 1.0);
+		}
+		}
+	public void cmdStopTranslate() {
+		//cmdMove(0,.1);
+		if(Math.abs(vel.x) < .1) vel.x = 0;
+		if(Math.abs(vel.y) < .1) vel.y = 0;
+		if(vel.x == 0 && vel.y == 0) return;
+		Vec2 dir = vel.simpleMult(-1);
+		if(vel.y != 0) {
+			
+		}
+		double angle = dir.getAngle();
+		if(dir.x < -.1 && dir.y < -.1) {
+			System.out.println("here");
+			cmdMove(3, -Math.cos(angle));
+			cmdMove(0, -Math.sin(angle));
+		}
+		
+		
+		
 	}
 
 	public void cmdRotateTo(double angle) {

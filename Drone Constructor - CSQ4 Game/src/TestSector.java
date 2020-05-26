@@ -2,12 +2,13 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class TestSector extends Sector{
-
+double sectorDrag = .992;
 	@Override
 	public void update() {
 		try {
 		for(Ship s : ships) {
 			s.update(this);
+			s.applyDrag(sectorDrag);
 		}
 		}catch(Exception e) {
 			

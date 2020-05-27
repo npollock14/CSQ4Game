@@ -61,17 +61,17 @@ class Button {
 			}
 		}
 		if (!circle) {
-			if (InputManager.mouse[1] && InputManager.mPos.inside(bounds)) {
+			if (InputManager.mouse[1] && InputManager.mPos.inside(bounds,false)) {
 				pressing = true;
 			} else if(!InputManager.mouse[1]){
 				pressing = false;
 			}
-			if (InputManager.mouseReleased[1] && InputManager.mPos.inside(bounds)) {
+			if (InputManager.mouseReleased[1] && InputManager.mPos.inside(bounds,false)) {
 				clicked = true;
 			} else {
 				clicked = false;
 			}
-			if (InputManager.mPos.inside(bounds) && glow) {
+			if (InputManager.mPos.inside(bounds,false) && glow) {
 				glowing = true;
 			} else {
 				glowing = false;
@@ -105,17 +105,17 @@ class Button {
 			}
 		}
 		if (!circle) {
-			if (mouse[1] && mPos.inside(bounds)) {
+			if (mouse[1] && mPos.inside(bounds,false)) {
 				pressing = true;
 			} else if(!mouse[1]){
 				pressing = false;
 			}
-			if (mouseReleased[1] && mPos.inside(bounds)) {
+			if (mouseReleased[1] && mPos.inside(bounds,false)) {
 				clicked = true;
 			} else {
 				clicked = false;
 			}
-			if (mPos.inside(bounds) && glow) {
+			if (mPos.inside(bounds,false) && glow) {
 				glowing = true;
 			} else {
 				glowing = false;

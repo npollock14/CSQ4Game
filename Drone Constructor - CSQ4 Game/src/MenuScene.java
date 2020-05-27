@@ -45,8 +45,12 @@ public class MenuScene extends Scene {
 		if (InputManager.keys[65])
 			Camera.xOff += 3;
 		
-		
-		
+		if(InputManager.keys[66]) {
+			SceneManager.ms.setActive(false);
+			SceneManager.bs.setActive(true);
+			SceneManager.bs.init();
+			SceneManager.bs.startNew();
+		}
 		
 		
 		//e1.shoot(p);

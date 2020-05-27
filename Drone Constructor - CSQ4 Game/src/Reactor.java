@@ -45,6 +45,11 @@ public class Reactor extends Part{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void drawFree(Graphics2D g, Point p) {
+		//never used
+		
+	}
 	
 	
 }

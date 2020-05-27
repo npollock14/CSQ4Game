@@ -204,4 +204,34 @@ public class Laser extends Part {
 		}
 	}
 
+	@Override
+	public void drawFree(Graphics2D g, Point p) {
+		int x1 = (int) p.x;
+		int y1 = (int) p.y;
+		int w1 = (int) (width * Camera.scale * SQUARE_WIDTH);
+		int h1 = (int) (height * Camera.scale * SQUARE_WIDTH);
+
+		g.setColor(new Color(255, 145, 145));
+		g.fillRect(x1, y1, w1, h1);
+		g.setColor(Color.red);
+		g.drawRect(x1, y1, w1, h1);
+		if (direction == 0) {
+			g.drawLine((int) x1, (int) (y1 + SQUARE_WIDTH * Camera.scale / 4), (int) (x1 + SQUARE_WIDTH * Camera.scale),
+					(int) (y1 + SQUARE_WIDTH * Camera.scale / 4));
+		}
+		if (direction == 1) {
+			g.drawLine((int) (x1 + SQUARE_WIDTH * 7 * Camera.scale / 4), (int) (y1),
+					(int) (x1 + SQUARE_WIDTH * 7 * Camera.scale / 4), (int) (y1 + SQUARE_WIDTH * Camera.scale));
+		}
+		if (direction == 2) {
+			g.drawLine((int) x1, (int) (y1 + SQUARE_WIDTH * 7 * Camera.scale / 4),
+					(int) (x1 + SQUARE_WIDTH * Camera.scale), (int) (y1 + SQUARE_WIDTH * 7 * Camera.scale / 4));
+		}
+		if (direction == 3) {
+			g.drawLine((int) (x1 + SQUARE_WIDTH*Camera.scale/4), (int) (y1),
+					(int) (x1 + SQUARE_WIDTH*Camera.scale/4), (int) (y1 + SQUARE_WIDTH * Camera.scale));
+		}
+		
+	}
+
 }

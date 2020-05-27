@@ -45,6 +45,13 @@ public class Hull extends Part{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void drawFree(Graphics2D g, Point p) {		
+		g.setColor(new Color(220,220,220));
+		g.fillRect((int)p.x,(int)p.y,(int)(SQUARE_WIDTH * Camera.scale),(int)(SQUARE_WIDTH*Camera.scale)); 
+		g.setColor(Color.GRAY);
+		g.drawRect((int)p.x,(int)p.y,(int)(SQUARE_WIDTH * Camera.scale),(int)(SQUARE_WIDTH*Camera.scale));
+	}
 	
 	
 }

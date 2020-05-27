@@ -42,9 +42,11 @@ public class Point {
 		return ((this.x - p2.x) * (this.x - p2.x) + (this.y - p2.y) * (this.y - p2.y));
 	}
 
-	public boolean inside(Rect r) {
-
+	public boolean inside(Rect r, boolean including) {
+if(!including) {
 		return (x > r.pos.x && x < r.pos.x + r.w && y > r.pos.y && y < r.pos.y + r.h);
+}
+return (x >= r.pos.x && x <= r.pos.x + r.w && y >= r.pos.y && y <= r.pos.y + r.h);
 
 	}
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class SceneManager {
 	static ArrayList<Scene> scenes = new ArrayList<Scene>();
 	static MenuScene ms = new MenuScene(); //menu scene
+	static BuildScene bs = new BuildScene();
 	
 	public static void update() {
 		for (Scene s : scenes) {
@@ -40,6 +41,7 @@ public class SceneManager {
 	
 	public static void initManager() {
 		scenes.add(ms);
+		scenes.add(bs);
 	}
 
 }

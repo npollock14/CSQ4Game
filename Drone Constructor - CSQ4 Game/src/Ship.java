@@ -56,7 +56,6 @@ public abstract class Ship {
 	public void applyDrag(double coeff) {
 		vel.x *= coeff;
 		vel.y *= coeff;
-		//if(Math.abs(rVel) > Math.toRadians(5))
 		rVel *= coeff;
 	}
 	
@@ -184,8 +183,10 @@ public abstract class Ship {
 		for (Part p : parts) {
 			Rect nBounds = new Rect(n.pos.x, n.pos.y, n.width, n.height);
 			Rect pBounds = new Rect(p.pos.x, p.pos.y, p.width, p.height);
-			if (nBounds.intersects(pBounds))
+			if (nBounds.getCM().inside(pBounds, true)) {
+				System.out.println(n.type + " @ " + n.pos.toString() + " could not be placed");
 				return false;
+			}
 
 		}
 		return true;
@@ -208,6 +209,7 @@ public abstract class Ship {
 
 				p.bounds.setCenter(cm);
 				parts.add(p);
+				System.out.println(p.type + " @ " + p.pos.toString() + " placed");
 			}
 		}
 		// for(double d : transForces) System.out.println(d);

@@ -74,6 +74,11 @@ public class BuildScene extends Scene {
 			deleting ^= true;
 			System.out.println(deleting);
 		}
+		if(InputManager.keysReleased[66]) {
+			InputManager.keysReleased[66] = false;
+			SceneManager.bs.setActive(false);
+			SceneManager.ms.setActive(true);
+		}
 		direction %= 4;
 
 		if (selectHull.clicked)
@@ -89,7 +94,6 @@ public class BuildScene extends Scene {
 
 		if (deleting && InputManager.mouse[1]) {
 			for (Part p : s.parts) {
-				//System.out.println(p.pos.toString());
 				if(p.type.equals("Reactor")) continue;
 				Rect r = new Rect((int)(p.pos.x * Part.SQUARE_WIDTH * 1.25 + (50 * 18)),
 						p.pos.y * Part.SQUARE_WIDTH * 1.25 + (50 * 9), p.width * Part.SQUARE_WIDTH * 1.25,

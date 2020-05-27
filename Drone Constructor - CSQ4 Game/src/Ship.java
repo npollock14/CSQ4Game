@@ -42,6 +42,8 @@ public abstract class Ship {
 	public void cmdRotate(boolean clockwise) {
 		rVel += (clockwise ? 1 : -1) * rotForce / mass;
 	}
+	
+	
 
 	public void cmdMove(int direction, double pow) { // up right down left
 		//if(pow > 1 || pow < 0) throw new IllegalArgumentException("Power > 1 or < 0");
@@ -167,11 +169,47 @@ public abstract class Ship {
 				parts.remove(p);
 				updateCM();
 				checkBrokenParts();
+				checkDisconnectedParts();
 				break;
 			}
 		}
 	}
 
+	public void checkDisconnectedParts() {
+		//wow this is a lot of loops and probably really inefficient
+		ArrayList<Node> blocked = new ArrayList<Node>();
+		ArrayList<Point> unblocked = new ArrayList<Point>();
+		Grid gr = new Grid(blocked);
+		for(Part p : parts) {
+			for(int i = 0; i < p.width; i++) {
+				for(int j = 0; j < p.height; j++) {
+					unblocked.add(new Point(p.pos.x + i,p.pos.y + j));
+				}
+			}
+		}
+		for(int i = -20; i < 20; i++) {
+			for(int j = -20; j < 20; j++) {
+			for(Point p : unblocked) {
+				if(!new Point(i,j).isSame(p)) {
+					gr.blocked.add(gr.makeBlockerNode(i, j));
+				}
+			}
+			}
+		}
+		for(int i = 0; i < parts.size(); i++) {
+			if(!parts.get(i).type.equals("Reactor")) {
+				gr.getPath(new Point(0,0), parts.get(i).pos);
+				if(gr.pathTree.size() == 0) {
+					parts.remove(parts.get(i));
+				}
+			}
+		}
+		
+		
+		
+	}
+	
+	
 	public void checkDestroyed(Sector s) {
 		if (destroyed == true || parts.size() == 0) {
 			s.ships.remove(this);

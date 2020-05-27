@@ -25,6 +25,9 @@ public class Point {
 	public Point avg(Point p) {
 		return new Point((x+p.x)/2, (y+p.y)/2);
 	}
+	public void print() {
+		System.out.println("(" + x + ", " + y + ")");
+	}
 
 	public double distanceTo(Point p2) {
 		return Math.sqrt((this.x - p2.x) * (this.x - p2.x) + (this.y - p2.y) * (this.y - p2.y));
@@ -57,6 +60,9 @@ return (x >= r.pos.x && x <= r.pos.x + r.w && y >= r.pos.y && y <= r.pos.y + r.h
 
 	public boolean isSame(Point p) {
 		return p.x == this.x && p.y == this.y;
+	}
+	public boolean isAdjacentTo(Point p) {
+		return (Math.abs(p.x - this.x) <= 1 && Math.abs(p.y - this.y) <= 1 && !p.equals(this));
 	}
 	public Point subtract(Point p) {
 		return new Point(this.x - p.x , this.y - p.y);

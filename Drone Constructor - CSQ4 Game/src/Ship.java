@@ -179,7 +179,7 @@ public abstract class Ship {
 		}
 	}
 
-	public boolean canPlace(Part n) {
+	public boolean canPlace(Part n) { 
 		for (Part p : parts) {
 			Rect nBounds = new Rect(n.pos.x, n.pos.y, n.width, n.height);
 			Rect pBounds = new Rect(p.pos.x, p.pos.y, p.width, p.height);

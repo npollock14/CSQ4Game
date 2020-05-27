@@ -100,9 +100,7 @@ public class Laser extends Part {
 				firePoint = bounds.segs.get(3).getP1().avg(bounds.segs.get(3).getP2());
 			}
 			if(s.target != null) {
-				System.out.println("Target AQUIRED");
 			if (canHitTarget(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel, s.rotation)) {
-				System.out.println("Fire");
 				s.projectiles.add(new LaserBolt(firePoint,
 						getVel(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel).add(s.vel), 1000,
 						damage));
@@ -111,9 +109,7 @@ public class Laser extends Part {
 			}
 			}
 			if(s.pTarget != null) {
-				System.out.println("Point AQUIRED");
 				if (canHitTarget(s.pTarget, firePoint, s.vel, new Vec2(0,0), s.rotation)) {
-					System.out.println("Fire");
 					s.projectiles.add(new LaserBolt(firePoint,
 							getVel(s.pTarget, firePoint, s.vel, new Vec2(0,0)).add(s.vel), 1000,
 							damage));
@@ -181,17 +177,19 @@ public class Laser extends Part {
 		double angle = source.angleTo(aimSpot.toPoint());
 		// System.out.println("Delta Angle: " + Math.toDegrees(Math.abs(angle - sRot -
 		// Math.toRadians(90))) % 360);
-		if (direction == 0)
-			return Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(90))) % 360 < 60;
-		if (direction == 1)
-			return Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(180))) % 360 < 60
-					|| Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(180))) % 360 > 300;
-		if (direction == 2)
-			return Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(270))) % 360 < 60
-					|| Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(270))) % 360 > 300;
-		if (direction == 3)
-		return Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(0))) % 360 < 60
-		|| Math.toDegrees(Math.abs(angle - sRot - Math.toRadians(0))) % 360 > 300;
+		if (direction == 0) {
+			return Math.abs(Ship.getAngleDiff(angle, sRot + Math.PI/2)) < Math.toRadians(60);
+		}
+		if (direction == 1) {
+			return Math.abs(Ship.getAngleDiff(angle, sRot)) < Math.toRadians(60);	
+		}
+		if (direction == 2) {
+			return Math.abs(Ship.getAngleDiff(angle, sRot - Math.PI/2)) < Math.toRadians(60);
+		}
+		if (direction == 3) {
+			return Math.abs(Ship.getAngleDiff(angle, sRot - Math.PI)) < Math.toRadians(60);	
+		}
+		
 		return false;
 	}
 

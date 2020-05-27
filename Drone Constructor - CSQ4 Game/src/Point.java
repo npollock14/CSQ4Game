@@ -67,6 +67,9 @@ return (x >= r.pos.x && x <= r.pos.x + r.w && y >= r.pos.y && y <= r.pos.y + r.h
 	public Point subtract(Point p) {
 		return new Point(this.x - p.x , this.y - p.y);
 	}
+	public GridPoint toGP() {
+		return new GridPoint((int)x, (int)y);
+	}
 
 	public String toString() {
 		return "(" + x + ", " + y + ")";

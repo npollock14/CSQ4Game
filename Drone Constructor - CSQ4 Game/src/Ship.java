@@ -42,70 +42,67 @@ public abstract class Ship {
 	public void cmdRotate(boolean clockwise) {
 		rVel += (clockwise ? 1 : -1) * rotForce / mass;
 	}
-	
-	
 
 	public void cmdMove(int direction, double pow) { // up right down left
-		//if(pow > 1 || pow < 0) throw new IllegalArgumentException("Power > 1 or < 0");
+		// if(pow > 1 || pow < 0) throw new IllegalArgumentException("Power > 1 or <
+		// 0");
 		if (direction == 0 || direction == 2) {
-			vel.x += pow*(transForces[direction] * Math.sin(rotation - (direction * Math.PI / 2)) / mass);
-			vel.y -= pow*(transForces[direction] * Math.cos(rotation - (direction * Math.PI / 2)) / mass);
+			vel.x += pow * (transForces[direction] * Math.sin(rotation - (direction * Math.PI / 2)) / mass);
+			vel.y -= pow * (transForces[direction] * Math.cos(rotation - (direction * Math.PI / 2)) / mass);
 		} else {
-			vel.x -= pow*(transForces[direction] * Math.sin(rotation - (direction * Math.PI / 2)) / mass);
-			vel.y += pow*(transForces[direction] * Math.cos(rotation - (direction * Math.PI / 2)) / mass);
+			vel.x -= pow * (transForces[direction] * Math.sin(rotation - (direction * Math.PI / 2)) / mass);
+			vel.y += pow * (transForces[direction] * Math.cos(rotation - (direction * Math.PI / 2)) / mass);
 		}
 	}
+
 	public void applyDrag(double coeff) {
 		vel.x *= coeff;
 		vel.y *= coeff;
 		rVel *= coeff;
 	}
-	
+
 	public void cmdMoveTo(Point p) {
 		double mag = vel.getMagnitude();
-		double angle = this.cm.angleTo(p) - Math.PI/2;
+		double angle = this.cm.angleTo(p) - Math.PI / 2;
 		double distance = cm.distanceTo(p);
 		cmdRotateTo(angle);
-		if(Math.abs(getAngleDiff(rotation, angle)) < Math.toRadians(30)) {
+		if (Math.abs(getAngleDiff(rotation, angle)) < Math.toRadians(30)) {
 			cmdMove(0, 1.0);
 		}
-		}
+	}
+
 	public void cmdStopTranslate() {
-		//cmdMove(0,.1);
-		if(Math.abs(vel.x) < .1) vel.x = 0;
-		if(Math.abs(vel.y) < .1) vel.y = 0;
-		if(vel.x == 0 && vel.y == 0) return;
+		// cmdMove(0,.1);
+		if (Math.abs(vel.x) < .1)
+			vel.x = 0;
+		if (Math.abs(vel.y) < .1)
+			vel.y = 0;
+		if (vel.x == 0 && vel.y == 0)
+			return;
 		Vec2 dir = vel.simpleMult(-1);
-		if(vel.y != 0) {
-			
+		if (vel.y != 0) {
+
 		}
 		double angle = dir.getAngle();
-		if(dir.x < -.1 && dir.y < -.1) {
-			System.out.println("here");
+		if (dir.x < -.1 && dir.y < -.1) {
 			cmdMove(3, -Math.cos(angle));
 			cmdMove(0, -Math.sin(angle));
 		}
-		
-		
-		
+
 	}
 
 	public void cmdRotateTo(double angle) {
 		double aDiff = getAngleDiff(rotation, angle);
 		int sign = rVel > 0 ? -1 : 1;
-		double timeToStop = rVel/(-sign*rotForce/mass);
-		double delta = rVel * timeToStop + (sign * .5 * (rotForce/mass) * timeToStop * timeToStop);
-		
-		if(Math.abs(aDiff - delta) < Math.toRadians(5)) {
+		double timeToStop = rVel / (-sign * rotForce / mass);
+		double delta = rVel * timeToStop + (sign * .5 * (rotForce / mass) * timeToStop * timeToStop);
+
+		if (Math.abs(aDiff - delta) < Math.toRadians(5)) {
 			cmdStopRotate();
-		
-		}else {
+
+		} else {
 			cmdRotate(aDiff > 0);
 		}
-		
-		
-			
-		
 
 	}
 
@@ -169,54 +166,56 @@ public abstract class Ship {
 				parts.remove(p);
 				updateCM();
 				checkBrokenParts();
-				//checkDisconnectedParts();
+				checkDisconnectedParts();
 				break;
 			}
 		}
 	}
 
 	public void checkDisconnectedParts() {
-		//wow this is a lot of loops and probably really inefficient
+		// wow this is a lot of loops and probably really inefficient
 		ArrayList<Node> blocked = new ArrayList<Node>();
 		ArrayList<Point> unblocked = new ArrayList<Point>();
 		Grid gr = new Grid(blocked);
-		for(Part p : parts) {
-			for(int i = 0; i < p.width; i++) {
-				for(int j = 0; j < p.height; j++) {
-					unblocked.add(new Point(p.pos.x + i,p.pos.y + j));
+		for (Part p : parts) {
+			for (int i = 0; i < p.width; i++) {
+				for (int j = 0; j < p.height; j++) {
+					unblocked.add(new Point(p.pos.x + i, p.pos.y + j));
 				}
 			}
 		}
-		
-		for(int i = -3; i < 3; i++) {
-			for(int j = -3; j < 3; j++) {
-			for(Point p : unblocked) {
-				if(!new Point(i,j).isSame(p)) {
-					gr.blocked.add(gr.makeBlockerNode(i, j));
-				}else {
-					p.print();
+		for (int i = -4; i < 4; i++) {
+			for (int j = -4; j < 4; j++) {
+				GridPoint toCheck = new GridPoint(i, j); //want to see if (i,j) is nowhere on unblocked
+				boolean found = false;
+				for (Point p : unblocked) {
+					if ((new GridPoint(i, j).isSamePosition(p.toGP()))) {
+						found = true;
+						break;
+
+					}
+
 				}
-			}
+				if(!found) gr.blocked.add(gr.makeBlockerNode(i, j));
 			}
 		}
-//		for(Node n : gr.blocked) {
-//			System.out.println(n.pos.toString());
-//		}
-		for(int i = 0; i < parts.size(); i++) {
-			if(!parts.get(i).type.equals("Reactor")) {
-				gr.getPath(new Point(0,0), parts.get(i).pos);
-				if(gr.pathTree.size() == 0) {
-					parts.remove(parts.get(i));
+		System.out.println("Blocked: ");
+		for (Node n : gr.blocked) {
+			n.pos.print();
+		}
+		System.out.println("End of Blocked");
+		for (int i = 0; i < parts.size(); i++) {
+			if (!parts.get(i).type.equals("Reactor")) {
+				gr.getPath(new GridPoint(0, 0), parts.get(i).pos.toGP());
+				if (gr.pathTree.size() == 0) {
+					parts.get(i).health = -1;
 				}
 				gr.pathTree.clear();
 			}
 		}
-		
-		
-		
+
 	}
-	
-	
+
 	public void checkDestroyed(Sector s) {
 		if (destroyed == true || parts.size() == 0) {
 			s.ships.remove(this);
@@ -224,7 +223,7 @@ public abstract class Ship {
 		}
 	}
 
-	public boolean canPlace(Part n) { 
+	public boolean canPlace(Part n) {
 		for (Part p : parts) {
 			Rect nBounds = new Rect(n.pos.x, n.pos.y, n.width, n.height);
 			Rect pBounds = new Rect(p.pos.x, p.pos.y, p.width, p.height);
@@ -270,6 +269,8 @@ public abstract class Ship {
 		for (Part p : parts)
 			p.bounds.setCenter(cm);
 		rotate(rot);
+		
+		checkDisconnectedParts();
 
 	}
 

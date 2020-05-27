@@ -82,6 +82,8 @@ public class MenuScene extends Scene {
 		
 		p.cmdMove(0, 1);
 		
+		
+		
 	}
 
 }

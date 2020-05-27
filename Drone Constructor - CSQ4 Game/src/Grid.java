@@ -9,12 +9,10 @@ public class Grid {
 	ArrayList<Node> closed = new ArrayList<Node>();
 	ArrayList<Node> blocked = new ArrayList<Node>();
 	ArrayList<Node> pathTree = new ArrayList<Node>();
-	Camera cam;
 
 	public Grid(ArrayList<Node> blocked) {
 		super();
 		this.blocked = blocked;
-		this.cam = cam;
 	}
 	public Node makeBlockerNode(int x, int y) {
 		return new Node(new Point(x, y), true, false, false, 0, 0, null);
@@ -55,8 +53,9 @@ public class Grid {
 				return;
 			}
 			ArrayList<Node> neighbors = getNeighbors(curr, a, b);
+			System.out.println("Neighbors: ");
 			for (Node n : neighbors) {
-
+n.pos.print();
 				if (n.blocked || closed.contains(n)) {
 					continue;
 				}
@@ -181,33 +180,33 @@ public class Grid {
 
 		for (Node o : blocked) {
 			g.setColor(Color.BLACK);
-			g.fillRect(cam.toXScreen(o.pos.x * (w) - w / 2), cam.toYScreen((o.pos.y * (w)) - (w / 2)),
-					(int) (w * cam.scale), (int) (w * cam.scale));
+			g.fillRect(Camera.toXScreen(o.pos.x * (w) - w / 2), Camera.toYScreen((o.pos.y * (w)) - (w / 2)),
+					(int) (w * Camera.scale), (int) (w * Camera.scale));
 
 		}
 		for (Node o : pathTree) {
 			g.setColor(Color.BLUE);
-			g.fillRect(cam.toXScreen(o.pos.x * (w) - w / 2), cam.toYScreen((o.pos.y * (w)) - (w / 2)),
-					(int) (w * cam.scale), (int) (w * cam.scale));
+			g.fillRect(Camera.toXScreen(o.pos.x * (w) - w / 2), Camera.toYScreen((o.pos.y * (w)) - (w / 2)),
+					(int) (w * Camera.scale), (int) (w * Camera.scale));
 
 			if (o.start) {
 				g.setColor(Color.BLACK);
-				g.setFont(new Font("Impact", 1, (int) cam.scale * 10));
-				g.drawString("A", cam.toXScreen(o.pos.x * w - w / 4), cam.toYScreen(o.pos.y * w + w / 4));
+				g.setFont(new Font("Impact", 1, (int) Camera.scale * 10));
+				g.drawString("A", Camera.toXScreen(o.pos.x * w - w / 4), Camera.toYScreen(o.pos.y * w + w / 4));
 			}
 			if (o.target) {
 				g.setColor(Color.BLACK);
-				g.setFont(new Font("Impact", 1, (int) cam.scale * 10));
-				g.drawString("B", cam.toXScreen(o.pos.x * w - w / 4), cam.toYScreen(o.pos.y * w + w / 4));
+				g.setFont(new Font("Impact", 1, (int) Camera.scale * 10));
+				g.drawString("B", Camera.toXScreen(o.pos.x * w - w / 4), Camera.toYScreen(o.pos.y * w + w / 4));
 			}
 
 		}
 		for (int i = 0; i <= 1000 + 1; i++) {
 			g.setColor(Color.LIGHT_GRAY);
-			g.drawLine(cam.toXScreen(i * 10 - w / 2), cam.toYScreen(0 - w / 2), cam.toXScreen(i * 10 - w / 2),
-					cam.toYScreen(10000 + 5));
-			g.drawLine(cam.toXScreen(0 - w / 2), cam.toYScreen(i * 10 - w / 2), cam.toXScreen(10000 - w / 2),
-					cam.toYScreen(i * 10 - w / 2));
+			g.drawLine(Camera.toXScreen(i * 10 - w / 2), Camera.toYScreen(0 - w / 2), Camera.toXScreen(i * 10 - w / 2),
+					Camera.toYScreen(10000 + 5));
+			g.drawLine(Camera.toXScreen(0 - w / 2), Camera.toYScreen(i * 10 - w / 2), Camera.toXScreen(10000 - w / 2),
+					Camera.toYScreen(i * 10 - w / 2));
 		}
 	}
 
@@ -218,17 +217,17 @@ public class Grid {
 
 		for (Node o : blocked) {
 			g.setColor(Color.BLACK);
-			g.fillRect(cam.toXScreen(o.pos.x * (w) - w / 2), cam.toYScreen((o.pos.y * (w)) - (w / 2)),
-					(int) (w * cam.scale), (int) (w * cam.scale));
+			g.fillRect(Camera.toXScreen(o.pos.x * (w) - w / 2), Camera.toYScreen((o.pos.y * (w)) - (w / 2)),
+					(int) (w * Camera.scale), (int) (w * Camera.scale));
 
 		}
 
 		for (int i = 0; i <= 1000 + 1; i++) {
 			g.setColor(Color.LIGHT_GRAY);
-			g.drawLine(cam.toXScreen(i * 10 - w / 2), cam.toYScreen(0 - w / 2), cam.toXScreen(i * 10 - w / 2),
-					cam.toYScreen(10000 + 5));
-			g.drawLine(cam.toXScreen(0 - w / 2), cam.toYScreen(i * 10 - w / 2), cam.toXScreen(10000 - w / 2),
-					cam.toYScreen(i * 10 - w / 2));
+			g.drawLine(Camera.toXScreen(i * 10 - w / 2), Camera.toYScreen(0 - w / 2), Camera.toXScreen(i * 10 - w / 2),
+					Camera.toYScreen(10000 + 5));
+			g.drawLine(Camera.toXScreen(0 - w / 2), Camera.toYScreen(i * 10 - w / 2), Camera.toXScreen(10000 - w / 2),
+					Camera.toYScreen(i * 10 - w / 2));
 		}
 	}
 }

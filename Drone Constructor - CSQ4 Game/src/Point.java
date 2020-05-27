@@ -59,10 +59,10 @@ return (x >= r.pos.x && x <= r.pos.x + r.w && y >= r.pos.y && y <= r.pos.y + r.h
 	}
 
 	public boolean isSame(Point p) {
-		return p.x == this.x && p.y == this.y;
+		return (double)p.x == (double)this.x && (double)p.y == (double)this.y;
 	}
 	public boolean isAdjacentTo(Point p) {
-		return (Math.abs(p.x - this.x) <= 1 && Math.abs(p.y - this.y) <= 1 && !p.equals(this));
+		return ((int)Math.abs(p.x - this.x) <= 1 && (int)Math.abs(p.y - this.y) <= 1 && !p.equals(this));
 	}
 	public Point subtract(Point p) {
 		return new Point(this.x - p.x , this.y - p.y);

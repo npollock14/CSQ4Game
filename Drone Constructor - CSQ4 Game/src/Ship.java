@@ -169,7 +169,7 @@ public abstract class Ship {
 				parts.remove(p);
 				updateCM();
 				checkBrokenParts();
-				checkDisconnectedParts();
+				//checkDisconnectedParts();
 				break;
 			}
 		}
@@ -187,21 +187,28 @@ public abstract class Ship {
 				}
 			}
 		}
-		for(int i = -20; i < 20; i++) {
-			for(int j = -20; j < 20; j++) {
+		
+		for(int i = -3; i < 3; i++) {
+			for(int j = -3; j < 3; j++) {
 			for(Point p : unblocked) {
 				if(!new Point(i,j).isSame(p)) {
 					gr.blocked.add(gr.makeBlockerNode(i, j));
+				}else {
+					p.print();
 				}
 			}
 			}
 		}
+//		for(Node n : gr.blocked) {
+//			System.out.println(n.pos.toString());
+//		}
 		for(int i = 0; i < parts.size(); i++) {
 			if(!parts.get(i).type.equals("Reactor")) {
 				gr.getPath(new Point(0,0), parts.get(i).pos);
 				if(gr.pathTree.size() == 0) {
 					parts.remove(parts.get(i));
 				}
+				gr.pathTree.clear();
 			}
 		}
 		

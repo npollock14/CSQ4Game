@@ -18,6 +18,11 @@ public class MenuScene extends Scene {
 		s.draw(g);
 		g.setColor(Color.BLACK);
 		Camera.toScreen(new Point(0, 0)).fillCircle(g, (int) (20 * Camera.scale));
+		
+		if(InputManager.mouse[1]) {
+			p.checkDisconnectedParts();
+		}
+		
 	}
 
 	@Override
@@ -54,6 +59,8 @@ public class MenuScene extends Scene {
 		}
 		
 		
+		
+		
 		//e1.shoot(p);
 		s.update();
 		Camera.focus(p.cm.avg(e1.cm));
@@ -64,7 +71,7 @@ public class MenuScene extends Scene {
 		Point sPos = new Point(Driver.screenWidth / 2, Driver.screenHeight / 2);
 
 		p = new PlayerShip(sPos);
-		p.addPart(new Thruster(new Point(0,2), 2), new Thruster(new Point(1,2), 2));
+		p.addPart(new Thruster(new Point(0,2), 2));
 
 		e1 = new EnemyShip(new Point(300, 200));
 		e1.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new Armor(new Point(-1, 0)),

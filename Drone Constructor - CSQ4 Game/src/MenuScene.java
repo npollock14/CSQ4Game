@@ -71,7 +71,7 @@ public class MenuScene extends Scene {
 		Point sPos = new Point(Driver.screenWidth / 2, Driver.screenHeight / 2);
 
 		p = new PlayerShip(sPos);
-		p.addPart(new Thruster(new Point(0,2), 2));
+		p.addPart(new Thruster(new Point(4,2), 2), new Thruster(new Point(3,2),2), new Thruster(new Point(2,2),2));
 
 		e1 = new EnemyShip(new Point(300, 200));
 		e1.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new Armor(new Point(-1, 0)),

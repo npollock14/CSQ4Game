@@ -79,7 +79,7 @@ public class BuildScene extends Scene {
 			SceneManager.bs.setActive(false);
 			SceneManager.ms.setActive(true);
 		}
-		direction %= 4;
+		direction = Math.abs(direction % 4);
 
 		if (selectHull.clicked)
 			selected = new Hull(new Point(0, 0));

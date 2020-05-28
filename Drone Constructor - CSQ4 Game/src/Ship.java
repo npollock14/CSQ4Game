@@ -166,7 +166,7 @@ public abstract class Ship {
 				parts.remove(p);
 				updateCM();
 				checkBrokenParts();
-				checkDisconnectedParts();
+				//checkDisconnectedParts();
 				break;
 			}
 		}
@@ -204,13 +204,16 @@ public abstract class Ship {
 			n.pos.print();
 		}
 		System.out.println("End of Blocked");
-		for (int i = 0; i < parts.size(); i++) {
-			if (!parts.get(i).type.equals("Reactor")) {
-				gr.getPath(new GridPoint(0, 0), parts.get(i).pos.toGP());
+		for (Part p : parts) {
+			if (!p.type.equals("Reactor")) {
+				gr.getPath(new GridPoint(0, 0), p.pos.toGP());
 				if (gr.pathTree.size() == 0) {
-					parts.get(i).health = -1;
+					p.health = -1;
+					System.out.println("Removing: " + p.type);
 				}
 				gr.pathTree.clear();
+				gr.open.clear();
+				gr.closed.clear();
 			}
 		}
 
@@ -270,7 +273,7 @@ public abstract class Ship {
 			p.bounds.setCenter(cm);
 		rotate(rot);
 		
-		checkDisconnectedParts();
+		//checkDisconnectedParts();
 
 	}
 

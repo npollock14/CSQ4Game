@@ -22,20 +22,20 @@ public class Grid {
 		open.add(new Node(a, false, false, true, getGCost(a, b), 0, null));
 		while (open.size() >= 1) {
 			Node curr = getLoF(open);
-			System.out.print("========================== Chosen: ");
+			//System.out.print("========================== Chosen: ");
 			curr.pos.print();
 			if (!curr.start) {
-				System.out.print("Parent: ");
+				//System.out.print("Parent: ");
 				curr.parent.pos.print();
 			}
-			System.out.println("OPEN: ");
+			//System.out.println("OPEN: ");
 			for (Node n : open) {
-				n.pos.print();
+				//n.pos.print();
 				if (!n.start) {
-					System.out.print("Parent: ");
+					//System.out.print("Parent: ");
 					curr.parent.pos.print();
 				}
-				System.out.println("GCOST: " + n.gCost + " SCOST: " + n.sCost + " FCOST: " + n.fCost);
+				//System.out.println("GCOST: " + n.gCost + " SCOST: " + n.sCost + " FCOST: " + n.fCost);
 
 			}
 			if (!curr.start) {
@@ -45,15 +45,15 @@ public class Grid {
 			closed.add(curr);
 
 			if (curr.target) {
-				System.out.println("====== FOUND PATH ======");
+				//System.out.println("====== FOUND PATH ======");
 				setNodePath(curr);
-				System.out.println("====== DONE ======");
+				//System.out.println("====== DONE ======");
 				open.clear();
 				closed.clear();
 				return;
 			}
 			ArrayList<Node> neighbors = getNeighbors(curr, a, b);
-			System.out.println("Neighbors: " + neighbors.size());
+			//System.out.println("Neighbors: " + neighbors.size());
 			for (Node n : neighbors) {
 
 				if (n.blocked || closed.contains(n)) {
@@ -61,12 +61,12 @@ public class Grid {
 				}
 
 				if (!open.contains(n)) {
-System.out.println("here");
+//System.out.println("here");
 					n.parent = curr;
 					n.sCost = getSCost(n);
 					n.fCost = n.sCost + n.gCost;
-					System.out.println("Set (" + n.pos.x + ", " + n.pos.y + ")'s parent to: (" + n.parent.pos.x + ", "
-							+ n.parent.pos.y + ")");
+					//System.out.println("Set (" + n.pos.x + ", " + n.pos.y + ")'s parent to: (" + n.parent.pos.x + ", "
+					//		+ n.parent.pos.y + ")");
 					if (!open.contains(n)) {
 						open.add(n);
 					}
@@ -75,7 +75,7 @@ System.out.println("here");
 			}
 
 		}
-		System.out.println("Couldn't find a path -_-");
+		//System.out.println("Couldn't find a path -_-");
 	}
 
 	private void setNodePath(Node n) {

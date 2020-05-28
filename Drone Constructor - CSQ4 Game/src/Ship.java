@@ -167,6 +167,7 @@ public abstract class Ship {
 				updateCM();
 				checkBrokenParts();
 				checkDisconnectedParts();
+				updateCM();
 				break;
 			}
 		}
@@ -186,7 +187,7 @@ public abstract class Ship {
 		}
 		for (int i = -10; i < 10; i++) {
 			for (int j = -10; j < 10; j++) {
-				GridPoint toCheck = new GridPoint(i, j); //want to see if (i,j) is nowhere on unblocked
+				GridPoint toCheck = new GridPoint(i, j); // want to see if (i,j) is nowhere on unblocked
 				boolean found = false;
 				for (Point p : unblocked) {
 					if ((new GridPoint(i, j).isSamePosition(p.toGP()))) {
@@ -196,7 +197,8 @@ public abstract class Ship {
 					}
 
 				}
-				if(!found) gr.blocked.add(gr.makeBlockerNode(i, j));
+				if (!found)
+					gr.blocked.add(gr.makeBlockerNode(i, j));
 			}
 		}
 		for (Part p : parts) {
@@ -204,7 +206,7 @@ public abstract class Ship {
 				gr.getPath(new GridPoint(0, 0), p.pos.toGP());
 				if (gr.pathTree.size() == 0) {
 					p.health = -1;
-					System.out.println("Removing: " + p.type);
+					//System.out.println("Removing: " + p.type);
 				}
 				gr.pathTree.clear();
 				gr.open.clear();
@@ -267,7 +269,7 @@ public abstract class Ship {
 		for (Part p : parts)
 			p.bounds.setCenter(cm);
 		rotate(rot);
-		
+
 		checkDisconnectedParts();
 
 	}

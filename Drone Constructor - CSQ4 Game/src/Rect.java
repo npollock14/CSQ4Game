@@ -15,11 +15,12 @@ public class Rect {
 	}
 
 	public boolean intersects(Rect r, boolean including) {
-		return (pos.inside(r,including) || new Point(pos.x + w, pos.y).inside(r,including) || new Point(pos.x + w, pos.y + h).inside(r,including)
-				|| new Point(pos.x, pos.y + h).inside(r,including) || r.pos.inside(this,including)
-				|| new Point(r.pos.x + r.w, r.pos.y).inside(this,including)
-				|| new Point(r.pos.x + r.w, r.pos.y + r.h).inside(this,including)
-				|| new Point(r.pos.x, r.pos.y + r.h).inside(this,including));
+		return (pos.inside(r, including) || new Point(pos.x + w, pos.y).inside(r, including)
+				|| new Point(pos.x + w, pos.y + h).inside(r, including)
+				|| new Point(pos.x, pos.y + h).inside(r, including) || r.pos.inside(this, including)
+				|| new Point(r.pos.x + r.w, r.pos.y).inside(this, including)
+				|| new Point(r.pos.x + r.w, r.pos.y + r.h).inside(this, including)
+				|| new Point(r.pos.x, r.pos.y + r.h).inside(this, including));
 	}
 
 	public int classifyCol(Rect r) {
@@ -45,20 +46,22 @@ public class Rect {
 		return 0;
 
 	}
+
 	public Point getCM() {
-		return new Point(pos.x + w/2, pos.y + h/2);
+		return new Point(pos.x + w / 2, pos.y + h / 2);
 	}
+
 	public void unIntersect(Rect r, int colType) {
-		if(colType == 2) {
+		if (colType == 2) {
 			this.pos.x = r.pos.x - this.w;
 		}
-		if(colType == 4) {
+		if (colType == 4) {
 			this.pos.x = r.pos.x + r.w;
 		}
-		if(colType == 1) {
+		if (colType == 1) {
 			this.pos.y = r.pos.y + r.h;
 		}
-		if(colType == 3) {
+		if (colType == 3) {
 			this.pos.y = r.pos.y - this.h;
 		}
 	}

@@ -13,34 +13,30 @@ public class MenuScene extends Scene {
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setFont(Misc.f);
-		g.drawString(p.shoot + " " + s.projectiles.size(), 100, 100);
+		
+		s.drawBasicGrid(g, 50000, (int)(100*(1/Math.sqrt((Camera.scale)))), 2);
 		s.draw(g);
-		g.setColor(Color.BLACK);
-		Camera.toScreen(new Point(0, 0)).fillCircle(g, (int) (20 * Camera.scale));
+
+
 		
-		if(InputManager.mouse[1]) {
-			p.checkDisconnectedParts();
-		}
-		
+
 	}
 
 	@Override
 	public void update() {
 
-		Camera.changeScale(InputManager.scroll / 2);
 		if (InputManager.keys[81])
 			p.cmdRotate(false);
 		if (InputManager.keys[69])
 			p.cmdRotate(true);
 		if (InputManager.keys[38])
-			p.cmdMove(0,1);
+			p.cmdMove(0, 1);
 		if (InputManager.keys[40])
-			p.cmdMove(2,1);
+			p.cmdMove(2, 1);
 		if (InputManager.keys[37])
-			p.cmdMove(3,1);
+			p.cmdMove(3, 1);
 		if (InputManager.keys[39])
-			p.cmdMove(1,1);
+			p.cmdMove(1, 1);
 		if (InputManager.keys[87])
 			Camera.yOff += 3;
 		if (InputManager.keys[83])
@@ -49,21 +45,18 @@ public class MenuScene extends Scene {
 			Camera.xOff -= 3;
 		if (InputManager.keys[65])
 			Camera.xOff += 3;
-		
-		if(InputManager.keysReleased[66]) {
+
+		if (InputManager.keysReleased[66]) {
 			InputManager.keysReleased[66] = false;
 			SceneManager.ms.setActive(false);
 			SceneManager.bs.setActive(true);
 			SceneManager.bs.init();
 			SceneManager.bs.edit(p);
 		}
-		
-		
-		
-		
-		//e1.shoot(p);
+
+		// e1.shoot(p);
 		s.update();
-		Camera.focus(p.cm.avg(e1.cm));
+		Camera.focus(p.cm);
 	}
 
 	@Override
@@ -71,19 +64,20 @@ public class MenuScene extends Scene {
 		Point sPos = new Point(Driver.screenWidth / 2, Driver.screenHeight / 2);
 
 		p = new PlayerShip(sPos);
-		p.addPart(new Thruster(new Point(4,2), 2), new Thruster(new Point(3,2),2), new Thruster(new Point(2,2),2));
+		p.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new Armor(new Point(-1, 0)),
+				new Armor(new Point(0, 1)), new Laser(new Point(0, -2), 0), new Thruster(new Point(-1, 2), 2),
+				new Thruster(new Point(1, 2), 2));
 
 		e1 = new EnemyShip(new Point(300, 200));
 		e1.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new Armor(new Point(-1, 0)),
-				new Armor(new Point(0, 1)), new Laser(new Point(0,-2), 0), new Thruster(new Point(-1,2), 2), new Thruster(new Point(1,2), 2));
+				new Armor(new Point(0, 1)), new Laser(new Point(0, -2), 0), new Thruster(new Point(-1, 2), 2),
+				new Thruster(new Point(1, 2), 2));
 		// e1.vel.x += 5;
 		s.ships.add(e1);
 		s.ships.add(p);
-		
+
 		p.cmdMove(0, 1);
-		
-		
-		
+
 	}
 
 }

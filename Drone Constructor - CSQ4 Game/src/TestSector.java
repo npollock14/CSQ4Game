@@ -5,6 +5,7 @@ public class TestSector extends Sector{
 double sectorDrag = .992;
 	@Override
 	public void update() {
+		Camera.changeScale(InputManager.scroll / 2);
 		try {
 		for(Ship s : ships) {
 			s.update(this);

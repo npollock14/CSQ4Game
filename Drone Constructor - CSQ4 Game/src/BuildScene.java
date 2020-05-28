@@ -35,6 +35,7 @@ public class BuildScene extends Scene {
 		}
 		
 		
+		
 	}
 
 	@Override
@@ -43,6 +44,7 @@ public class BuildScene extends Scene {
 		selectArmor.update();
 		selectLaser.update();
 		selectThruster.update();
+		s.checkBrokenParts();
 		if (!deleting && selected != null && InputManager.mouseReleased[1]
 				&& InputManager.mPos.y < Driver.screenHeight - 150) {
 			if (selected.type == "Hull") {
@@ -99,7 +101,8 @@ public class BuildScene extends Scene {
 						p.pos.y * Part.SQUARE_WIDTH * 1.25 + (50 * 9), p.width * Part.SQUARE_WIDTH * 1.25,
 						p.height * Part.SQUARE_WIDTH*1.25);
 				if(InputManager.mPos.inside(r, true)) {
-					s.parts.remove(p);
+					p.health = -1;
+					s.updateCM();
 					break;
 				}
 				

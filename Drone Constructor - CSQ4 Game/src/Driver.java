@@ -68,6 +68,7 @@ public class Driver extends JPanel
 		System.out.println("Initializing...");
 		SceneManager.initManager();
 		SceneManager.ms.init();
+		SceneManager.bs.init();
 		SceneManager.ms.setActive(true);
 		System.out.println("Done");
 

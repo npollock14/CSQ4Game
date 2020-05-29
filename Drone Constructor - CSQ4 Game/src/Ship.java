@@ -162,9 +162,11 @@ public abstract class Ship {
 		for (Part p : parts) {
 			if (p.health <= 0) {
 				mass -= p.mass;
-				if (p.type.equals("Reactor"))
+				if (p.type.equals("Reactor")) {
 					destroyed = true;
+				}
 				parts.remove(p);
+				calculateThrust();
 				updateCM();
 				checkBrokenParts();
 				checkDisconnectedParts();
@@ -235,6 +237,18 @@ public abstract class Ship {
 
 		}
 		return true;
+	}
+	public void calculateThrust() {
+		for (int i = 0; i < transForces.length; i++) {
+			transForces[i] = 0;
+		}
+		rotForce = 0;
+		for(Part p : parts) {
+		for (int i = 0; i < transForces.length; i++) {
+			transForces[i] += p.transForces[i];
+		}
+		rotForce += p.rotForce;
+		}
 	}
 
 	public void addPart(Part... ps) {

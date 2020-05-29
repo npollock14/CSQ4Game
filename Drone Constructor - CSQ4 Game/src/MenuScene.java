@@ -50,7 +50,6 @@ public class MenuScene extends Scene {
 			InputManager.keysReleased[66] = false;
 			SceneManager.ms.setActive(false);
 			SceneManager.bs.setActive(true);
-			SceneManager.bs.init();
 			SceneManager.bs.edit(p);
 		}
 

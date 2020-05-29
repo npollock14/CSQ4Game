@@ -200,11 +200,11 @@ public class BuildScene extends Scene {
 
 		selectHull = new Button(new Rect(331, 889, 80, 80), null, 0, "Hull", null, Color.WHITE,
 				true, false);
-		selectArmor = new Button(new Rect(175, Driver.screenHeight - 100, 50, 50), null, 0, "Armor", null, Color.WHITE,
+		selectArmor = new Button(new Rect(479, 889, 80, 80), null, 0, "Armor", null, Color.WHITE,
 				true, false);
-		selectLaser = new Button(new Rect(250, Driver.screenHeight - 100, 50, 50), null, 0, "Laser", null, Color.WHITE,
+		selectLaser = new Button(new Rect(481 + 148, 889, 80, 80), null, 0, "Laser", null, Color.WHITE,
 				true, false);
-		selectThruster = new Button(new Rect(325, Driver.screenHeight - 100, 50, 50), null, 0, "Thruster", null,
+		selectThruster = new Button(new Rect(483 + 148*2, 889, 80, 80), null, 0, "Thruster", null,
 				Color.WHITE, true, false);
 
 	}

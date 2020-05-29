@@ -36,7 +36,7 @@ public class BuildScene extends Scene {
 		g.setStroke(new BasicStroke((float) (3)));
 		Camera.scale = 1.25;
 		for (Part p : s.parts) {
-			p.draw(g, new Point(50 * 18, 50 * 9), 0, new Point(Driver.screenWidth / 2, Driver.screenHeight / 2));
+			p.draw(g, new Point(50 * 18, 50 * 9), 0, new Point(Driver.screenWidth / 2, Driver.screenHeight / 2), modes[3]);
 		}
 		
 		
@@ -56,20 +56,20 @@ public class BuildScene extends Scene {
 		}
 		
 		//draw mode - bottom right
-		g.setFont(Misc.f);
-		g.setColor(Color.WHITE);
+		g.setPaint(new Color(50, 168, 82,128));
 		if (modes[0]) {
-			g.drawString("Delete", 1645, 970);
+			g.fillRect(76, 930, 55, 68);
 		}
 		if (modes[1]) {
-			g.drawString("Select", 1645, 970);
+			g.fillRect(15, 860, 50, 63);
 		}
 		if (modes[2]) {
-			g.drawString("Build", 1645, 970);
+			g.fillRect(11, 933, 60, 60);
 		}
 		if (modes[3]) {
-			g.drawString("Repair", 1645, 970);
+			g.fillRect(78, 860, 55, 63);
 		}
+		g.setColor(Color.BLACK);
 		
 		selectHull.draw(g, 10, 30);
 		selectArmor.draw(g, 10, 30);
@@ -196,15 +196,15 @@ public class BuildScene extends Scene {
 		backgroundUI = Misc.loadImage("/buildSceneUI.png");
 		backgroundUISelection = Misc.loadImage("/buildSceneUISelection.png");
 
-		changeMode(1);
+		changeMode(3);
 
-		selectHull = new Button(new Rect(331, 889, 80, 80), null, 0, "Hull", null, Color.WHITE,
+		selectHull = new Button(new Rect(331, 889, 80, 80), null, 0, "", null, Color.WHITE,
 				true, false);
-		selectArmor = new Button(new Rect(479, 889, 80, 80), null, 0, "Armor", null, Color.WHITE,
+		selectArmor = new Button(new Rect(479, 889, 80, 80), null, 0, "", null, Color.WHITE,
 				true, false);
-		selectLaser = new Button(new Rect(481 + 148, 889, 80, 80), null, 0, "Laser", null, Color.WHITE,
+		selectLaser = new Button(new Rect(481 + 148, 889, 80, 80), null, 0, "", null, Color.WHITE,
 				true, false);
-		selectThruster = new Button(new Rect(483 + 148*2, 889, 80, 80), null, 0, "Thruster", null,
+		selectThruster = new Button(new Rect(483 + 148*2, 889, 80, 80), null, 0, "", null,
 				Color.WHITE, true, false);
 
 	}

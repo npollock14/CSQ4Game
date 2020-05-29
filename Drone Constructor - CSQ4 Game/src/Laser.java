@@ -44,7 +44,7 @@ public class Laser extends Part {
 			return 1;
 	}
 
-	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
+	public void draw(Graphics2D g, Point sPos, double sRot, Point cm, boolean drawHealth) {
 
 		g.rotate(sRot, cm.x, cm.y);
 
@@ -74,6 +74,12 @@ public class Laser extends Part {
 					(int) (x1 + SQUARE_WIDTH*Camera.scale/4), (int) (y1 + SQUARE_WIDTH * Camera.scale));
 		}
 
+		if(drawHealth) {
+			g.setFont(Misc.smallTitleFont);
+			g.setColor(Color.black);
+			g.drawString(""+health, x1+7, y1 + 35);
+			}
+		
 		g.rotate(-sRot, cm.x, cm.y);
 
 		// g.setColor(Color.green);

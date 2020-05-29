@@ -51,7 +51,7 @@ public abstract class Part {
 		}
 	}
 
-	public abstract void draw(Graphics2D g, Point sPos, double sRot, Point cm);
+	public abstract void draw(Graphics2D g, Point sPos, double sRot, Point cm, boolean drawHealth);
 	
 	public abstract void drawFree(Graphics2D g, Point p);
 

@@ -31,7 +31,7 @@ double sectorDrag = .992;
 	public void draw(Graphics2D g) {
 		
 		for(Ship s : ships) {
-			s.draw(g);
+			s.draw(g,false);
 		}
 		for(Projectile p : projectiles) {
 			p.draw(g);

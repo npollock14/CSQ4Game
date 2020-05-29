@@ -18,7 +18,7 @@ public class Reactor extends Part{
 		super(width, height, baseHealth, new Point(0,0), type,mass);
 	}
 	
-	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
+	public void draw(Graphics2D g, Point sPos, double sRot, Point cm, boolean drawHealth) {
 		
 		g.rotate(sRot, cm.x, cm.y);
 		
@@ -32,6 +32,12 @@ public class Reactor extends Part{
 		g.fillRect(x1,y1,w1,h1); 
 		g.setColor(new Color(23, 87, 0));
 		g.drawRect(x1, y1,w1, h1);
+		
+		if(drawHealth) {
+			g.setFont(Misc.smallTitleFont);
+			g.setColor(Color.black);
+			g.drawString(""+health, x1+7, y1 + 35);
+			}
 		
 		g.rotate(-sRot, cm.x, cm.y);
 		

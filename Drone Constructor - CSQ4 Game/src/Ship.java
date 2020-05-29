@@ -144,11 +144,11 @@ public abstract class Ship {
 		}
 	}
 
-	public void draw(Graphics2D g) {
+	public void draw(Graphics2D g, boolean drawHealth) {
 		
 		for (Part p : parts) {
 			g.setStroke(new BasicStroke((float) (3 * Camera.scale)));
-			p.draw(g, Camera.toScreen(pos), rotation, Camera.toScreen(cm));
+			p.draw(g, Camera.toScreen(pos), rotation, Camera.toScreen(cm), drawHealth);
 
 		}
 		g.setColor(Color.RED);
@@ -188,8 +188,8 @@ public abstract class Ship {
 				}
 			}
 		}
-		for (int i = -10; i < 10; i++) {
-			for (int j = -10; j < 10; j++) {
+		for (int i = -20; i < 20; i++) {
+			for (int j = -20; j < 20; j++) {
 				GridPoint toCheck = new GridPoint(i, j); // want to see if (i,j) is nowhere on unblocked
 				boolean found = false;
 				for (Point p : unblocked) {

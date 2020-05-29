@@ -17,7 +17,7 @@ public class Armor extends Part {
 		super(width, height, baseHealth, pos, type, mass);
 	}
 
-	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
+	public void draw(Graphics2D g, Point sPos, double sRot, Point cm, boolean drawHealth) {
 
 		g.rotate(sRot, cm.x, cm.y);
 
@@ -30,6 +30,11 @@ public class Armor extends Part {
 		g.fillRect(x1, y1, w1, h1);
 		g.setColor(new Color(40, 40, 40));
 		g.drawRect(x1, y1, w1, h1);
+		if(drawHealth) {
+			g.setFont(Misc.smallTitleFont);
+			g.setColor(Color.white);
+			g.drawString(""+health, x1+7, y1 + 35);
+			}
 
 		g.rotate(-sRot, cm.x, cm.y);
 

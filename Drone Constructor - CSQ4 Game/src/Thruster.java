@@ -33,7 +33,7 @@ public class Thruster extends Part {
 		if(direction == 3) transForces[1] = force; //flame left
 	}
 
-	public void draw(Graphics2D g, Point sPos, double sRot, Point cm) {
+	public void draw(Graphics2D g, Point sPos, double sRot, Point cm, boolean drawHealth) {
 
 		g.rotate(sRot, cm.x, cm.y);
 
@@ -64,6 +64,12 @@ public class Thruster extends Part {
 			g.drawLine((int) (x1 + SQUARE_WIDTH*Camera.scale/4), (int) (y1),
 					(int) (x1 + SQUARE_WIDTH*Camera.scale/4), (int) (y1 + SQUARE_WIDTH * Camera.scale));
 		}
+		
+		if(drawHealth) {
+			g.setFont(Misc.smallTitleFont);
+			g.setColor(Color.black);
+			g.drawString(""+health, x1+7, y1 + 35);
+			}
 		
 
 		g.rotate(-sRot, cm.x, cm.y);

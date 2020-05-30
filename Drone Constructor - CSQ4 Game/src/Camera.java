@@ -19,6 +19,14 @@ public class Camera {
 	public static void changeScale(double scroll) {
 		scaleNotches += scroll;
 		scale = Math.pow(2, scaleNotches);
+		
+		if(Camera.scale > 5.0) Camera.setScale(Math.log(5) / Math.log(2));
+		if(Camera.scale < .25) Camera.setScale(Math.log(.25) / Math.log(2));
+		
+	}
+	public static void setScale(double notches) {
+		scaleNotches = (float) notches;
+		scale = Math.pow(2, scaleNotches);
 	}
 
 	public static int toXScreen(double x) {

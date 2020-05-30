@@ -18,62 +18,64 @@ public class BuildScene extends Scene {
 
 	@Override
 	public void draw(Graphics2D g) {
-		
 
-		
-		
-		//draw lines
+		// draw lines
 		g.setColor(Color.black);
 		for (int i = 0; i < Driver.screenWidth; i += 50) {
 			new Point(i, 0).drawLine(g, new Point(i, Driver.screenHeight));
 			if (i < Driver.screenHeight)
 				new Point(0, i).drawLine(g, new Point(Driver.screenWidth, i));
 		}
-		
-		//draw background on top of lines
-		g.drawImage(backgroundUI, 0, 0, 1920, 1080, null);
-		
-		//draw selection area
-		if(modes[1] && selection != null) {
-			g.drawImage(backgroundUISelection, 0, 0, 1920, 1080, null);
-			g.setColor(Color.white);
-			g.setFont(Misc.font);
-			g.drawString("" + selection.type, 1658, 381);
-			g.drawString("Health: " + selection.health + "/" + selection.baseHealth, 1658, 415);
-			g.drawString("Sell Price: " + (selection.type.equals("Reactor") ? "-----" : (int)(((double)selection.cost) * .5 * ((double)selection.health / (double)selection.baseHealth))), 1658, 450);
-		}
-		
-		//draw player scrap amt
-		g.setFont(Misc.arialBig);
-		g.setColor(Color.white);
-		g.drawString("" + Driver.playerScrap, 1733, 72);
-		
-		//draw parts on ship
+
+		// draw parts on ship
 		g.setStroke(new BasicStroke((float) (3)));
 		Camera.scale = 1.25;
 		for (Part p : s.parts) {
-			p.draw(g, new Point(50 * 18, 50 * 9), 0, new Point(Driver.screenWidth / 2, Driver.screenHeight / 2), modes[3]);
+			p.draw(g, new Point(50 * 18, 50 * 9), 0, new Point(Driver.screenWidth / 2, Driver.screenHeight / 2),
+					modes[3]);
 		}
-		
-		
+
 		// drawing the free model if in build mode
 		if (modes[2]) {
 			if (InputManager.mPos.y < 845) {
 				toBuild.drawFree(g, new Point((int) ((InputManager.mPos.x / 50)) * Part.SQUARE_WIDTH * 1.25,
 						(int) ((InputManager.mPos.y / 50)) * Part.SQUARE_WIDTH * 1.25));
-				
+
 			}
 		}
-		
-		
+
+		// draw background on top of lines
+		g.drawImage(backgroundUI, 0, 0, 1920, 1080, null);
+
+		// draw selection area
+		if (modes[1] && selection != null) {
+			g.drawImage(backgroundUISelection, 0, 0, 1920, 1080, null);
+			g.setColor(Color.white);
+			g.setFont(Misc.font);
+			g.drawString("" + selection.type, 1658, 381);
+			g.drawString("Health: " + selection.health + "/" + selection.baseHealth, 1658, 415);
+			g.drawString(
+					"Sell Price: "
+							+ (selection.type
+									.equals("Reactor")
+											? "-----"
+											: (int) (((double) selection.cost) * .5
+													* ((double) selection.health / (double) selection.baseHealth))),
+					1658, 450);
+		}
+
+		// draw player scrap amt
+		g.setFont(Misc.arialBig);
+		g.setColor(Color.white);
+		g.drawString("" + Driver.playerScrap, 1733, 72);
 
 		// to draw where mouse is - temp
 		if (InputManager.mouse[2]) {
 			System.out.println(InputManager.mPos.toString());
 		}
-		
-		//draw mode - bottom right
-		g.setPaint(new Color(50, 168, 82,128));
+
+		// draw mode - bottom right
+		g.setPaint(new Color(50, 168, 82, 128));
 		if (modes[0]) {
 			g.fillRect(76, 930, 55, 68);
 		}
@@ -87,12 +89,11 @@ public class BuildScene extends Scene {
 			g.fillRect(78, 860, 55, 63);
 		}
 		g.setColor(Color.BLACK);
-		
+
 		selectHull.draw(g, 10, 30);
 		selectArmor.draw(g, 10, 30);
 		selectLaser.draw(g, 10, 30);
 		selectThruster.draw(g, 10, 30);
-		
 
 	}
 
@@ -122,24 +123,28 @@ public class BuildScene extends Scene {
 				if (toBuild.type == "Hull" && Driver.playerScrap >= Hull.cost) {
 					s.addPart(new Hull(
 							new Point((int) (InputManager.mPos.x / 50) - 18, (int) (InputManager.mPos.y / 50) - 9)));
-					if(s.parts.size() > startingSize) Driver.playerScrap -= Hull.cost;
+					if (s.parts.size() > startingSize)
+						Driver.playerScrap -= Hull.cost;
 				}
 				if (toBuild.type == "Armor" && Driver.playerScrap >= Armor.cost) {
 					s.addPart(new Armor(
 							new Point((int) (InputManager.mPos.x / 50) - 18, (int) (InputManager.mPos.y / 50) - 9)));
-					if(s.parts.size() > startingSize) Driver.playerScrap -= Armor.cost;
+					if (s.parts.size() > startingSize)
+						Driver.playerScrap -= Armor.cost;
 				}
 				if (toBuild.type == "Lazer" && Driver.playerScrap >= Laser.cost) {
 					s.addPart(new Laser(
 							new Point((int) (InputManager.mPos.x / 50) - 18, (int) (InputManager.mPos.y / 50) - 9),
 							direction));
-					if(s.parts.size() > startingSize) Driver.playerScrap -= Laser.cost;
+					if (s.parts.size() > startingSize)
+						Driver.playerScrap -= Laser.cost;
 				}
 				if (toBuild.type == "Thruster" && Driver.playerScrap >= Thruster.cost) {
 					s.addPart(new Thruster(
 							new Point((int) (InputManager.mPos.x / 50) - 18, (int) (InputManager.mPos.y / 50) - 9),
 							direction));
-					if(s.parts.size() > startingSize) Driver.playerScrap -= Thruster.cost;
+					if (s.parts.size() > startingSize)
+						Driver.playerScrap -= Thruster.cost;
 				}
 			}
 		}
@@ -179,10 +184,8 @@ public class BuildScene extends Scene {
 			}
 		}
 		if (InputManager.keysReleased[83]) {
-				changeMode(1);
+			changeMode(1);
 		}
-		
-		
 
 		// handling switching of scenes
 		if (InputManager.keysReleased[27]) {
@@ -220,17 +223,17 @@ public class BuildScene extends Scene {
 						p.pos.y * Part.SQUARE_WIDTH * 1.25 + (50 * 9), p.width * Part.SQUARE_WIDTH * 1.25,
 						p.height * Part.SQUARE_WIDTH * 1.25);
 				if (InputManager.mPos.inside(r, true)) {
-					//selling adds scrap
-					Driver.playerScrap += (int)((double)p.cost) * .5 * ((double)p.health / (double)p.baseHealth);
+					// selling adds scrap
+					Driver.playerScrap += (int) ((double) p.cost) * .5 * ((double) p.health / (double) p.baseHealth);
 					p.health = -1;
-					
+
 					s.updateCM();
 					break;
 				}
 
 			}
 		}
-		if(modes[1] && InputManager.mouse[1]) {
+		if (modes[1] && InputManager.mouse[1]) {
 			selection = getSelected();
 		}
 
@@ -238,24 +241,21 @@ public class BuildScene extends Scene {
 
 	@Override
 	public void init() {
-		
+
 		backgroundUI = Misc.loadImage("/buildSceneUI.png");
 		backgroundUISelection = Misc.loadImage("/buildSceneUISelection.png");
 
 		changeMode(3);
 
-		selectHull = new Button(new Rect(331, 889, 80, 80), null, 0, "", null, Color.WHITE,
-				true, false);
-		selectArmor = new Button(new Rect(479, 889, 80, 80), null, 0, "", null, Color.WHITE,
-				true, false);
-		selectLaser = new Button(new Rect(481 + 148, 889, 80, 80), null, 0, "", null, Color.WHITE,
-				true, false);
-		selectThruster = new Button(new Rect(483 + 148*2, 889, 80, 80), null, 0, "", null,
-				Color.WHITE, true, false);
+		selectHull = new Button(new Rect(331, 889, 80, 80), null, 0, "", null, Color.WHITE, true, false);
+		selectArmor = new Button(new Rect(479, 889, 80, 80), null, 0, "", null, Color.WHITE, true, false);
+		selectLaser = new Button(new Rect(481 + 148, 889, 80, 80), null, 0, "", null, Color.WHITE, true, false);
+		selectThruster = new Button(new Rect(483 + 148 * 2, 889, 80, 80), null, 0, "", null, Color.WHITE, true, false);
 
 	}
+
 	public Part getSelected() {
-		for(Part p : s.parts) {
+		for (Part p : s.parts) {
 			Rect r = new Rect((int) (p.pos.x * Part.SQUARE_WIDTH * 1.25 + (50 * 18)),
 					p.pos.y * Part.SQUARE_WIDTH * 1.25 + (50 * 9), p.width * Part.SQUARE_WIDTH * 1.25,
 					p.height * Part.SQUARE_WIDTH * 1.25);

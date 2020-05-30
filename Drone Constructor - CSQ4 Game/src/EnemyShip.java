@@ -34,9 +34,10 @@ public class EnemyShip extends Ship {
 						this.cmdRotateTo(cm.angleTo(s.cm) - Math.PI/2);
 					}
 				}
-				break;
+				return;
 			}
 		}
+		this.ceaseFire();
 		
 	}
 

@@ -5,6 +5,10 @@ import java.util.ArrayList;
 public class MenuScene extends Scene {
 	PlayerShip p;
 	EnemyShip e1;
+	
+	Ship camFocus = null;
+	
+	Ship selected = null;
 
 	TestSector s = new TestSector();
 
@@ -38,24 +42,41 @@ public class MenuScene extends Scene {
 		if (InputManager.keys[39])
 			p.cmdMove(1, 1);
 		if (InputManager.keys[87])
-			Camera.yOff += 3;
+			Camera.yOff += 10* (1/Camera.scale);
 		if (InputManager.keys[83])
-			Camera.yOff -= 3;
+			Camera.yOff -= 10* (1/Camera.scale);
 		if (InputManager.keys[68])
-			Camera.xOff -= 3;
+			Camera.xOff -= 10* (1/Camera.scale);
 		if (InputManager.keys[65])
-			Camera.xOff += 3;
+			Camera.xOff += 10* (1/Camera.scale);
+		
+		
+		
 
+		
+		//key to go to build area - b
 		if (InputManager.keysReleased[66]) {
 			InputManager.keysReleased[66] = false;
 			SceneManager.ms.setActive(false);
 			SceneManager.bs.setActive(true);
 			SceneManager.bs.edit(p);
 		}
+		
+		//key to select a ship
+			if(InputManager.mouse[1]) {
+				selected = s.getClickShip();
+		}
+			//key to move the camera to a ship or area
+			if(InputManager.mouseReleased[2]) {
+				camFocus = s.getClickShip();
+				if(camFocus == null) Camera.focus(Camera.toMap(InputManager.mPos.x, InputManager.mPos.y));
+			}
+			if(camFocus != null) Camera.focus(camFocus.cm);
+			//if(selected != null) selected.vel.print();
+			
 
 		p.shoot(e1);
 		s.update();
-		Camera.focus(p.cm);
 	}
 
 	@Override

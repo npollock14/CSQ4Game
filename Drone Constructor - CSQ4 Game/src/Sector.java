@@ -22,5 +22,14 @@ public abstract class Sector {
 					Camera.toYScreen(i * (spacing)));
 		}
 	}
+	
+	public Ship getClickShip() {
+		for(Ship s : ships) {
+			for(Part p : s.parts) {
+				if(p.bounds.surrounds(Camera.toMap(InputManager.mPos.x, InputManager.mPos.y))) return s;
+			}
+		}
+		return null;
+	}
 
 }

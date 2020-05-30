@@ -35,6 +35,10 @@ public class Driver extends JPanel
 	static int screenHeight = 1040;
 	ArrayList<Long> fps = new ArrayList<Long>();
 	long frameStart = 0;
+	
+	static int playerScrap = 20;
+	
+	static BufferedImage scrapIcon = Misc.loadImage("/scrap.png");
 
 	// ============== end of settings ==================
 

@@ -16,7 +16,9 @@ double sectorDrag = .992;
 		}
 		for(Projectile p : projectiles) {
 			p.update();
-			
+		}
+		for(ScrapEntity s : scrap) {
+			s.update(this);
 		}
 		for(Projectile p : projectiles) {
 			if(!p.alive) {
@@ -35,6 +37,9 @@ double sectorDrag = .992;
 		}
 		for(Projectile p : projectiles) {
 			p.draw(g);
+		}
+		for(ScrapEntity s : scrap) {
+			s.draw(g);
 		}
 	}
 

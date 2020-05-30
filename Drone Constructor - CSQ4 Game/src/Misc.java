@@ -26,6 +26,7 @@ public class Misc {
 	static Font smallestTitleFont = new Font("Dialog", 1, 17);
 	static Font fpsFont = new Font("Impact", 1, 25);
 	static Font fancyTitleFont = new Font("TimesRoman", 3, 82);
+	static Font arialBig = new Font("Arial", 1, 80);
 	static Color darkGreen = new Color(0,102,0);
 
 	public static BufferedImage loadImage(String path) {
@@ -38,6 +39,7 @@ public class Misc {
 		}
 		return null;
 	}
+	 
 	public static String[] read(String location) {
 		String[] text = null;
 		String line = null;

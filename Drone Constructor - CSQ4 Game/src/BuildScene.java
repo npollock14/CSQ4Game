@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 public class BuildScene extends Scene {
 	Ship s;
 	Part toBuild = null;
+	Part selection = null;
 	int direction = 0;
 	Button selectHull;
 	Button selectArmor;
@@ -32,6 +33,21 @@ public class BuildScene extends Scene {
 		//draw background on top of lines
 		g.drawImage(backgroundUI, 0, 0, 1920, 1080, null);
 		
+		//draw selection area
+		if(modes[1] && selection != null) {
+			g.drawImage(backgroundUISelection, 0, 0, 1920, 1080, null);
+			g.setColor(Color.white);
+			g.setFont(Misc.font);
+			g.drawString("" + selection.type, 1658, 381);
+			g.drawString("Health: " + selection.health + "/" + selection.baseHealth, 1658, 415);
+			g.drawString("Sell Price: " + (selection.type.equals("Reactor") ? "-----" : (int)(((double)selection.cost) * .5 * ((double)selection.health / (double)selection.baseHealth))), 1658, 450);
+		}
+		
+		//draw player scrap amt
+		g.setFont(Misc.arialBig);
+		g.setColor(Color.white);
+		g.drawString("" + Driver.playerScrap, 1733, 72);
+		
 		//draw parts on ship
 		g.setStroke(new BasicStroke((float) (3)));
 		Camera.scale = 1.25;
@@ -45,6 +61,7 @@ public class BuildScene extends Scene {
 			if (InputManager.mPos.y < 845) {
 				toBuild.drawFree(g, new Point((int) ((InputManager.mPos.x / 50)) * Part.SQUARE_WIDTH * 1.25,
 						(int) ((InputManager.mPos.y / 50)) * Part.SQUARE_WIDTH * 1.25));
+				
 			}
 		}
 		
@@ -101,23 +118,28 @@ public class BuildScene extends Scene {
 
 		if (modes[2]) {
 			if (InputManager.mouseReleased[1] && InputManager.mPos.y < Driver.screenHeight - 150) {
-				if (toBuild.type == "Hull") {
+				int startingSize = s.parts.size();
+				if (toBuild.type == "Hull" && Driver.playerScrap >= Hull.cost) {
 					s.addPart(new Hull(
 							new Point((int) (InputManager.mPos.x / 50) - 18, (int) (InputManager.mPos.y / 50) - 9)));
+					if(s.parts.size() > startingSize) Driver.playerScrap -= Hull.cost;
 				}
-				if (toBuild.type == "Armor") {
+				if (toBuild.type == "Armor" && Driver.playerScrap >= Armor.cost) {
 					s.addPart(new Armor(
 							new Point((int) (InputManager.mPos.x / 50) - 18, (int) (InputManager.mPos.y / 50) - 9)));
+					if(s.parts.size() > startingSize) Driver.playerScrap -= Armor.cost;
 				}
-				if (toBuild.type == "Lazer") {
+				if (toBuild.type == "Lazer" && Driver.playerScrap >= Laser.cost) {
 					s.addPart(new Laser(
 							new Point((int) (InputManager.mPos.x / 50) - 18, (int) (InputManager.mPos.y / 50) - 9),
 							direction));
+					if(s.parts.size() > startingSize) Driver.playerScrap -= Laser.cost;
 				}
-				if (toBuild.type == "Thruster") {
+				if (toBuild.type == "Thruster" && Driver.playerScrap >= Thruster.cost) {
 					s.addPart(new Thruster(
 							new Point((int) (InputManager.mPos.x / 50) - 18, (int) (InputManager.mPos.y / 50) - 9),
 							direction));
+					if(s.parts.size() > startingSize) Driver.playerScrap -= Thruster.cost;
 				}
 			}
 		}
@@ -141,12 +163,30 @@ public class BuildScene extends Scene {
 			} else {
 				changeMode(0);
 			}
-			System.out.println(modes[0]);
 		}
+		if (InputManager.keysReleased[66] && toBuild != null) {
+			if (modes[2]) {
+				changeMode(1);
+			} else {
+				changeMode(2);
+			}
+		}
+		if (InputManager.keysReleased[82]) {
+			if (modes[3]) {
+				changeMode(1);
+			} else {
+				changeMode(3);
+			}
+		}
+		if (InputManager.keysReleased[83]) {
+				changeMode(1);
+		}
+		
+		
 
 		// handling switching of scenes
-		if (InputManager.keysReleased[66]) {
-			InputManager.keysReleased[66] = false;
+		if (InputManager.keysReleased[27]) {
+			InputManager.keysReleased[27] = false;
 			SceneManager.bs.setActive(false);
 			SceneManager.ms.setActive(true);
 		}
@@ -180,12 +220,18 @@ public class BuildScene extends Scene {
 						p.pos.y * Part.SQUARE_WIDTH * 1.25 + (50 * 9), p.width * Part.SQUARE_WIDTH * 1.25,
 						p.height * Part.SQUARE_WIDTH * 1.25);
 				if (InputManager.mPos.inside(r, true)) {
+					//selling adds scrap
+					Driver.playerScrap += (int)((double)p.cost) * .5 * ((double)p.health / (double)p.baseHealth);
 					p.health = -1;
+					
 					s.updateCM();
 					break;
 				}
 
 			}
+		}
+		if(modes[1] && InputManager.mouse[1]) {
+			selection = getSelected();
 		}
 
 	}
@@ -207,6 +253,17 @@ public class BuildScene extends Scene {
 		selectThruster = new Button(new Rect(483 + 148*2, 889, 80, 80), null, 0, "", null,
 				Color.WHITE, true, false);
 
+	}
+	public Part getSelected() {
+		for(Part p : s.parts) {
+			Rect r = new Rect((int) (p.pos.x * Part.SQUARE_WIDTH * 1.25 + (50 * 18)),
+					p.pos.y * Part.SQUARE_WIDTH * 1.25 + (50 * 9), p.width * Part.SQUARE_WIDTH * 1.25,
+					p.height * Part.SQUARE_WIDTH * 1.25);
+			if (InputManager.mPos.inside(r, true)) {
+				return p;
+			}
+		}
+		return null;
 	}
 
 	public void startNew() {

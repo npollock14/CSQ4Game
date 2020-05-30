@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class EnemyShip extends Ship {
+	
 
 	public EnemyShip(Point pos, ArrayList<Part> parts) {
 		super(pos, 0, parts);

@@ -8,14 +8,15 @@ public class Hull extends Part{
 	static int baseHealth = 10;
 	static double mass = 10;
 	static String type = "Hull";
+	static int cost = 2;
 
 	
 	
 	public Hull(Point pos, Point sPos, Point cm, double mass) {
-		super(width, height, baseHealth, pos,type, sPos, cm,mass);
+		super(width, height, baseHealth, pos,type, sPos, cm,mass,cost);
 	}
 	public Hull(Point pos) {
-		super(width, height, baseHealth, pos, type,mass);
+		super(width, height, baseHealth, pos, type,mass,cost);
 	}
 	
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm, boolean drawHealth) {

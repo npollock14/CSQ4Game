@@ -8,14 +8,15 @@ public class Reactor extends Part{
 	static int baseHealth = 30;
 	static double mass = 50;
 	static String type = "Reactor";
+	static int cost = 50;
 
 	
 	
 	public Reactor(Point pos, Point sPos, Point cm, double mass) {
-		super(width, height, baseHealth, pos,type, sPos, cm,mass);
+		super(width, height, baseHealth, pos,type, sPos, cm,mass,cost);
 	}
 	public Reactor() {
-		super(width, height, baseHealth, new Point(0,0), type,mass);
+		super(width, height, baseHealth, new Point(0,0), type,mass,cost);
 	}
 	
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm, boolean drawHealth) {

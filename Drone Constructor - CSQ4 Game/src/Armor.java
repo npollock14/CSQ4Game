@@ -8,13 +8,14 @@ public class Armor extends Part {
 	static double mass = 20;
 	static String type = "Armor";
 	static double deflectionChance = .3;
+	static int cost = 5;
 
 	public Armor(Point pos, Point sPos, Point cm, double mass) {
-		super(width, height, baseHealth, pos, type, sPos, cm, mass);
+		super(width, height, baseHealth, pos, type, sPos, cm, mass,cost);
 	}
 
 	public Armor(Point pos) {
-		super(width, height, baseHealth, pos, type, mass);
+		super(width, height, baseHealth, pos, type, mass,cost);
 	}
 
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm, boolean drawHealth) {

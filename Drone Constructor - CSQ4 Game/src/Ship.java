@@ -221,9 +221,19 @@ public abstract class Ship {
 
 	public void checkDestroyed(Sector s) {
 		if (destroyed == true || parts.size() == 0) {
+			spawnScrap(s);
 			s.ships.remove(this);
 			this.destroyed = true;
+			
+			
 		}
+	}
+
+	public void spawnScrap(Sector s) {
+		for(int i = 0; i < (int)(Math.random() * 20); i++) {
+			s.scrap.add(new ScrapEntity(cm));
+		}
+		
 	}
 
 	public boolean canPlace(Part n) {
@@ -286,6 +296,16 @@ public abstract class Ship {
 		rotate(rot);
 
 		checkDisconnectedParts();
+		
+		for (Part p : parts) {
+			if (p.health <= 0) {
+				mass -= p.mass;
+				parts.remove(p);
+				calculateThrust();
+				updateCM();
+				break;
+			}
+		}
 
 	}
 

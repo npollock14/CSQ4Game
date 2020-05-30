@@ -4,7 +4,8 @@ import java.util.ArrayList;
 public abstract class Part {
 	public static final double SQUARE_WIDTH = 40;
 	int width, height; // in blocks
-	int health;
+	int health,baseHealth;
+	int cost;
 	Point pos; // in blocks from center of ship
 	String type;
 	Poly bounds;
@@ -13,10 +14,11 @@ public abstract class Part {
 	double[] transForces = {0.0,0.0,0.0,0.0};
 	double rotForce = 0.0;
 
-	public Part(int width, int height, int health, Point pos, String type, Point sPos, Point cm, double mass) {
+	public Part(int width, int height, int baseHealth, Point pos, String type, Point sPos, Point cm, double mass, int cost) {
 		this.width = width;
 		this.height = height;
-		this.health = health;
+		this.health = baseHealth;
+		this.baseHealth = baseHealth;
 		this.pos = pos;
 		this.type = type;
 		this.mass = mass;
@@ -25,14 +27,17 @@ public abstract class Part {
 		bounds = new Poly(tlx, tly, tlx + SQUARE_WIDTH * width, tly, tlx + SQUARE_WIDTH * width,
 				tly + SQUARE_WIDTH * height, tlx, tly + SQUARE_WIDTH * height, tlx, tly);
 		bounds.setCenter(cm);
+		this.cost = cost;
 	}
-	public Part(int width, int height, int health, Point pos, String type, double mass) {
+	public Part(int width, int height, int baseHealth, Point pos, String type, double mass, int cost) {
 		this.width = width;
 		this.height = height;
-		this.health = health;
+		this.health = baseHealth;
+		this.baseHealth = baseHealth;
 		this.pos = pos;
 		this.type = type;	
 		this.mass = mass;
+		this.cost = cost;
 	}
 	
 	public Point getCM() {

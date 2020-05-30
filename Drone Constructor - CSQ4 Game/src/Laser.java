@@ -14,17 +14,18 @@ public class Laser extends Part {
 	double maxAngle = 60; // degrees
 	boolean active = true;
 	static double projectileSpeed = 12.0;
+	static int cost = 10;
 	int direction = 0; // 0 = up, 1 = right, 2 = down, 3 = left - clockwise pattern
 
 	public Laser(Point pos, Point sPos, Point cm, double mass, int dir) {
-		super(getW(dir), getH(dir), baseHealth, pos, type, sPos, cm, mass);
+		super(getW(dir), getH(dir), baseHealth, pos, type, sPos, cm, mass,cost);
 		this.direction = dir;
 		this.width = getW(dir);
 		this.height = getH(dir);
 	}
 
 	public Laser(Point pos, int dir) {
-		super(getW(dir), getH(dir), baseHealth, pos, type, mass);
+		super(getW(dir), getH(dir), baseHealth, pos, type, mass,cost);
 		this.direction = dir;
 		this.width = getW(dir);
 		this.height = getH(dir);

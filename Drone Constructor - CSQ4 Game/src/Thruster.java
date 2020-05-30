@@ -11,9 +11,10 @@ public class Thruster extends Part {
 	int direction;
 	double force = 2.0;
 	double rForce = .01;
+	static int cost = 5;
 
 	public Thruster(Point pos, Point sPos, Point cm, double mass, int direction) {
-		super(width, height, baseHealth, pos, type, sPos, cm, mass);
+		super(width, height, baseHealth, pos, type, sPos, cm, mass,cost);
 		this.direction = direction;
 		rotForce = rForce;
 		if(direction == 0) transForces[2] = force; //flame faces up
@@ -24,7 +25,7 @@ public class Thruster extends Part {
 
 
 	public Thruster(Point pos, int direction) { //up right down left 0123
-		super(width, height, baseHealth, pos, type, mass);
+		super(width, height, baseHealth, pos, type, mass,cost);
 		this.direction = direction;
 		rotForce = rForce;
 		if(direction == 0) transForces[2] = force; //flame faces up

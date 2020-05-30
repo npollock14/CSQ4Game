@@ -53,7 +53,7 @@ public class MenuScene extends Scene {
 			SceneManager.bs.edit(p);
 		}
 
-		// e1.shoot(p);
+		p.shoot(e1);
 		s.update();
 		Camera.focus(p.cm);
 	}

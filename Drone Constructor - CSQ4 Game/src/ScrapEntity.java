@@ -3,7 +3,7 @@ import java.awt.Graphics2D;
 public class ScrapEntity {
 	Vec2 vel;
 	Point pos;
-	double drag = .97;
+	double drag = .975;
 	double rotation = 0;
 	double rVel = 0;
 	boolean alive = true;

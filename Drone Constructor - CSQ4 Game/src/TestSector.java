@@ -41,6 +41,10 @@ public class TestSector extends Sector {
 
 	@Override
 	public void draw(Graphics2D g) {
+		
+		for (ScrapEntity s : scrap) {
+			s.draw(g);
+		}
 
 		for (Ship s : ships) {
 			s.draw(g, false);
@@ -48,9 +52,7 @@ public class TestSector extends Sector {
 		for (Projectile p : projectiles) {
 			p.draw(g);
 		}
-		for (ScrapEntity s : scrap) {
-			s.draw(g);
-		}
+		
 	}
 
 	@Override

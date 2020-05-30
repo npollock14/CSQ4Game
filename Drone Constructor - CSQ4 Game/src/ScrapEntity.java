@@ -3,15 +3,17 @@ import java.awt.Graphics2D;
 public class ScrapEntity {
 	Vec2 vel;
 	Point pos;
-	double drag = .95;
+	double drag = .97;
 	double rotation = 0;
 	double rVel = 0;
 	boolean alive = true;
+	int velRandomness = 15;
+	double rotRandom = .05;
 	
 	public ScrapEntity (Point pos){
 		this.pos = new Point(pos.x,pos.y);
-		this.vel = new Vec2((Math.random()-.5) * 5, (Math.random()-.5) * 5);
-		this.rVel = (Math.random() - .5) * 2 * .1;
+		this.vel = new Vec2((Math.random()-.5) * velRandomness, (Math.random()-.5) * velRandomness);
+		this.rVel = (Math.random() - .5) * 2 * rotRandom;
 	}
 	public void draw(Graphics2D g) {
 		if(!alive) return;
@@ -27,13 +29,12 @@ public class ScrapEntity {
 		vel.y *= drag;
 		for(Ship s : se.ships) {
 			if(s.isPlayer) {
-				if(pos.distanceTo(s.cm) < 600) {
-					double dx = s.cm.x - pos.x;
-					double dy = s.cm.y - pos.y;
-					System.out.println(dx + ", " + dy);
+				double d = pos.distanceTo(s.cm);
+				if(d < 600) {
+					Vec2 v = s.cm.subtract(pos).toVec2();
 					
-				vel.x += 10/(dx + 20);
-				vel.y += 10/(dy + 20);
+					
+				vel = vel.add(v.simpleMult(100/(d*d)));
 				}
 				
 				for(Part p : s.parts) {

@@ -27,13 +27,13 @@ public class ScrapEntity {
 		vel.y *= drag;
 		for(Ship s : se.ships) {
 			if(s.isPlayer) {
-				if(pos.distanceTo(s.cm) < 500) {
+				if(pos.distanceTo(s.cm) < 600) {
 					double dx = s.cm.x - pos.x;
 					double dy = s.cm.y - pos.y;
 					System.out.println(dx + ", " + dy);
 					
-				//vel.x += 10/(dx + 20);
-				//vel.y += 10/(dy + 20);
+				vel.x += 10/(dx + 20);
+				vel.y += 10/(dy + 20);
 				}
 				
 				for(Part p : s.parts) {

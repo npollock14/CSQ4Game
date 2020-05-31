@@ -31,5 +31,11 @@ public abstract class Sector {
 		}
 		return null;
 	}
+	public Part getClickShipPart(Ship s) {
+		for(Part p : s.parts) {
+			if(p.bounds.surrounds(Camera.toMap(InputManager.mPos.x, InputManager.mPos.y))) return p;
+		}
+		return null;
+	}
 
 }

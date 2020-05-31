@@ -76,7 +76,9 @@ public class MenuScene extends Scene {
 		//key to select a ship
 			if(InputManager.mouse[1]) {
 				selected = s.getClickShip();
+				//now have a ship selected
 		}
+			
 			//key to move the camera to a ship or area
 			if(InputManager.mouseReleased[2]) {
 				camFocus = s.getClickShip();

@@ -12,9 +12,16 @@ public class BuildScene extends Scene {
 	Button selectArmor;
 	Button selectLaser;
 	Button selectThruster;
+	Button repairAll;
 	boolean[] modes = new boolean[4]; // deleting - 0, selection - 1, build - 2, repair - 3
 	BufferedImage backgroundUI;
 	BufferedImage backgroundUISelection;
+	BufferedImage backgroundUIRepair;
+
+	BufferedImage laserPic;
+	BufferedImage armorPic;
+	BufferedImage hullPic;
+	BufferedImage thrusterPic;
 
 	@Override
 	public void draw(Graphics2D g) {
@@ -31,8 +38,37 @@ public class BuildScene extends Scene {
 		g.setStroke(new BasicStroke((float) (3)));
 		Camera.scale = 1.25;
 		for (Part p : s.parts) {
-			p.draw(g, new Point(50 * 18, 50 * 9), 0, new Point(Driver.screenWidth / 2, Driver.screenHeight / 2),
-					modes[3]);
+			p.draw(g, new Point(50 * 18, 50 * 9), 0, new Point(Driver.screenWidth / 2, Driver.screenHeight / 2), false);
+		}
+		// draw health bars if mode 3
+		if (modes[3]) {
+			g.drawImage(backgroundUIRepair, 0, 0, 1920, 1080, null);
+
+			int total = 0;
+			for (Part p : s.parts) {
+				if (p.health != p.baseHealth)
+					total += (p.baseHealth - p.health) / 4 + 1;
+			}
+			g.setFont(Misc.arialSmall);
+			g.setColor(Color.white);
+			g.drawString("" + total, 206, 803);
+
+			Part repairHover = getSelected();
+			for (Part p : s.parts) {
+				Point pPos = new Point(50 * 18 + (p.pos.x * Part.SQUARE_WIDTH * 1.25) + 5,
+						50 * 9 + (p.pos.y * Part.SQUARE_WIDTH * 1.25) + 5);
+
+				g.setFont(Misc.tiny);
+				drawPartHealth(g, p, pPos, 40, 15, p.health, p.baseHealth);
+
+				if (repairHover != null && repairHover.equals(p)) {
+					g.setColor(Color.green);
+					g.setStroke(new BasicStroke(3));
+					g.drawRect((int) pPos.x - 5, (int) pPos.y - 5, (int) (repairHover.width * Part.SQUARE_WIDTH * 1.25),
+							(int) (repairHover.height * Part.SQUARE_WIDTH * 1.25));
+				}
+
+			}
 		}
 
 		// drawing the free model if in build mode
@@ -62,6 +98,16 @@ public class BuildScene extends Scene {
 											: (int) (((double) selection.cost) * .5
 													* ((double) selection.health / (double) selection.baseHealth))),
 					1658, 450);
+			g.setFont(Misc.fpsFont);
+			Point pPos = new Point(50 * 18 + (selection.pos.x * Part.SQUARE_WIDTH * 1.25) + 5,
+					50 * 9 + (selection.pos.y * Part.SQUARE_WIDTH * 1.25) + 5);
+			g.setFont(Misc.tiny);
+			drawPartHealth(g, selection, pPos, 40, 15, selection.health, selection.baseHealth);
+			g.setColor(Color.WHITE);
+			g.setStroke(new BasicStroke(3));
+			g.drawRect((int) pPos.x - 5, (int) pPos.y - 5, (int) (selection.width * Part.SQUARE_WIDTH * 1.25),
+					(int) (selection.height * Part.SQUARE_WIDTH * 1.25));
+
 		}
 
 		// draw player scrap amt
@@ -90,10 +136,35 @@ public class BuildScene extends Scene {
 		}
 		g.setColor(Color.BLACK);
 
+		g.setStroke(new BasicStroke(1));
+
+		// draw ship stats
+		g.setFont(Misc.arialVerySmall);
+		g.setColor(Color.WHITE);
+		g.drawString("Max Foward Speed: " + (int) ((s.transForces[0] * 2462.0 / s.mass / Sector.sectorDrag)) + " mph",
+				1534, 925);
+		g.drawString("Max Rotation Speed: " + (int) ((s.rotForce * 2462.0 * 181.0 / s.mass / Sector.sectorDrag))
+				+ " deg/sec", 1534, 950);
+		g.drawString("Mass: " + s.mass / 10 + "k lbs", 1534, 975);
+
 		selectHull.draw(g, 10, 30);
 		selectArmor.draw(g, 10, 30);
 		selectLaser.draw(g, 10, 30);
 		selectThruster.draw(g, 10, 30);
+
+		// repairAll.draw(g);
+
+	}
+
+	private void drawPartHealth(Graphics2D g, Part p, Point pos, int w, int h, int curr, int total) {
+		g.setStroke(new BasicStroke(2));
+		g.setColor(Color.white);
+		g.fillRect((int) pos.x, (int) pos.y, (int) w, (int) h);
+		g.setColor(Color.green);
+		g.fillRect((int) pos.x, (int) pos.y, w * curr / total, h);
+		g.setColor(Color.black);
+		g.drawRect((int) pos.x, (int) pos.y, (int) w, (int) h);
+		g.drawString(p.health + "/" + p.baseHealth, (int) (pos.x + 3), (int) (pos.y + 12));
 
 	}
 
@@ -113,6 +184,27 @@ public class BuildScene extends Scene {
 		selectArmor.update();
 		selectLaser.update();
 		selectThruster.update();
+
+		if (modes[3]) {
+			repairAll.update();
+			if (repairAll.clicked) {
+				int total = 0;
+				boolean canRepair = false;
+				for (Part p : s.parts) {
+
+					if (p.baseHealth - p.health != 0) {
+						canRepair = true;
+						total += (p.baseHealth - p.health) / 4 + 1;
+					}
+				}
+				if (canRepair && Driver.playerScrap >= total) {
+					for (Part p : s.parts) {
+						p.health = p.baseHealth;
+					}
+					Driver.playerScrap -= total;
+				}
+			}
+		}
 
 		// check for broken parts
 		s.checkBrokenParts();
@@ -237,6 +329,16 @@ public class BuildScene extends Scene {
 			selection = getSelected();
 		}
 
+		if (modes[3] && InputManager.mouseReleased[1]) {
+			Part hov = getSelected();
+			if (hov != null && hov.health != hov.baseHealth) {
+				if (Driver.playerScrap >= (hov.baseHealth - hov.health) / 4 + 1) {
+					Driver.playerScrap -= (hov.baseHealth - hov.health) / 4 + 1;
+					hov.health = hov.baseHealth;
+				}
+			}
+		}
+
 	}
 
 	@Override
@@ -244,13 +346,20 @@ public class BuildScene extends Scene {
 
 		backgroundUI = Misc.loadImage("/buildSceneUI.png");
 		backgroundUISelection = Misc.loadImage("/buildSceneUISelection.png");
+		backgroundUIRepair = Misc.loadImage("/buildSceneRepairUI.png");
 
-		changeMode(3);
+		laserPic = Misc.loadImage("/laser.png");
+		armorPic = Misc.loadImage("/armor.png");
+		hullPic = Misc.loadImage("/hull.png");
+		thrusterPic = Misc.loadImage("/thruster.png");
+
+		changeMode(1);
 
 		selectHull = new Button(new Rect(331, 889, 80, 80), null, 0, "", null, Color.WHITE, true, false);
 		selectArmor = new Button(new Rect(479, 889, 80, 80), null, 0, "", null, Color.WHITE, true, false);
 		selectLaser = new Button(new Rect(481 + 148, 889, 80, 80), null, 0, "", null, Color.WHITE, true, false);
 		selectThruster = new Button(new Rect(483 + 148 * 2, 889, 80, 80), null, 0, "", null, Color.WHITE, true, false);
+		repairAll = new Button(new Rect(16, 763, 258, 58), null, 0, "", null, Color.WHITE, true, false);
 
 	}
 

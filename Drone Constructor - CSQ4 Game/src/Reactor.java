@@ -1,4 +1,5 @@
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -20,7 +21,7 @@ public class Reactor extends Part{
 	}
 	
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm, boolean drawHealth) {
-		
+		g.setStroke(new BasicStroke((float) (3 * Camera.scale)));
 		g.rotate(sRot, cm.x, cm.y);
 		
 		int x1 = (int) (sPos.x + pos.x * SQUARE_WIDTH * Camera.scale);
@@ -28,6 +29,8 @@ public class Reactor extends Part{
 		int w1 = (int) (width * Camera.scale * SQUARE_WIDTH);
 		int h1 = (int) (height * Camera.scale * SQUARE_WIDTH);
 		
+		//hb.curr = health;
+		//hb.pos = new Point(x1, y1);
 		
 		g.setColor(new Color(172, 255, 143));
 		g.fillRect(x1,y1,w1,h1); 
@@ -35,9 +38,10 @@ public class Reactor extends Part{
 		g.drawRect(x1, y1,w1, h1);
 		
 		if(drawHealth) {
-			g.setFont(Misc.smallTitleFont);
-			g.setColor(Color.black);
-			g.drawString(""+health, x1+7, y1 + 35);
+			//hb.draw(g);
+//			g.setFont(Misc.smallTitleFont);
+//			g.setColor(Color.black);
+//			g.drawString(""+health, x1+7, y1 + 35);
 			}
 		
 		g.rotate(-sRot, cm.x, cm.y);

@@ -135,7 +135,9 @@ public class Driver extends JPanel
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		try {
 		InputManager.keys[e.getKeyCode()] = true;
+		}catch(Exception ee) {}
 
 	}
 

@@ -1,3 +1,4 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Vector;
@@ -46,13 +47,16 @@ public class Laser extends Part {
 	}
 
 	public void draw(Graphics2D g, Point sPos, double sRot, Point cm, boolean drawHealth) {
-
+		g.setStroke(new BasicStroke((float) (3 * Camera.scale)));
 		g.rotate(sRot, cm.x, cm.y);
 
 		int x1 = (int) (sPos.x + pos.x * SQUARE_WIDTH * Camera.scale);
 		int y1 = (int) (sPos.y + pos.y * Camera.scale * SQUARE_WIDTH);
 		int w1 = (int) (width * Camera.scale * SQUARE_WIDTH);
 		int h1 = (int) (height * Camera.scale * SQUARE_WIDTH);
+		
+		//hb.curr = health;
+		//hb.pos = new Point(x1, y1);
 
 		g.setColor(new Color(255, 145, 145));
 		g.fillRect(x1, y1, w1, h1);
@@ -76,16 +80,13 @@ public class Laser extends Part {
 		}
 
 		if(drawHealth) {
-			g.setFont(Misc.smallTitleFont);
-			g.setColor(Color.black);
-			g.drawString(""+health, x1+7, y1 + 35);
+			//hb.draw(g);
 			}
 		
 		g.rotate(-sRot, cm.x, cm.y);
 
 		
-		hb.curr = health;
-		hb.pos = new Point(x1, y1);
+		
 		
 		// g.setColor(Color.green);
 		// Camera.toScreen(getCM()).fillCircle(g, (int) (2*Camera.scale));

@@ -147,7 +147,7 @@ public abstract class Ship {
 	public void draw(Graphics2D g, boolean drawHealth) {
 		
 		for (Part p : parts) {
-			g.setStroke(new BasicStroke((float) (3 * Camera.scale)));
+			
 			p.draw(g, Camera.toScreen(pos), rotation, Camera.toScreen(cm), drawHealth);
 
 		}

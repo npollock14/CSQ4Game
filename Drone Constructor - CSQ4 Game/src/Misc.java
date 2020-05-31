@@ -22,11 +22,14 @@ public class Misc {
 	static Font fBig = new Font("Press Start", 0, 82);
 	static Font font = new Font("Courier New", 1, 25);
 	static Font titleFont = new Font("Dialog", 3, 50);
+	static Font tiny = new Font("Dialog", 0, 12);
 	static Font smallTitleFont = new Font("Dialog", 3, 30);
 	static Font smallestTitleFont = new Font("Dialog", 1, 17);
 	static Font fpsFont = new Font("Impact", 1, 25);
 	static Font fancyTitleFont = new Font("TimesRoman", 3, 82);
 	static Font arialBig = new Font("Arial", 1, 80);
+	static Font arialSmall = new Font("Arial", 1, 33);
+	static Font arialVerySmall = new Font("Arial", 1, 20);
 	static Color darkGreen = new Color(0,102,0);
 
 	public static BufferedImage loadImage(String path) {

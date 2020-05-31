@@ -32,9 +32,6 @@ public class MenuScene extends Scene {
 		g.setColor(Color.black);
 		s.draw(g);
 		
-		for(Part pt : p.parts) {
-			pt.hb.draw(g);
-		}
 
 
 		
@@ -115,10 +112,9 @@ public class MenuScene extends Scene {
 				new Armor(new Point(0, 1)), new Laser(new Point(0, -2), 0), new Thruster(new Point(-1, 2), 2),
 				new Thruster(new Point(1, 2), 2));
 		// e1.vel.x += 5;
-		s.ships.add(e1);
+		//s.ships.add(e1);
 		s.ships.add(p);
 
-		p.cmdMove(0, 1);
 
 	}
 

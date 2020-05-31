@@ -355,10 +355,10 @@ public class BuildScene extends Scene {
 
 		changeMode(1);
 
-		selectHull = new Button(new Rect(331, 889, 80, 80), null, 0, "", null, Color.WHITE, true, false);
-		selectArmor = new Button(new Rect(479, 889, 80, 80), null, 0, "", null, Color.WHITE, true, false);
-		selectLaser = new Button(new Rect(481 + 148, 889, 80, 80), null, 0, "", null, Color.WHITE, true, false);
-		selectThruster = new Button(new Rect(483 + 148 * 2, 889, 80, 80), null, 0, "", null, Color.WHITE, true, false);
+		selectHull = new Button(new Rect(331, 889, 80, 80), hullPic, 0, "", null, Color.WHITE, true, false);
+		selectArmor = new Button(new Rect(479, 889, 80, 80), armorPic, 0, "", null, Color.WHITE, true, false);
+		selectLaser = new Button(new Rect(481 + 148, 889, 80, 80), laserPic, 0, "", null, Color.WHITE, true, false);
+		selectThruster = new Button(new Rect(483 + 148 * 2, 889, 80, 80), thrusterPic, 0, "", null, Color.WHITE, true, false);
 		repairAll = new Button(new Rect(16, 763, 258, 58), null, 0, "", null, Color.WHITE, true, false);
 
 	}

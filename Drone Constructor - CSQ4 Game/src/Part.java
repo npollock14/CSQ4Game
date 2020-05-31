@@ -13,6 +13,7 @@ public abstract class Part {
 	ArrayList<Projectile> projectilesToAdd = new ArrayList<Projectile>();
 	double[] transForces = {0.0,0.0,0.0,0.0};
 	double rotForce = 0.0;
+	HealthBar hb;
 
 	public Part(int width, int height, int baseHealth, Point pos, String type, Point sPos, Point cm, double mass, int cost) {
 		this.width = width;
@@ -28,6 +29,7 @@ public abstract class Part {
 				tly + SQUARE_WIDTH * height, tlx, tly + SQUARE_WIDTH * height, tlx, tly);
 		bounds.setCenter(cm);
 		this.cost = cost;
+		hb = new HealthBar(health, baseHealth, bounds.getCenter(), 50, 25);
 	}
 	public Part(int width, int height, int baseHealth, Point pos, String type, double mass, int cost) {
 		this.width = width;
@@ -38,6 +40,7 @@ public abstract class Part {
 		this.type = type;	
 		this.mass = mass;
 		this.cost = cost;
+		hb = new HealthBar(health, baseHealth, new Point(0,0), 50, 25);
 	}
 	
 	public Point getCM() {
@@ -57,6 +60,10 @@ public abstract class Part {
 	}
 
 	public abstract void draw(Graphics2D g, Point sPos, double sRot, Point cm, boolean drawHealth);
+	
+	public void drawHealthBar(Graphics2D g) {
+		
+	}
 	
 	public abstract void drawFree(Graphics2D g, Point p);
 

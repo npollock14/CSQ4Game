@@ -31,6 +31,10 @@ public class MenuScene extends Scene {
 		}
 		g.setColor(Color.black);
 		s.draw(g);
+		
+		for(Part pt : p.parts) {
+			pt.hb.draw(g);
+		}
 
 
 		
@@ -78,6 +82,7 @@ public class MenuScene extends Scene {
 				selected = s.getClickShip();
 				//now have a ship selected
 		}
+			
 			
 			//key to move the camera to a ship or area
 			if(InputManager.mouseReleased[2]) {

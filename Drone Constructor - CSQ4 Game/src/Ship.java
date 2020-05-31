@@ -154,6 +154,8 @@ public abstract class Ship {
 		g.setColor(Color.RED);
 		Camera.toScreen(cm).fillCircle(g, (int) (2 * Camera.scale));
 		g.setColor(Color.BLACK);
+		
+		
 	}
 
 	public abstract void update(Sector s);

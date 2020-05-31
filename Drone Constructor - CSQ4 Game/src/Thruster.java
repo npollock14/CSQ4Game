@@ -74,6 +74,10 @@ public class Thruster extends Part {
 		
 
 		g.rotate(-sRot, cm.x, cm.y);
+		
+		
+		hb.curr = health;
+		hb.pos = new Point(x1, y1);
 
 		// g.setColor(Color.green);
 		// Camera.toScreen(getCM()).fillCircle(g, (int) (2*Camera.scale));

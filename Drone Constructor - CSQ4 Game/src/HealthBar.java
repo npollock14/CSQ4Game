@@ -17,8 +17,15 @@ public class HealthBar {
 	}
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.black);
+		
 		g.setStroke(new BasicStroke(1));
+		g.setColor(Color.white);
+		g.fillRect(Camera.toXScreen(pos.x), Camera.toYScreen(pos.y), (int)(w * Camera.scale), (int)(h * Camera.scale));
+		g.setColor(Color.black);
 		g.drawRect(Camera.toXScreen(pos.x), Camera.toYScreen(pos.y), (int)(w * Camera.scale), (int)(h * Camera.scale));
+		g.setColor(Color.green);
+		g.fillRect(Camera.toXScreen(pos.x+1), Camera.toYScreen(pos.y + 1), (int)(w * Camera.scale / (curr/total)-2), (int)(h * Camera.scale-2));
+		
+	
 	}
 }

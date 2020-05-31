@@ -9,8 +9,8 @@ public class Thruster extends Part {
 	static double mass = 10;
 	static String type = "Thruster";
 	int direction;
-	double force = 2.0;
-	double rForce = .01;
+	double force = 4.0;
+	double rForce = .02;
 	static int cost = 5;
 
 	public Thruster(Point pos, Point sPos, Point cm, double mass, int direction) {

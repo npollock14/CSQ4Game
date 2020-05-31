@@ -241,7 +241,7 @@ public abstract class Ship {
 			Rect nBounds = new Rect(n.pos.x, n.pos.y, n.width, n.height);
 			Rect pBounds = new Rect(p.pos.x, p.pos.y, p.width, p.height);
 			if (nBounds.getCM().inside(pBounds, true)) {
-				System.out.println(n.type + " @ " + n.pos.toString() + " could not be placed");
+				//System.out.println(n.type + " @ " + n.pos.toString() + " could not be placed");
 				return false;
 			}
 
@@ -278,7 +278,7 @@ public abstract class Ship {
 
 				p.bounds.setCenter(cm);
 				parts.add(p);
-				System.out.println(p.type + " @ " + p.pos.toString() + " placed");
+				//System.out.println(p.type + " @ " + p.pos.toString() + " placed");
 			}
 		}
 		// for(double d : transForces) System.out.println(d);

@@ -23,23 +23,23 @@ public class Grid {
 		while (open.size() >= 1) {
 			Node curr = getLoF(open);
 			//System.out.print("========================== Chosen: ");
-			curr.pos.print();
+			//curr.pos.print();
 			if (!curr.start) {
 				//System.out.print("Parent: ");
-				curr.parent.pos.print();
+				//curr.parent.pos.print();
 			}
 			//System.out.println("OPEN: ");
 			for (Node n : open) {
 				//n.pos.print();
 				if (!n.start) {
 					//System.out.print("Parent: ");
-					curr.parent.pos.print();
+					//curr.parent.pos.print();
 				}
 				//System.out.println("GCOST: " + n.gCost + " SCOST: " + n.sCost + " FCOST: " + n.fCost);
 
 			}
 			if (!curr.start) {
-				curr.parent.pos.print();
+				//curr.parent.pos.print();
 			}
 			open.remove(curr);
 			closed.add(curr);
@@ -85,7 +85,7 @@ public class Grid {
 		pathTree.add(n);
 
 		for (Node node : pathTree) {
-			node.pos.print();
+			//node.pos.print();
 		}
 
 	}
@@ -130,8 +130,8 @@ public class Grid {
 					// add new node
 					Node n = new Node(tempPos, false, tempPos.isSamePosition(b), tempPos.isSamePosition(a),
 							getGCost(tempPos, b), 0, curr);
-					System.out.println("Created (" + n.pos.x + ", " + n.pos.y + ") and set their parent to: ("
-							+ curr.pos.x + ", " + curr.pos.y + ")");
+					//System.out.println("Created (" + n.pos.x + ", " + n.pos.y + ") and set their parent to: ("
+					//		+ curr.pos.x + ", " + curr.pos.y + ")");
 					n.sCost = getSCost(n);
 					n.fCost = n.sCost + n.gCost;
 					neighbors.add(n);

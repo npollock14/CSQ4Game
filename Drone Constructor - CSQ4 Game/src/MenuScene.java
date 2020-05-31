@@ -9,6 +9,8 @@ public class MenuScene extends Scene {
 	Ship camFocus = null;
 	
 	Ship selected = null;
+	
+	Ship target = null;
 
 	TestSector s = new TestSector();
 
@@ -18,7 +20,16 @@ public class MenuScene extends Scene {
 	@Override
 	public void draw(Graphics2D g) {
 		
-		s.drawBasicGrid(g, 50000, (int)(100*(1/Math.sqrt((Camera.scale)))), 2);
+		s.drawBasicGrid(g, 1000000, (int)(100*(1/Math.sqrt((Camera.scale)))), 2);
+		g.setFont(Misc.font);
+		g.setColor(Color.BLACK);
+		g.drawString((int)(p.vel.getMagnitude() * 20) + " mph", 1000, 30);
+		
+		if(target != null) {
+			g.setPaint(new Color(255,0,0,70));
+			Camera.toScreen(target.cm).fillCircle(g, (int)(150 * Camera.scale));
+		}
+		g.setColor(Color.black);
 		s.draw(g);
 
 
@@ -71,11 +82,15 @@ public class MenuScene extends Scene {
 				camFocus = s.getClickShip();
 				if(camFocus == null) Camera.focus(Camera.toMap(InputManager.mPos.x, InputManager.mPos.y));
 			}
+			if(InputManager.mouseReleased[3]) {
+				target = s.getClickShip();
+				if(target != null) p.shoot(target);
+			}
 			if(camFocus != null) Camera.focus(camFocus.cm);
 			//if(selected != null) selected.vel.print();
 			
 
-		p.shoot(e1);
+		
 		s.update();
 	}
 

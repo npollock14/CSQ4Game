@@ -36,7 +36,7 @@ public class Driver extends JPanel
 	ArrayList<Long> fps = new ArrayList<Long>();
 	long frameStart = 0;
 	
-	static int playerScrap = 20;
+	static int playerScrap = 200;
 	
 	static BufferedImage scrapIcon = Misc.loadImage("/scrap.png");
 

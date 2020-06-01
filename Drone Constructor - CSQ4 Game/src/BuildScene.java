@@ -115,7 +115,7 @@ public class BuildScene extends Scene {
 		g.setColor(Color.white);
 		g.drawString("" + Driver.playerScrap, 1733, 72);
 
-		// to draw where mouse is - temp
+		// TODO remove before flight: to draw where mouse is - temp
 		if (InputManager.mouse[2]) {
 			System.out.println(InputManager.mPos.toString());
 		}

@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -41,6 +42,12 @@ public class Misc {
 			System.exit(1); // if image is not loaded dont run game
 		}
 		return null;
+	}
+	
+	public static double gau(double mean, double sd) {
+		Random r = new Random();
+		return (r.nextGaussian() * sd + mean);
+
 	}
 	 
 	public static String[] read(String location) {

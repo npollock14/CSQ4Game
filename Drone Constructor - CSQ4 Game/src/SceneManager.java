@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class SceneManager {
 	static ArrayList<Scene> scenes = new ArrayList<Scene>();
-	static MenuScene ms = new MenuScene(); //menu scene
-	static BuildScene bs = new BuildScene();
+	static BattleScene ms = new BattleScene(); //menu scene
+	static BuildScene bs = new BuildScene(); //build scene
 	
 	public static void update() {
 		for (Scene s : scenes) {

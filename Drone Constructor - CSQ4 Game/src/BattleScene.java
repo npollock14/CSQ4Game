@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-public class MenuScene extends Scene {
+public class BattleScene extends Scene {
 	PlayerShip p;
 	EnemyShip e1;
 	

@@ -9,6 +9,7 @@ public class StarMap extends Scene {
 	Sector currSector;
 	Sector endSector;
 	Sector selected;
+	Sector hover;
 	int jumpDist = 350;
 	double rSkipChance = .1;
 	int sX = 6;
@@ -19,8 +20,10 @@ public class StarMap extends Scene {
 	Button jump;
 
 	public void draw(Graphics2D g) {
+		g.setColor(new Color(30,30,30));
+		g.fillRect(0, 0, Driver.screenWidth, Driver.screenHeight);
 
-		g.setColor(Color.black);
+		g.setColor(Color.white);
 		for (Sector s : sectors) {
 			if (!s.equals(currSector)) {
 				if (s.pos.distanceTo(currSector.pos) < jumpDist) {
@@ -37,13 +40,27 @@ public class StarMap extends Scene {
 		currSector.pos.fillCircle(g, 10);
 		g.setColor(Color.blue);
 		endSector.pos.fillCircle(g, 10);
-		g.setColor(Color.BLACK);
+		g.setColor(Color.white);
 		g.setFont(Misc.arialSmall);
 		g.drawString("YOU", (int) currSector.pos.x, (int) currSector.pos.y - 30);
 		g.drawString("FINISH", (int) endSector.pos.x, (int) endSector.pos.y - 30);
 //System.out.println(selected == null);
-		if (selected != null)
+		if (selected != null && selected.pos.distanceTo(currSector.pos) < jumpDist)
+			{
 			jump.draw(g);
+			g.setFont(Misc.arialBig);
+			g.setColor(Color.white);
+			g.drawString("JUMP", 1920/2 - 100, 1010 - 80);
+			g.setStroke(new BasicStroke(3));
+			g.setColor(Color.white);
+			selected.pos.drawCircle(g, 10);
+			}
+		if(hover != null) {
+			g.setStroke(new BasicStroke(3));
+			g.setColor(Color.white);
+			hover.pos.drawCircle(g, 10);
+		}
+		
 	}
 
 	public void init() {
@@ -65,7 +82,7 @@ public class StarMap extends Scene {
 				endSector = s;
 		}
 
-		jump = new Button(new Rect(100,100,100,100), null, 0, "JUMP", Misc.arialSmall, Color.gray, true, false);
+		jump = new Button(new Rect(820,860,300,100), null, 0, "JUMP", null, Color.gray, true, false);
 	}
 
 	@Override
@@ -87,6 +104,13 @@ public class StarMap extends Scene {
 			}
 			
 		}
+		for (Sector s : sectors) {
+			if (InputManager.mPos.distanceTo(s.pos) < 50 && s != currSector) {
+				hover = s;
+				break;
+			}
+			hover = null;
+		}
 
 		if(jump.clicked && selected != null) {
 			if(selected.pos.distanceTo(currSector.pos) < jumpDist) {
@@ -96,7 +120,7 @@ public class StarMap extends Scene {
 				player.vel = new Vec2(0,0);
 				player.rVel = 0.0;
 				currSector.ships.add(player);
-				SceneManager.sm.setActive(false);
+				this.running = false;
 				SceneManager.hs.init();
 				SceneManager.hs.setActive(true);
 			}

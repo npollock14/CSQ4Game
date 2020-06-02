@@ -72,7 +72,7 @@ if(version == 0) { //basic enemies
 		while(pos.distanceTo(new Point(0,0)) < 2000) {
 			pos = new Point(Misc.rBt(-4000, 4000), Misc.rBt(-4000, 4000));
 		}
-		Ship e = new EnemyShip(new Point(Misc.rBt(-2000, 2000), Misc.rBt(-2000, 2000)));
+		Ship e = new EnemyShip(new Point(pos.x, pos.y));
 		e.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new Armor(new Point(-1, 0)),
 				new Armor(new Point(0, 1)), new Laser(new Point(0, -2), 0), new Thruster(new Point(-1, 2), 2),
 				new Thruster(new Point(1, 2), 2));

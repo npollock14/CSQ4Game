@@ -7,29 +7,36 @@ public class StarMap extends Scene {
 
 	ArrayList<Sector> sectors = new ArrayList<Sector>();
 	Sector currSector;
+	Sector endSector;
 	int jumpDist = 350;
 	double rSkipChance = .1;
 	int sX = 6;
-	int sY = 4;
+	int sY = 5;
 
 	public void draw(Graphics2D g) {
-		g.setColor(Color.blue);
 
 		g.setColor(Color.black);
 		for (Sector s : sectors) {
-			for (Sector s2 : sectors) {
-				if (!s.equals(s2)) {
-					if (s.pos.distanceTo(s2.pos) < jumpDist) {
+				if (!s.equals(currSector)) {
+					if (s.pos.distanceTo(currSector.pos) < jumpDist) {
 						g.setStroke(new BasicStroke(1));
-						s.pos.drawLine(g, s2.pos);
+						currSector.pos.drawLine(g, s.pos);
 					}
 				}
 			}
-		}
+		
 		for (Sector s : sectors) {
-
 			s.pos.fillCircle(g, 5);
 		}
+		g.setColor(Color.GREEN);
+		currSector.pos.fillCircle(g, 10);
+		g.setColor(Color.blue);
+		endSector.pos.fillCircle(g, 10);
+		g.setColor(Color.BLACK);
+		g.setFont(Misc.arialSmall);
+		g.drawString("YOU", (int)currSector.pos.x, (int)currSector.pos.y - 30);
+		g.drawString("FINISH", (int)endSector.pos.x, (int)endSector.pos.y - 30);
+		
 
 	}
 
@@ -44,9 +51,12 @@ public class StarMap extends Scene {
 			}
 		}
 		currSector = sectors.get(0);
+		endSector = sectors.get(0);
 		for (Sector s : sectors) {
-			if (s.pos.x < s.pos.x)
+			if (s.pos.x < currSector.pos.x)
 				currSector = s;
+			if(s.pos.x > endSector.pos.x)
+				endSector = s;
 		}
 	}
 

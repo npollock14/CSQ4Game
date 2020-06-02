@@ -77,6 +77,9 @@ return (x >= r.pos.x && x <= r.pos.x + r.w && y >= r.pos.y && y <= r.pos.y + r.h
 	public void fillCircle(Graphics2D g, int r) {
 		g.fillOval((int)(x - r), (int)(y-r),r*2, r*2);
 	}
+	public void drawCircle(Graphics2D g, int r) {
+		g.drawOval((int)(x - r), (int)(y-r),r*2, r*2);
+	}
 	
 	public void drawLine(Graphics g, Point p) {
 		g.drawLine((int)this.x, (int)this.y, (int)p.x, (int)p.y);

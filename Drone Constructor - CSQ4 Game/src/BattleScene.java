@@ -31,6 +31,9 @@ public class BattleScene extends Scene {
 			g.setPaint(new Color(255, 0, 0, 70));
 			Camera.toScreen(target.cm).fillCircle(g, (int) (150 * Camera.scale));
 		}
+		
+		SceneManager.sm.currSector.draw(g);
+		
 		g.setColor(Color.BLACK);
 
 		g.drawImage(ui, 0, 0, 1920, 1010, null);
@@ -52,7 +55,7 @@ public class BattleScene extends Scene {
 		g.setColor(Color.BLACK);
 		g.drawString((int) (p.vel.getMagnitude() * 20) + " mph", 1760, 564 - (int) (564 * ((p.vel.getMagnitude() * 20)
 				/ (int) ((p.transForces[0] * 2462.0 / p.mass / Sector.sectorDrag)))) + 120);
-		SceneManager.sm.currSector.draw(g);
+		
 		
 		//shipYard.draw(g);
 		//starMap.draw(g);
@@ -141,7 +144,7 @@ public class BattleScene extends Scene {
 		
 		shipYard = new Button(new Rect(0,912,307,100), null, 0, "", null, Color.white, true, false);
 		starMap = new Button(new Rect(310,912,307,100), null, 0, "", null, Color.white, true, false);
-		Point sPos = new Point(Driver.screenWidth / 2, Driver.screenHeight / 2);
+		Point sPos = new Point(0,0);
 
 		p = new PlayerShip(sPos);
 		p.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new Armor(new Point(-1, 0)),

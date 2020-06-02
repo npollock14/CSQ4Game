@@ -54,6 +54,17 @@ public abstract class Ship {
 			vel.y += pow * (transForces[direction] * Math.cos(rotation - (direction * Math.PI / 2)) / mass);
 		}
 	}
+	
+	public void teleport(Point nPos) {
+		
+		for(Part p : parts)
+		{
+			p.bounds.translate(nPos.subtract(pos).toVec2());
+		}
+		
+		cm.add(nPos.subtract(pos).toVec2());
+		pos.add(nPos.subtract(pos).toVec2());
+	}
 
 	public void applyDrag(double coeff) {
 		vel.x *= coeff;

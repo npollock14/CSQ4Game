@@ -59,6 +59,7 @@ public class BattleScene extends Scene {
 		
 		//shipYard.draw(g);
 		//starMap.draw(g);
+		
 
 	}
 
@@ -157,6 +158,7 @@ public class BattleScene extends Scene {
 //				new Thruster(new Point(1, 2), 2));
 		// e1.vel.x += 5;
 		// s.ships.add(e1);
+		SceneManager.sm.player = p;
 		SceneManager.sm.currSector.ships.add(p);
 
 		camFocus = p;

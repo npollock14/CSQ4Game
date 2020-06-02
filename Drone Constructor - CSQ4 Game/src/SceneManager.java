@@ -7,6 +7,7 @@ public class SceneManager {
 	static BattleScene ms = new BattleScene(); //menu scene
 	static BuildScene bs = new BuildScene(); //build scene
 	static StarMap sm = new StarMap(); //build scene
+	static HyperspaceScene hs = new HyperspaceScene();
 	
 	public static void update() {
 		for (Scene s : scenes) {
@@ -44,6 +45,7 @@ public class SceneManager {
 		scenes.add(ms);
 		scenes.add(bs);
 		scenes.add(sm);
+		scenes.add(hs);
 	}
 
 }

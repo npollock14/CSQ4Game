@@ -65,6 +65,15 @@ public class StarMap extends Scene {
 			g.setColor(Color.white);
 			hover.pos.drawCircle(g, 30);
 		}
+		if(currSector.clear) {
+			g.setFont(Misc.arialSmall);
+			g.setColor(Color.green);
+			g.drawString("Sector Clear", 25, 950);
+		}else {
+			g.setFont(Misc.arialSmall);
+			g.setColor(Color.red);
+			g.drawString("Sector NOT Clear", 25, 950);
+		}
 		
 	}
 
@@ -117,7 +126,7 @@ public class StarMap extends Scene {
 			hover = null;
 		}
 
-		if(jump.clicked && selected != null) {
+		if(jump.clicked && selected != null && currSector.clear) {
 			if(selected.pos.distanceTo(currSector.pos) < jumpDist) {
 				currSector.ships.remove(player);
 				currSector = selected;

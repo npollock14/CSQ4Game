@@ -25,9 +25,12 @@ public class BuildScene extends Scene {
 
 	@Override
 	public void draw(Graphics2D g) {
+		
+		g.setColor(new Color(36, 36, 36));
+		g.fillRect(0, 0, Driver.screenWidth, Driver.screenHeight);
 
 		// draw lines
-		g.setColor(Color.black);
+		g.setColor(new Color(87, 87, 87));
 		for (int i = 0; i < Driver.screenWidth; i += 50) {
 			new Point(i, 0).drawLine(g, new Point(i, Driver.screenHeight));
 			if (i < Driver.screenHeight)
@@ -51,7 +54,7 @@ public class BuildScene extends Scene {
 			}
 			g.setFont(Misc.arialSmall);
 			g.setColor(Color.white);
-			g.drawString("" + total, 206, 803);
+			g.drawString("" + total, 195, 803);
 
 			Part repairHover = getSelected();
 			for (Part p : s.parts) {
@@ -156,7 +159,7 @@ public class BuildScene extends Scene {
 
 	}
 
-	private void drawPartHealth(Graphics2D g, Part p, Point pos, int w, int h, int curr, int total) {
+	public void drawPartHealth(Graphics2D g, Part p, Point pos, int w, int h, int curr, int total) {
 		g.setStroke(new BasicStroke(2));
 		g.setColor(Color.white);
 		g.fillRect((int) pos.x, (int) pos.y, (int) w, (int) h);
@@ -338,6 +341,8 @@ public class BuildScene extends Scene {
 				}
 			}
 		}
+		
+		
 
 	}
 

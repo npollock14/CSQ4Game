@@ -111,7 +111,7 @@ public class Laser extends Part {
 			if (direction == 3) {
 				firePoint = bounds.segs.get(3).getP1().avg(bounds.segs.get(3).getP2());
 			}
-			if(s.target != null) {
+			if(s.target != null && s.partTarget == null) {
 			if (canHitTarget(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel, s.rotation)) {
 				s.projectiles.add(new LaserBolt(firePoint,
 						getVel(s.target.parts.get(0).getCM(), firePoint, s.vel, s.target.vel).add(s.vel), 1000,
@@ -120,6 +120,15 @@ public class Laser extends Part {
 				return;
 			}
 			}
+			if(s.target != null && s.partTarget != null) {
+				if (canHitTarget(s.partTarget.getCM(), firePoint, s.vel, s.target.vel, s.rotation)) {
+					s.projectiles.add(new LaserBolt(firePoint,
+							getVel(s.partTarget.getCM(), firePoint, s.vel, s.target.vel).add(s.vel), 1000,
+							damage));
+					timeSinceLastShot = 0;
+					return;
+				}
+				}
 			if(s.pTarget != null) {
 				if (canHitTarget(s.pTarget, firePoint, s.vel, new Vec2(0,0), s.rotation)) {
 					s.projectiles.add(new LaserBolt(firePoint,
@@ -192,13 +201,13 @@ public class Laser extends Part {
 		if (direction == 0) {
 			return Math.abs(Ship.getAngleDiff(angle, sRot + Math.PI/2)) < Math.toRadians(60);
 		}
-		if (direction == 1) {
+		if (direction == 3) {
 			return Math.abs(Ship.getAngleDiff(angle, sRot)) < Math.toRadians(60);	
 		}
 		if (direction == 2) {
 			return Math.abs(Ship.getAngleDiff(angle, sRot - Math.PI/2)) < Math.toRadians(60);
 		}
-		if (direction == 3) {
+		if (direction == 1) {
 			return Math.abs(Ship.getAngleDiff(angle, sRot - Math.PI)) < Math.toRadians(60);	
 		}
 		

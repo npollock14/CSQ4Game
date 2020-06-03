@@ -18,6 +18,7 @@ public abstract class Ship {
 	boolean shoot = false;
 	Ship target;
 	Point pTarget;
+	Part partTarget;
 	boolean destroyed = false;
 
 	double[] transForces = { 0.0, 0.0, 0.0, 0.0 }; // up, right, down, left - clockwise
@@ -383,17 +384,28 @@ public abstract class Ship {
 	public void shoot(Ship s) {
 		shoot = true;
 		target = s;
+		partTarget = null;
+		pTarget = null;
+	}
+	public void shoot(Part p) {
+		shoot = true;
+		partTarget = p;
+		pTarget = null;
 	}
 
 	public void shoot(Point p) {
 		shoot = true;
 		pTarget = new Point(p.x, p.y);
+		target = null;
+		partTarget = null;
 	}
 
 	public void ceaseFire() {
 		shoot = false;
 		target = null;
 		pTarget = null;
+		partTarget = null;
+		
 	}
 
 }

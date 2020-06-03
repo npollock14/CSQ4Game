@@ -8,6 +8,7 @@ public class SceneManager {
 	static BuildScene bs = new BuildScene(); //build scene
 	static StarMap sm = new StarMap(); //build scene
 	static HyperspaceScene hs = new HyperspaceScene();
+	static WinScene ws = new WinScene();
 	
 	public static void update() {
 		for (Scene s : scenes) {
@@ -46,6 +47,7 @@ public class SceneManager {
 		scenes.add(bs);
 		scenes.add(sm);
 		scenes.add(hs);
+		scenes.add(ws);
 	}
 
 }

@@ -11,6 +11,9 @@ public class TestSector extends Sector {
 
 	@Override
 	public void update() {
+		if(ships.size() == 1) {
+			clear = true;
+		}
 		Camera.changeScale(InputManager.scroll / 2);
 		try {
 			for (Ship s : ships) {

@@ -1,4 +1,6 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -11,6 +13,7 @@ public class BattleScene extends Scene {
 	Ship selected = null;
 
 	Ship target = null;
+	Part partTarget = null;
 
 	BufferedImage ui = Misc.loadImage("/battleScene.png");
 
@@ -24,6 +27,13 @@ public class BattleScene extends Scene {
 
 	@Override
 	public void draw(Graphics2D g) {
+
+		if (InputManager.keys[75]) {
+			this.running = false;
+		}
+		if (InputManager.keys[76]) {
+			this.running = true;
+		}
 		g.setColor(new Color(36, 36, 36));
 		g.fillRect(0, 0, Driver.screenWidth, Driver.screenHeight);
 
@@ -31,8 +41,9 @@ public class BattleScene extends Scene {
 		SceneManager.sm.currSector.drawBasicGrid(g, 1000000, (int) (100 * (1 / Math.sqrt((Camera.scale)))), 2);
 
 		if (target != null) {
-			g.setPaint(new Color(255, 0, 0, 70));
-			Camera.toScreen(target.cm).fillCircle(g, (int) (150 * Camera.scale));
+			g.setPaint(new Color(255, 0, 0, 200));
+			g.setStroke(new BasicStroke((int) (3 * Camera.scale)));
+			Camera.toScreen(target.cm).drawCircle(g, (int) (150 * Camera.scale));
 		}
 
 		SceneManager.sm.currSector.draw(g);
@@ -52,34 +63,95 @@ public class BattleScene extends Scene {
 				* ((p.vel.getMagnitude() * 20) / (int) ((p.transForces[0] * 2462.0 / p.mass / Sector.sectorDrag)))), 33,
 				(int) (564 * ((p.vel.getMagnitude() * 20)
 						/ (int) ((p.transForces[0] * 2462.0 / p.mass / Sector.sectorDrag)))));
-		// System.out.println(((int)((p.transForces[0]/p.mass)*110 -
-		// (p.vel.getMagnitude() * Sector.sectorDrag))));
-		// g.fillRect(1825, (int)(677 - 564*((int)((p.transForces[0]/p.mass)*110 -
-		// (p.vel.getMagnitude() * Sector.sectorDrag)) / (p.transForces[0]/p.mass))),
-		// 33, 564);
 		g.setFont(Misc.font);
 		g.setColor(Color.LIGHT_GRAY);
 		g.drawString((int) (p.vel.getMagnitude() * 20) + " mph", 1760, 564 - (int) (564
 				* ((p.vel.getMagnitude() * 20) / (int) ((p.transForces[0] * 2462.0 / p.mass / Sector.sectorDrag))))
 				+ 120);
 
+		// show selected ship
+		if (selected != null && !selected.destroyed) {
+			g.setColor(Color.LIGHT_GRAY);
+			Camera.toScreen(selected.cm).drawCircle(g, (int) (150 * Camera.scale));
+		}
+
+		for (Ship s : SceneManager.sm.currSector.ships) {
+			for (Part p : s.parts) {
+				if (p.health < p.baseHealth && Camera.scale > .5) {
+					g.rotate(s.rotation, Camera.toXScreen(s.cm.x), Camera.toYScreen(s.cm.y));
+					drawPartHealth(g, p,
+							Camera.toScreen(new Point(s.pos.x + p.pos.x * Part.SQUARE_WIDTH,
+									s.pos.y + p.pos.y * Part.SQUARE_WIDTH)),
+							(int) (40 * Camera.scale), (int) (15 * Camera.scale), p.health, p.baseHealth);
+					g.rotate(-s.rotation, Camera.toXScreen(s.cm.x), Camera.toYScreen(s.cm.y));
+				}
+			}
+		}
+
+		if (partTarget != null) {
+			g.rotate(target.rotation, Camera.toXScreen(target.cm.x), Camera.toYScreen(target.cm.y));
+			g.setColor(Color.red);
+			outlinePart(g,
+					Camera.toScreen(new Point(target.pos.x + partTarget.pos.x * Part.SQUARE_WIDTH,
+							target.pos.y + partTarget.pos.y * Part.SQUARE_WIDTH)),
+					(int) (partTarget.width * Part.SQUARE_WIDTH * Camera.scale),
+					(int) (partTarget.height * Part.SQUARE_WIDTH * Camera.scale));
+			g.rotate(-target.rotation, Camera.toXScreen(target.cm.x), Camera.toYScreen(target.cm.y));
+		}
+
 		// shipYard.draw(g);
 		// starMap.draw(g);
+
 		minimap.mc.focus(Camera.toMap(Driver.screenWidth / 2, Driver.screenHeight / 2));
 		minimap.draw(g, SceneManager.sm.currSector.ships);
+
+		if (!running) {
+			g.setPaint(new Color(0,0,0,128));
+			g.fillRect(0, 0, Driver.screenWidth, Driver.screenHeight);
+			g.setColor(Color.white);
+			g.setFont(Misc.arialBig);
+			g.drawString("Paused - [L] to resume", Driver.screenWidth/2 - 400, Driver.screenHeight/2);
+		}
+
+	}
+
+	public void outlinePart(Graphics2D g, Point pos, int w, int h) {
+
+		g.drawRect((int) pos.x, (int) pos.y, (int) w, (int) h);
+		new Point(pos.x + w / 2, pos.y + h / 2).fillCircle(g, (int) (10 * Camera.scale));
+
+	}
+
+	public void drawPartHealth(Graphics2D g, Part p, Point pos, int w, int h, int curr, int total) {
+		g.setStroke(new BasicStroke((int) (2 * Camera.scale)));
+		g.setColor(Color.white);
+		g.fillRect((int) pos.x, (int) pos.y, (int) w, (int) h);
+		g.setColor(Color.green);
+		g.fillRect((int) pos.x, (int) pos.y, w * curr / total, h);
+		g.setColor(Color.black);
+		g.drawRect((int) pos.x, (int) pos.y, (int) w, (int) h);
+		// g.setFont(new Font("Arial", 0, (int)(12 * Camera.scale)));
+		// g.drawString(p.health + "/" + p.baseHealth, (int) (pos.x + 3), (int) (pos.y +
+		// 12));
 
 	}
 
 	@Override
 	public void update() {
+		
+		if(SceneManager.sm.endSector.clear && SceneManager.sm.currSector.pos.isSame(SceneManager.sm.endSector.pos)) {
+			System.out.println("WON");
+			this.setActive(false);
+			SceneManager.ws.setActive(true);
+		}
 
 		shipYard.update();
 		starMap.update();
 
 		// TODO remove before flight: to draw where mouse is - temp
-		if (InputManager.mouse[2]) {
-			System.out.println(InputManager.mPos.toString());
-		}
+//		if (InputManager.mouse[2]) {
+//			System.out.println(InputManager.mPos.toString());
+//		}
 
 		if (InputManager.keys[81])
 			p.cmdRotate(false);
@@ -129,18 +201,32 @@ public class BattleScene extends Scene {
 			if (camFocus == null)
 				Camera.focus(Camera.toMap(InputManager.mPos.x, InputManager.mPos.y));
 		}
+		if (partTarget != null && partTarget.health <= 0)
+			partTarget = null;
+
+		if (partTarget == null && target != null)
+			p.shoot(target);
+
+		if (partTarget == null && target == null)
+			p.ceaseFire();
+
+		if (target != null && InputManager.mouseReleased[3] && !target.destroyed) {
+			partTarget = SceneManager.sm.currSector.getClickShipPart(target);
+			p.shoot(partTarget);
+		}
+
 		if (InputManager.mouseReleased[3]) {
 			target = SceneManager.sm.currSector.getClickShip();
-			if (target != null) {
+			if (target != null && partTarget == null) {
 				p.shoot(target);
-			} else {
-				p.ceaseFire();
 			}
 		}
-		if (target != null && target.destroyed) {
+		if (target != null && (target.destroyed || target.isPlayer)) {
 			target = null;
+			partTarget = null;
 			p.ceaseFire();
 		}
+
 		if (camFocus != null)
 			Camera.focus(camFocus.cm);
 		// if(selected != null) selected.vel.print();

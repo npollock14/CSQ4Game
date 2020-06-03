@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Sector {
 	static double sectorDrag = .992;
+	boolean clear = false;
 	
 	Point pos;
 	

@@ -97,6 +97,7 @@ public class StarMap extends Scene {
 		}
 
 		jump = new Button(new Rect(820,860,300,100), null, 0, "JUMP", null, Color.gray, true, false);
+		currSector = endSector;
 	}
 
 	@Override

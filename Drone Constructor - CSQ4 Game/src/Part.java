@@ -16,6 +16,8 @@ public abstract class Part {
 	//HealthBar hb;
 	
 	public abstract Part clone();
+	
+	public abstract String instantiateCMD();
 
 	public Part(int width, int height, int baseHealth, Point pos, String type, Point sPos, Point cm, double mass, int cost) {
 		this.width = width;

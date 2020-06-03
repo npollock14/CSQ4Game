@@ -17,6 +17,12 @@ public class Hull extends Part{
 		return new Hull(new Point(this.pos.x,this.pos.y));
 	}
 	
+	
+	@Override
+	public String instantiateCMD() {
+		return "new Hull(new Point(" + (int)pos.x + ", " + (int)pos.y + "))";
+	}
+	
 	public Hull(Point pos, Point sPos, Point cm, double mass) {
 		super(width, height, baseHealth, pos,type, sPos, cm,mass,cost);
 	}

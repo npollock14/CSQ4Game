@@ -16,6 +16,10 @@ public class Reactor extends Part{
 		
 		return new Reactor();
 	}
+	@Override
+	public String instantiateCMD() {
+		return "";
+	}
 	
 	public Reactor(Point pos, Point sPos, Point cm, double mass) {
 		super(width, height, baseHealth, pos,type, sPos, cm,mass,cost);

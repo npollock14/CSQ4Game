@@ -18,6 +18,11 @@ public class Armor extends Part {
 		return new Armor(new Point(this.pos.x,this.pos.y));
 	}
 	
+	@Override
+	public String instantiateCMD() {
+		return "new Armor(new Point(" + (int)pos.x + ", " + (int)pos.y + "))";
+	}
+	
 	public Armor(Point pos, Point sPos, Point cm, double mass) {
 		super(width, height, baseHealth, pos, type, sPos, cm, mass,cost);
 	}
@@ -92,6 +97,8 @@ public class Armor extends Part {
 		g.drawRect((int)p.x,(int)p.y,(int)(SQUARE_WIDTH * Camera.scale),(int)(SQUARE_WIDTH*Camera.scale));
 		
 	}
+
+	
 
 	
 

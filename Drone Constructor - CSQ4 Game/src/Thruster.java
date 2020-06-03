@@ -20,6 +20,10 @@ public class Thruster extends Part {
 		
 		return new Thruster(new Point(this.pos.x,this.pos.y), this.direction);
 	}
+	@Override
+	public String instantiateCMD() {
+		return "new Thruster(new Point(" + (int)pos.x + ", " + (int)pos.y + "), " + direction + ")";
+	}
 	
 
 	public Thruster(Point pos, Point sPos, Point cm, double mass, int direction) {

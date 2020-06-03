@@ -25,6 +25,11 @@ public class Laser extends Part {
 		return new Laser(new Point(this.pos.x,this.pos.y), this.direction);
 	}
 	
+	@Override
+	public String instantiateCMD() {
+		return "new Laser(new Point(" + (int)pos.x + ", " + (int)pos.y + "), " + direction + ")";
+	}
+	
 	public Laser(Point pos, Point sPos, Point cm, double mass, int dir) {
 		super(getW(dir), getH(dir), baseHealth, pos, type, sPos, cm, mass,cost);
 		this.direction = dir;

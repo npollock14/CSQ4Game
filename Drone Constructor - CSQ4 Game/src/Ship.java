@@ -167,6 +167,12 @@ public abstract class Ship {
 		g.setColor(Color.BLACK);
 		
 		
+		if(!isPlayer) {
+			g.setColor(Color.GRAY);
+			g.setStroke(new BasicStroke((int)(Camera.scale * 3)));
+			Camera.toScreen(cm).drawCircle(g, (int)(2500 * Camera.scale));
+		}
+		
 	}
 
 	public abstract void update(Sector s);

@@ -13,9 +13,9 @@ public class BattleScene extends Scene {
 	Ship target = null;
 
 	BufferedImage ui = Misc.loadImage("/battleScene.png");
-	
+
 	MiniMap minimap = new MiniMap(1605, 695, 310, 315, .03);
-	
+
 	Button shipYard;
 	Button starMap;
 
@@ -29,15 +29,14 @@ public class BattleScene extends Scene {
 
 		g.setColor(new Color(87, 87, 87));
 		SceneManager.sm.currSector.drawBasicGrid(g, 1000000, (int) (100 * (1 / Math.sqrt((Camera.scale)))), 2);
-		
 
 		if (target != null) {
 			g.setPaint(new Color(255, 0, 0, 70));
 			Camera.toScreen(target.cm).fillCircle(g, (int) (150 * Camera.scale));
 		}
-		
+
 		SceneManager.sm.currSector.draw(g);
-		
+
 		g.setColor(Color.BLACK);
 
 		g.drawImage(ui, 0, 0, 1920, 1010, null);
@@ -53,24 +52,27 @@ public class BattleScene extends Scene {
 				* ((p.vel.getMagnitude() * 20) / (int) ((p.transForces[0] * 2462.0 / p.mass / Sector.sectorDrag)))), 33,
 				(int) (564 * ((p.vel.getMagnitude() * 20)
 						/ (int) ((p.transForces[0] * 2462.0 / p.mass / Sector.sectorDrag)))));
-	//	System.out.println(((int)((p.transForces[0]/p.mass)*110 - (p.vel.getMagnitude() * Sector.sectorDrag))));
-		//g.fillRect(1825, (int)(677 - 564*((int)((p.transForces[0]/p.mass)*110 - (p.vel.getMagnitude() * Sector.sectorDrag)) / (p.transForces[0]/p.mass))), 33, 564);
+		// System.out.println(((int)((p.transForces[0]/p.mass)*110 -
+		// (p.vel.getMagnitude() * Sector.sectorDrag))));
+		// g.fillRect(1825, (int)(677 - 564*((int)((p.transForces[0]/p.mass)*110 -
+		// (p.vel.getMagnitude() * Sector.sectorDrag)) / (p.transForces[0]/p.mass))),
+		// 33, 564);
 		g.setFont(Misc.font);
 		g.setColor(Color.LIGHT_GRAY);
-		g.drawString((int) (p.vel.getMagnitude() * 20) + " mph", 1760, 564 - (int) (564 * ((p.vel.getMagnitude() * 20)
-				/ (int) ((p.transForces[0] * 2462.0 / p.mass / Sector.sectorDrag)))) + 120);
-		
-		
-		//shipYard.draw(g);
-		//starMap.draw(g);
-		minimap.mc.focus(Camera.toMap(Driver.screenWidth/2, Driver.screenHeight/2));
-minimap.draw(g, SceneManager.sm.currSector.ships);
+		g.drawString((int) (p.vel.getMagnitude() * 20) + " mph", 1760, 564 - (int) (564
+				* ((p.vel.getMagnitude() * 20) / (int) ((p.transForces[0] * 2462.0 / p.mass / Sector.sectorDrag))))
+				+ 120);
+
+		// shipYard.draw(g);
+		// starMap.draw(g);
+		minimap.mc.focus(Camera.toMap(Driver.screenWidth / 2, Driver.screenHeight / 2));
+		minimap.draw(g, SceneManager.sm.currSector.ships);
 
 	}
 
 	@Override
 	public void update() {
-		
+
 		shipYard.update();
 		starMap.update();
 
@@ -91,14 +93,22 @@ minimap.draw(g, SceneManager.sm.currSector.ships);
 			p.cmdMove(3, 1);
 		if (InputManager.keys[39])
 			p.cmdMove(1, 1);
-		if (InputManager.keys[87])
+		if (InputManager.keys[87]) {
 			Camera.yOff += 10 * (1 / Camera.scale);
-		if (InputManager.keys[83])
+			camFocus = null;
+		}
+		if (InputManager.keys[83]) {
 			Camera.yOff -= 10 * (1 / Camera.scale);
-		if (InputManager.keys[68])
+			camFocus = null;
+		}
+		if (InputManager.keys[68]) {
+			camFocus = null;
 			Camera.xOff -= 10 * (1 / Camera.scale);
-		if (InputManager.keys[65])
+		}
+		if (InputManager.keys[65]) {
+			camFocus = null;
 			Camera.xOff += 10 * (1 / Camera.scale);
+		}
 
 		// key to go to build area - b
 		if (InputManager.keysReleased[66] || shipYard.clicked) {
@@ -121,8 +131,15 @@ minimap.draw(g, SceneManager.sm.currSector.ships);
 		}
 		if (InputManager.mouseReleased[3]) {
 			target = SceneManager.sm.currSector.getClickShip();
-			if (target != null)
+			if (target != null) {
 				p.shoot(target);
+			} else {
+				p.ceaseFire();
+			}
+		}
+		if (target != null && target.destroyed) {
+			target = null;
+			p.ceaseFire();
 		}
 		if (camFocus != null)
 			Camera.focus(camFocus.cm);
@@ -130,10 +147,11 @@ minimap.draw(g, SceneManager.sm.currSector.ships);
 
 		SceneManager.sm.currSector.update();
 	}
+
 	public void swtichToStarMap() {
 		SceneManager.ms.setActive(false);
 		SceneManager.sm.setActive(true);
-		
+
 	}
 
 	public void swtichToBuild() {
@@ -145,22 +163,24 @@ minimap.draw(g, SceneManager.sm.currSector.ships);
 
 	@Override
 	public void init() {
-		
+
 		SceneManager.sm.init();
-		
-		shipYard = new Button(new Rect(0,912,307,100), null, 0, "", null, Color.white, true, false);
-		starMap = new Button(new Rect(310,912,307,100), null, 0, "", null, Color.white, true, false);
-		Point sPos = new Point(0,0);
+
+		shipYard = new Button(new Rect(0, 912, 307, 100), null, 0, "", null, Color.white, true, false);
+		starMap = new Button(new Rect(310, 912, 307, 100), null, 0, "", null, Color.white, true, false);
+		Point sPos = new Point(0, 0);
 
 		p = new PlayerShip(sPos);
 		p.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new Armor(new Point(-1, 0)),
 				new Armor(new Point(0, 1)), new Laser(new Point(0, -2), 0), new Thruster(new Point(-1, 2), 2),
 				new Thruster(new Point(1, 2), 2));
 
-//		e1 = new EnemyShip(new Point(300, 200));
-//		e1.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new Armor(new Point(-1, 0)),
-//				new Armor(new Point(0, 1)), new Laser(new Point(0, -2), 0), new Thruster(new Point(-1, 2), 2),
-//				new Thruster(new Point(1, 2), 2));
+		// e1 = new EnemyShip(new Point(300, 200));
+		// e1.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new
+		// Armor(new Point(-1, 0)),
+		// new Armor(new Point(0, 1)), new Laser(new Point(0, -2), 0), new Thruster(new
+		// Point(-1, 2), 2),
+		// new Thruster(new Point(1, 2), 2));
 		// e1.vel.x += 5;
 		// s.ships.add(e1);
 		SceneManager.sm.player = p;

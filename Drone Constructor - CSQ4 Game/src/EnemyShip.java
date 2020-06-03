@@ -27,9 +27,9 @@ public class EnemyShip extends Ship {
 		for(Ship s : sec.ships) {
 			if(s.isPlayer && !s.destroyed) {
 				
-				if(cm.distanceTo(s.cm) < 1500) {
+				if(cm.distanceTo(s.cm) < 2500) {
 					this.shoot(s);
-					if(cm.distanceTo(s.cm) > 800) {
+					if(cm.distanceTo(s.cm) > 900) {
 					this.cmdMoveTo(s.cm);
 					}else {
 						this.cmdRotateTo(cm.angleTo(s.cm) - Math.PI/2);
@@ -38,6 +38,7 @@ public class EnemyShip extends Ship {
 				return;
 			}
 		}
+		//TODO wander code here
 		this.ceaseFire();
 		
 	}

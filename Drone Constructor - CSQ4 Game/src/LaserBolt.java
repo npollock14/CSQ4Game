@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class LaserBolt extends Projectile{
-	static double maxLifeSpan = 180;
+	static double maxLifeSpan = 90;
 
 	public LaserBolt(Point pos, Vec2 vel, double maxLifeSpan, double damage) {
 		super(pos, vel, maxLifeSpan, damage);
@@ -20,7 +20,7 @@ public class LaserBolt extends Projectile{
 	@Override
 	public void draw(Graphics2D g) {
 		g.setColor(Color.red);
-		Camera.toScreen(pos).fillCircle(g, (int) (2*Camera.scale));
+		Camera.toScreen(pos).fillCircle(g, (int) (7*Camera.scale));
 	}
 
 	

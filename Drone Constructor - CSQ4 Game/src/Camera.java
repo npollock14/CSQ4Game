@@ -21,7 +21,7 @@ public class Camera {
 		scale = Math.pow(2, scaleNotches);
 		
 		if(Camera.scale > 5.0) Camera.setScale(Math.log(5) / Math.log(2));
-		if(Camera.scale < .25) Camera.setScale(Math.log(.25) / Math.log(2));
+		if(Camera.scale < .1) Camera.setScale(Math.log(.1) / Math.log(2));
 		
 	}
 	public static void setScale(double notches) {

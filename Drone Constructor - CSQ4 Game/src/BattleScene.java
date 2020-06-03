@@ -14,6 +14,8 @@ public class BattleScene extends Scene {
 
 	BufferedImage ui = Misc.loadImage("/battleScene.png");
 	
+	MiniMap minimap = new MiniMap(1605, 695, 310, 315, .03);
+	
 	Button shipYard;
 	Button starMap;
 
@@ -22,8 +24,10 @@ public class BattleScene extends Scene {
 
 	@Override
 	public void draw(Graphics2D g) {
-		
+		g.setColor(new Color(36, 36, 36));
+		g.fillRect(0, 0, Driver.screenWidth, Driver.screenHeight);
 
+		g.setColor(new Color(87, 87, 87));
 		SceneManager.sm.currSector.drawBasicGrid(g, 1000000, (int) (100 * (1 / Math.sqrt((Camera.scale)))), 2);
 		
 
@@ -52,14 +56,15 @@ public class BattleScene extends Scene {
 	//	System.out.println(((int)((p.transForces[0]/p.mass)*110 - (p.vel.getMagnitude() * Sector.sectorDrag))));
 		//g.fillRect(1825, (int)(677 - 564*((int)((p.transForces[0]/p.mass)*110 - (p.vel.getMagnitude() * Sector.sectorDrag)) / (p.transForces[0]/p.mass))), 33, 564);
 		g.setFont(Misc.font);
-		g.setColor(Color.BLACK);
+		g.setColor(Color.LIGHT_GRAY);
 		g.drawString((int) (p.vel.getMagnitude() * 20) + " mph", 1760, 564 - (int) (564 * ((p.vel.getMagnitude() * 20)
 				/ (int) ((p.transForces[0] * 2462.0 / p.mass / Sector.sectorDrag)))) + 120);
 		
 		
 		//shipYard.draw(g);
 		//starMap.draw(g);
-		
+		minimap.mc.focus(Camera.toMap(Driver.screenWidth/2, Driver.screenHeight/2));
+minimap.draw(g, SceneManager.sm.currSector.ships);
 
 	}
 
@@ -99,7 +104,7 @@ public class BattleScene extends Scene {
 		if (InputManager.keysReleased[66] || shipYard.clicked) {
 			swtichToBuild();
 		}
-		if (InputManager.keysReleased[83] || starMap.clicked) {
+		if (InputManager.keysReleased[77] || starMap.clicked) {
 			swtichToStarMap();
 		}
 		// key to select a ship

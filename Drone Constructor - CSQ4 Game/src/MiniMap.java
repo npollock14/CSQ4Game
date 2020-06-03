@@ -4,15 +4,28 @@ import java.util.ArrayList;
 
 public class MiniMap {
 	Rect bounds;
-	double scale = 1.0/10.0; //1 px map = 10 px game
-	MiniCam mc = new MiniCam(0,0,scale, (int)bounds.w,(int)bounds.h);
+	double scale; //1 px map = 10 px game
+	MiniCam mc;
+	
+	public MiniMap(int x,int y, int w, int h, double scale) {
+		this.bounds = new Rect(x,y,w,h);
+		this.scale = scale;
+		this.mc = new MiniCam(x, y, scale, w, h);
+	}
 
 	public void draw(Graphics2D g, ArrayList<Ship> ships) {
+		g.setPaint(new Color(0, 175, 201,128));
+		g.fillRect((int)bounds.pos.x, (int)bounds.pos.y, (int)bounds.w, (int)bounds.h);
 		for(Ship s : ships) {
 		g.setColor(Color.RED);
 			if(s.isPlayer) g.setColor(Color.green);
 			
-			Point loc = new Point(s.cm.x, s.cm.y);
+			Point loc = new Point(mc.toXScreen((int)(s.cm.x ))  + bounds.pos.x, mc.toYScreen((int)(s.cm.y)) + bounds.pos.y);
+			if(loc.x > bounds.pos.x + bounds.w) loc.x = bounds.pos.x + bounds.w;
+			if(loc.x < bounds.pos.x) loc.x = bounds.pos.x;
+			if(loc.y > bounds.pos.y + bounds.h) loc.y = bounds.pos.y + bounds.h;
+			if(loc.y < bounds.pos.y) loc.y = bounds.pos.y;
+			loc.fillCircle(g, 5);
 			
 		}
 	}

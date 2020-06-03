@@ -25,9 +25,10 @@ public class EnemyShip extends Ship {
 		cm.add(vel);
 		addProjectiles(sec);
 		for(Ship s : sec.ships) {
-			if(s.isPlayer) {
-				this.shoot(s);
+			if(s.isPlayer && !s.destroyed) {
+				
 				if(cm.distanceTo(s.cm) < 1500) {
+					this.shoot(s);
 					if(cm.distanceTo(s.cm) > 800) {
 					this.cmdMoveTo(s.cm);
 					}else {

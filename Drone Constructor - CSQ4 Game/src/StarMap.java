@@ -1,6 +1,7 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class StarMap extends Scene {
@@ -14,6 +15,8 @@ public class StarMap extends Scene {
 	double rSkipChance = .1;
 	int sX = 6;
 	int sY = 5;
+	
+	BufferedImage star = Misc.loadImage("/star.png");
 	
 	Ship player;
 
@@ -34,12 +37,13 @@ public class StarMap extends Scene {
 		}
 
 		for (Sector s : sectors) {
-			s.pos.fillCircle(g, 5);
+			g.drawImage(star, (int)s.pos.x - star.getWidth()/4, (int)s.pos.y - star.getHeight()/4,star.getWidth()/2, star.getHeight()/2, null);
 		}
+		g.setStroke(new BasicStroke(6));
 		g.setColor(Color.GREEN);
-		currSector.pos.fillCircle(g, 10);
+		currSector.pos.drawCircle(g, 30);
 		g.setColor(Color.blue);
-		endSector.pos.fillCircle(g, 10);
+		endSector.pos.drawCircle(g, 30);
 		g.setColor(Color.white);
 		g.setFont(Misc.arialSmall);
 		g.drawString("YOU", (int) currSector.pos.x, (int) currSector.pos.y - 30);
@@ -51,14 +55,15 @@ public class StarMap extends Scene {
 			g.setFont(Misc.arialBig);
 			g.setColor(Color.white);
 			g.drawString("JUMP", 1920/2 - 100, 1010 - 80);
-			g.setStroke(new BasicStroke(3));
-			g.setColor(Color.white);
-			selected.pos.drawCircle(g, 10);
+			g.setStroke(new BasicStroke(6));
+			g.setColor(Color.CYAN);
+			selected.pos.drawCircle(g, 30);
+			currSector.pos.drawDashedLine(g, selected.pos);
 			}
 		if(hover != null) {
-			g.setStroke(new BasicStroke(3));
+			g.setStroke(new BasicStroke(6));
 			g.setColor(Color.white);
-			hover.pos.drawCircle(g, 10);
+			hover.pos.drawCircle(g, 30);
 		}
 		
 	}

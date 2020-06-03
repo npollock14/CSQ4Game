@@ -68,11 +68,11 @@ public class TestSector extends Sector {
 	@Override
 	public void init() {
 if(version == 0) { //basic enemies
-	int num = Misc.rBt(2, 3);
+	int num = Misc.rBt(2, 4);
 	for(int i = 0; i < num; i++) {
-		Point pos = new Point(Misc.rBt(-4000, 4000), Misc.rBt(-4000, 4000));
+		Point pos = new Point(Misc.rBt(-8000, 8000), Misc.rBt(-8000, 8000));
 		while(pos.distanceTo(new Point(0,0)) < 2600) {
-			pos = new Point(Misc.rBt(-4000, 4000), Misc.rBt(-4000, 4000));
+			pos = new Point(Misc.rBt(-8000, 8000), Misc.rBt(-8000, 8000));
 		}
 		ships.add(ShipList.getShip(pos, (int)(Math.random() * (ShipList.ships.size()))));
 	}

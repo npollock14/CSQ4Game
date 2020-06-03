@@ -336,16 +336,16 @@ public abstract class Ship {
 		}
 		
 		//print ship so that can make lots 
-		System.out.print(".addPart(");
-		for(int i = 0; i < parts.size(); i++) {
-			if(!parts.get(i).type.equals("Reactor")) {
-				
-				System.out.print(parts.get(i).instantiateCMD());
-				if(i != parts.size()-1) System.out.print(", ");
-				
-			}
-		}
-		System.out.println(");");
+//		System.out.print(".addPart(");
+//		for(int i = 0; i < parts.size(); i++) {
+//			if(!parts.get(i).type.equals("Reactor")) {
+//				
+//				System.out.print(parts.get(i).instantiateCMD());
+//				if(i != parts.size()-1) System.out.print(", ");
+//				
+//			}
+//		}
+//		System.out.println(");");
 
 	}
 

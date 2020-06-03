@@ -13,6 +13,14 @@ public class Thruster extends Part {
 	double force = 4.0;
 	double rForce = .02;
 	static int cost = 5;
+	
+	
+	@Override
+	public Part clone() {
+		
+		return new Thruster(new Point(this.pos.x,this.pos.y), this.direction);
+	}
+	
 
 	public Thruster(Point pos, Point sPos, Point cm, double mass, int direction) {
 		super(width, height, baseHealth, pos, type, sPos, cm, mass,cost);

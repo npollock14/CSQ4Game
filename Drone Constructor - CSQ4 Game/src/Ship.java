@@ -23,6 +23,14 @@ public abstract class Ship {
 
 	double[] transForces = { 0.0, 0.0, 0.0, 0.0 }; // up, right, down, left - clockwise
 	double rotForce = 0.0;
+	
+	public Ship clone() {
+		EnemyShip s = new EnemyShip(new Point(this.pos.x,this.pos.y));
+		for(Part p : parts) {
+			s.addPart(p.clone());
+		}
+		return s;
+	}
 
 	public Ship(Point pos, double rotation, ArrayList<Part> parts) {
 		this.pos = pos;

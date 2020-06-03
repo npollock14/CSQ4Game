@@ -71,14 +71,10 @@ if(version == 0) { //basic enemies
 	int num = Misc.rBt(2, 3);
 	for(int i = 0; i < num; i++) {
 		Point pos = new Point(Misc.rBt(-4000, 4000), Misc.rBt(-4000, 4000));
-		while(pos.distanceTo(new Point(0,0)) < 2000) {
+		while(pos.distanceTo(new Point(0,0)) < 2600) {
 			pos = new Point(Misc.rBt(-4000, 4000), Misc.rBt(-4000, 4000));
 		}
-		Ship e = new EnemyShip(new Point(pos.x, pos.y));
-		e.addPart(new Armor(new Point(0, 0)), new Armor(new Point(1, 0)), new Armor(new Point(-1, 0)),
-				new Armor(new Point(0, 1)), new Laser(new Point(0, -2), 0), new Thruster(new Point(-1, 2), 2),
-				new Thruster(new Point(1, 2), 2));
-		ships.add(e);
+		ships.add(ShipList.getShip(pos, (int)(Math.random() * (ShipList.ships.size()))));
 	}
 }
 if(version == 1) {//transport

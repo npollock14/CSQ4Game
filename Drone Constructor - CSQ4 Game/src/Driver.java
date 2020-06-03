@@ -71,6 +71,7 @@ public class Driver extends JPanel
 	private void init() {
 		System.out.println("Initializing...");
 		SceneManager.initManager();
+		ShipList.makeShips();
 		SceneManager.ms.init();
 		SceneManager.bs.init();
 		SceneManager.ms.setActive(true);

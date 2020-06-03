@@ -14,6 +14,8 @@ public abstract class Part {
 	double[] transForces = {0.0,0.0,0.0,0.0};
 	double rotForce = 0.0;
 	//HealthBar hb;
+	
+	public abstract Part clone();
 
 	public Part(int width, int height, int baseHealth, Point pos, String type, Point sPos, Point cm, double mass, int cost) {
 		this.width = width;

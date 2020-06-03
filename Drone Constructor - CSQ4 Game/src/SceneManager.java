@@ -9,6 +9,7 @@ public class SceneManager {
 	static StarMap sm = new StarMap(); //build scene
 	static HyperspaceScene hs = new HyperspaceScene();
 	static WinScene ws = new WinScene();
+	static LoseScene ls = new LoseScene();
 	
 	public static void update() {
 		for (Scene s : scenes) {
@@ -48,6 +49,7 @@ public class SceneManager {
 		scenes.add(sm);
 		scenes.add(hs);
 		scenes.add(ws);
+		scenes.add(ls);
 	}
 
 }

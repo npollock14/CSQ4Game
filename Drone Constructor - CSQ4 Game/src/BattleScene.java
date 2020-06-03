@@ -140,9 +140,14 @@ public class BattleScene extends Scene {
 	public void update() {
 		
 		if(SceneManager.sm.endSector.clear && SceneManager.sm.currSector.pos.isSame(SceneManager.sm.endSector.pos)) {
-			System.out.println("WON");
+			System.out.println("Game WON");
 			this.setActive(false);
 			SceneManager.ws.setActive(true);
+		}
+		if(p.destroyed) {
+			System.out.println("Game LOST");
+			this.setActive(false);
+			SceneManager.ls.setActive(true);
 		}
 
 		shipYard.update();

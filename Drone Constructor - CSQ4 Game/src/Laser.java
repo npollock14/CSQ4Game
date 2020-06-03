@@ -18,6 +18,13 @@ public class Laser extends Part {
 	static int cost = 10;
 	int direction = 0; // 0 = up, 1 = right, 2 = down, 3 = left - clockwise pattern
 
+	
+	@Override
+	public Part clone() {
+		
+		return new Laser(new Point(this.pos.x,this.pos.y), this.direction);
+	}
+	
 	public Laser(Point pos, Point sPos, Point cm, double mass, int dir) {
 		super(getW(dir), getH(dir), baseHealth, pos, type, sPos, cm, mass,cost);
 		this.direction = dir;

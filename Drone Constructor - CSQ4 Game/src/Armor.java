@@ -11,6 +11,13 @@ public class Armor extends Part {
 	static double deflectionChance = .3;
 	static int cost = 5;
 
+	
+	@Override
+	public Part clone() {
+		
+		return new Armor(new Point(this.pos.x,this.pos.y));
+	}
+	
 	public Armor(Point pos, Point sPos, Point cm, double mass) {
 		super(width, height, baseHealth, pos, type, sPos, cm, mass,cost);
 	}
@@ -85,5 +92,7 @@ public class Armor extends Part {
 		g.drawRect((int)p.x,(int)p.y,(int)(SQUARE_WIDTH * Camera.scale),(int)(SQUARE_WIDTH*Camera.scale));
 		
 	}
+
+	
 
 }

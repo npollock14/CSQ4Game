@@ -11,7 +11,11 @@ public class Reactor extends Part{
 	static String type = "Reactor";
 	static int cost = 50;
 
-	
+	@Override
+	public Part clone() {
+		
+		return new Reactor();
+	}
 	
 	public Reactor(Point pos, Point sPos, Point cm, double mass) {
 		super(width, height, baseHealth, pos,type, sPos, cm,mass,cost);

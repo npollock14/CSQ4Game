@@ -11,7 +11,11 @@ public class Hull extends Part{
 	static String type = "Hull";
 	static int cost = 2;
 
-	
+	@Override
+	public Part clone() {
+		
+		return new Hull(new Point(this.pos.x,this.pos.y));
+	}
 	
 	public Hull(Point pos, Point sPos, Point cm, double mass) {
 		super(width, height, baseHealth, pos,type, sPos, cm,mass,cost);

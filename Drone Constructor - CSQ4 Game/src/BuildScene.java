@@ -15,9 +15,12 @@ public class BuildScene extends Scene {
 	Button selectThruster;
 	Button repairAll;
 	boolean[] modes = new boolean[4]; // deleting - 0, selection - 1, build - 2, repair - 3
+	
+	boolean paused = true;
 	BufferedImage backgroundUI;
 	BufferedImage backgroundUISelection;
 	BufferedImage backgroundUIRepair;
+	BufferedImage helpUI;
 
 	BufferedImage laserPic;
 	BufferedImage armorPic;
@@ -156,14 +159,18 @@ public class BuildScene extends Scene {
 		selectLaser.draw(g, 10, 30);
 		selectThruster.draw(g, 10, 30);
 		
-		g.setFont(Misc.arialSmall);
-		g.setColor(Color.white);
-		g.drawString("Q and E to rotate parts || Modes: select [s], delete/sell [d], repair[r], build[b]", 300, 40);
-		g.drawString("Grab a part by clicking it from the toolbar and place it next to or diagonal to an existing part", 300, 80);
-		g.drawString("Placing a part in a valid location will charge you that parts cost, can then be sold/deleted for up to 50% value", 10, 120);
-		g.drawString("[Esc] to return to space", 10, 160);
+//		g.setFont(Misc.arialSmall);
+//		g.setColor(Color.white);
+//		g.drawString("Q and E to rotate parts || Modes: select [s], delete/sell [d], repair[r], build[b]", 300, 40);
+//		g.drawString("Grab a part by clicking it from the toolbar and place it next to or diagonal to an existing part", 300, 80);
+//		g.drawString("Placing a part in a valid location will charge you that parts cost, can then be sold/deleted for up to 50% value", 10, 120);
+//		g.drawString("[Esc] to return to space", 10, 160);
 
 		// repairAll.draw(g);
+		
+		if(paused) {
+			g.drawImage(helpUI, 0, 0, null);
+		}
 
 	}
 
@@ -195,6 +202,10 @@ public class BuildScene extends Scene {
 		selectArmor.update();
 		selectLaser.update();
 		selectThruster.update();
+		
+		if(InputManager.keysReleased[80]) {
+			paused = !paused;
+		}
 
 		if (modes[3]) {
 			repairAll.update();
@@ -365,6 +376,7 @@ public class BuildScene extends Scene {
 		armorPic = Misc.loadImage("/armor.png");
 		hullPic = Misc.loadImage("/hull.png");
 		thrusterPic = Misc.loadImage("/thruster.png");
+		helpUI = Misc.loadImage("/buildSceneHelp.png");
 
 		changeMode(1);
 

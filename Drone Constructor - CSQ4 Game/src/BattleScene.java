@@ -124,8 +124,8 @@ public class BattleScene extends Scene {
 			g.drawString("Paused - [p] to resume", 900, 50);
 			g.setColor(Color.cyan);
 			g.drawString(
-					"Destroy enemies to collect scrap, build up your ship, and make your way to the end of the galaxy!",
-					Driver.screenWidth / 2 - 800, Driver.screenHeight / 2 - 400);
+					"Protect your reactor, destroy enemies to collect scrap, build up your ship, and make your way to the end of the galaxy!",
+					Driver.screenWidth / 2 - 920, Driver.screenHeight / 2 - 400);
 			g.setColor(Color.WHITE);
 			g.drawString("CONTROL BASICS:", Driver.screenWidth / 2 - 940, Driver.screenHeight / 2 - 350);
 			

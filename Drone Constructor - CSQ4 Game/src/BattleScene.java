@@ -1,3 +1,4 @@
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -8,7 +9,7 @@ public class BattleScene extends Scene {
 	PlayerShip p;
 	EnemyShip e1;
 
-	Ship camFocus = null;
+	Point camFocus = null;
 
 	Ship selected = null;
 
@@ -22,8 +23,12 @@ public class BattleScene extends Scene {
 	Button shipYard;
 	Button starMap;
 
-	int num = 0;
-	int num2 = 0;
+	BufferedImage eye = Misc.loadImage("/eye.png");
+	boolean eyeFocused = false;
+	
+	Point eyeLoc = new Point(0,0);
+
+	boolean canBuild = false; // if out of range of an enemy ship ur good
 
 	@Override
 	public void draw(Graphics2D g) {
@@ -102,24 +107,53 @@ public class BattleScene extends Scene {
 		// shipYard.draw(g);
 		// starMap.draw(g);
 
+		if (target != null) {
+			Point avg = Camera.toScreen(target.cm.avg(p.cm));
+			Point mapAvg = target.cm.avg(p.cm);
+			eyeLoc.setXY(mapAvg.x, mapAvg.y);
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, eyeFocused ? .1f : .3f));
+			g.drawImage(eye, (int)(avg.x - eye.getWidth() * Camera.scale / 2), (int)(avg.y - eye.getHeight() * Camera.scale / 2),
+					(int)(eye.getWidth() * Camera.scale), (int)(eye.getHeight() * Camera.scale), null);
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+			
+		}
+
 		minimap.mc.focus(Camera.toMap(Driver.screenWidth / 2, Driver.screenHeight / 2));
 		minimap.draw(g, SceneManager.sm.currSector.ships);
 
 		if (!running) {
-			g.setPaint(new Color(0,0,0,128));
+			g.setPaint(new Color(0, 0, 0, 128));
 			g.fillRect(0, 0, Driver.screenWidth, Driver.screenHeight);
 			g.setColor(Color.white);
 			g.setFont(Misc.arialBig);
-			g.drawString("Paused - [L] to resume", Driver.screenWidth/2 - 400, Driver.screenHeight/2);
+			g.drawString("Paused - [L] to resume", Driver.screenWidth / 2 - 400, Driver.screenHeight / 2 - 400);
+			g.setFont(Misc.arialSmall);
+			g.drawString("Q and E to rotate ship", Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 350);
+			g.drawString("Arrow Keys to control ship - must have thrusters in that direction to move",
+					Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 300);
+			g.drawString("Right Click on enemy to target them and another right click on a part to target that part",
+					Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 250);
+			g.drawString("Middle Mouse Click to focus the camera on a map position or follow a ship",
+					Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 200);
+			g.drawString("Scroll Wheel to zoom camera", Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 150);
+			g.drawString(
+					"Destroy enemies, collect scrap and build up your ship to make your way to the end of the galaxy!",
+					Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 100);
+			g.drawString("Cannot jump to the next sector if current sector is not clear", Driver.screenWidth / 2 - 600,
+					Driver.screenHeight / 2 - 50);
+			g.drawString("Cannot go into build mode if in enemy range", Driver.screenWidth / 2 - 600,
+					Driver.screenHeight / 2 - 0);
+			g.drawString("Middle Click the 'eye' icon if a target is selected to have the camera focus in the middle of the battle", Driver.screenWidth / 2 - 600,
+					Driver.screenHeight / 2 - -50);
+			g.drawString("Spacebar to recenter camera on player", Driver.screenWidth / 2 - 600,
+					Driver.screenHeight / 2 - -100);
 		}
 
 	}
 
 	public void outlinePart(Graphics2D g, Point pos, int w, int h) {
-
 		g.drawRect((int) pos.x, (int) pos.y, (int) w, (int) h);
 		new Point(pos.x + w / 2, pos.y + h / 2).fillCircle(g, (int) (10 * Camera.scale));
-
 	}
 
 	public void drawPartHealth(Graphics2D g, Part p, Point pos, int w, int h, int curr, int total) {
@@ -130,21 +164,28 @@ public class BattleScene extends Scene {
 		g.fillRect((int) pos.x, (int) pos.y, w * curr / total, h);
 		g.setColor(Color.black);
 		g.drawRect((int) pos.x, (int) pos.y, (int) w, (int) h);
-		// g.setFont(new Font("Arial", 0, (int)(12 * Camera.scale)));
-		// g.drawString(p.health + "/" + p.baseHealth, (int) (pos.x + 3), (int) (pos.y +
-		// 12));
 
 	}
 
 	@Override
 	public void update() {
-		
-		if(SceneManager.sm.endSector.clear && SceneManager.sm.currSector.pos.isSame(SceneManager.sm.endSector.pos)) {
+		// check if player can build
+		canBuild = true;
+		for (Ship s : SceneManager.sm.currSector.ships) {
+			if (!s.isPlayer) {
+				if (s.cm.distanceTo(p.cm) < 2500) {
+					canBuild = false;
+					break;
+				}
+			}
+		}
+
+		if (SceneManager.sm.endSector.clear && SceneManager.sm.currSector.pos.isSame(SceneManager.sm.endSector.pos)) {
 			System.out.println("Game WON");
 			this.setActive(false);
 			SceneManager.ws.setActive(true);
 		}
-		if(p.destroyed) {
+		if (p.destroyed) {
 			System.out.println("Game LOST");
 			this.setActive(false);
 			SceneManager.ls.setActive(true);
@@ -154,9 +195,9 @@ public class BattleScene extends Scene {
 		starMap.update();
 
 		// TODO remove before flight: to draw where mouse is - temp
-//		if (InputManager.mouse[2]) {
-//			System.out.println(InputManager.mPos.toString());
-//		}
+		// if (InputManager.mouse[2]) {
+		// System.out.println(InputManager.mPos.toString());
+		// }
 
 		if (InputManager.keys[81])
 			p.cmdRotate(false);
@@ -173,38 +214,54 @@ public class BattleScene extends Scene {
 		if (InputManager.keys[87]) {
 			Camera.yOff += 10 * (1 / Camera.scale);
 			camFocus = null;
+			eyeFocused = false;
 		}
 		if (InputManager.keys[83]) {
 			Camera.yOff -= 10 * (1 / Camera.scale);
 			camFocus = null;
+			eyeFocused = false;
 		}
 		if (InputManager.keys[68]) {
 			camFocus = null;
+			eyeFocused = false;
 			Camera.xOff -= 10 * (1 / Camera.scale);
 		}
 		if (InputManager.keys[65]) {
 			camFocus = null;
+			eyeFocused = false;
 			Camera.xOff += 10 * (1 / Camera.scale);
 		}
 
 		// key to go to build area - b
-		if (InputManager.keysReleased[66] || shipYard.clicked) {
+		if (canBuild && InputManager.keysReleased[66] || shipYard.clicked) {
 			swtichToBuild();
 		}
 		if (InputManager.keysReleased[77] || starMap.clicked) {
 			swtichToStarMap();
 		}
+		
 		// key to select a ship
 		if (InputManager.mouse[1]) {
 			selected = SceneManager.sm.currSector.getClickShip();
 			// now have a ship selected
 		}
+		
+		if(InputManager.keysReleased[32]) {
+			camFocus = p.cm;
+		}
 
 		// key to move the camera to a ship or area
 		if (InputManager.mouseReleased[2]) {
-			camFocus = SceneManager.sm.currSector.getClickShip();
-			if (camFocus == null)
-				Camera.focus(Camera.toMap(InputManager.mPos.x, InputManager.mPos.y));
+			eyeFocused = false;
+			if(SceneManager.sm.currSector.getClickShip() != null)
+			{
+				camFocus = SceneManager.sm.currSector.getClickShip().cm;
+			}else if(Camera.toScreen(eyeLoc).distanceTo(InputManager.mPos) < 40){
+				camFocus = eyeLoc;
+				eyeFocused = true;
+			}else {
+				camFocus = Camera.toMap(InputManager.mPos.x, InputManager.mPos.y);
+			}
 		}
 		if (partTarget != null && partTarget.health <= 0)
 			partTarget = null;
@@ -233,7 +290,7 @@ public class BattleScene extends Scene {
 		}
 
 		if (camFocus != null)
-			Camera.focus(camFocus.cm);
+			Camera.focus(camFocus);
 		// if(selected != null) selected.vel.print();
 
 		SceneManager.sm.currSector.update();
@@ -277,7 +334,7 @@ public class BattleScene extends Scene {
 		SceneManager.sm.player = p;
 		SceneManager.sm.currSector.ships.add(p);
 
-		camFocus = p;
+		camFocus = p.cm;
 
 	}
 

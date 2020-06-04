@@ -36,7 +36,7 @@ public class Driver extends JPanel
 	ArrayList<Long> fps = new ArrayList<Long>();
 	long frameStart = 0;
 	
-	static int playerScrap = 2000;
+	static int playerScrap = 40;
 	
 	static BufferedImage scrapIcon = Misc.loadImage("/scrap.png");
 
@@ -74,7 +74,8 @@ public class Driver extends JPanel
 		ShipList.makeShips();
 		SceneManager.ms.init();
 		SceneManager.bs.init();
-		SceneManager.ms.setActive(true);
+		SceneManager.mm.init();
+		SceneManager.mm.setActive(true);
 		System.out.println("Done");
 
 	}

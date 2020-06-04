@@ -10,6 +10,7 @@ public class SceneManager {
 	static HyperspaceScene hs = new HyperspaceScene();
 	static WinScene ws = new WinScene();
 	static LoseScene ls = new LoseScene();
+	static MainMenuScene mm = new MainMenuScene();
 	
 	public static void update() {
 		for (Scene s : scenes) {
@@ -50,6 +51,7 @@ public class SceneManager {
 		scenes.add(hs);
 		scenes.add(ws);
 		scenes.add(ls);
+		scenes.add(mm);
 	}
 
 }

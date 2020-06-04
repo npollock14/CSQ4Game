@@ -8,6 +8,7 @@ public class BuildScene extends Scene {
 	Part toBuild = null;
 	Part selection = null;
 	int direction = 0;
+	int rotation = 1000;
 	Button selectHull;
 	Button selectArmor;
 	Button selectLaser;
@@ -154,6 +155,13 @@ public class BuildScene extends Scene {
 		selectArmor.draw(g, 10, 30);
 		selectLaser.draw(g, 10, 30);
 		selectThruster.draw(g, 10, 30);
+		
+		g.setFont(Misc.arialSmall);
+		g.setColor(Color.white);
+		g.drawString("Q and E to rotate parts || Modes: select [s], delete/sell [d], repair[r], build[b]", 300, 40);
+		g.drawString("Grab a part by clicking it from the toolbar and place it next to or diagonal to an existing part", 300, 80);
+		g.drawString("Placing a part in a valid location will charge you that parts cost, can then be sold/deleted for up to 50% value", 10, 120);
+		g.drawString("[Esc] to return to space", 10, 160);
 
 		// repairAll.draw(g);
 
@@ -247,13 +255,13 @@ public class BuildScene extends Scene {
 		// handle rotation
 		if (modes[2]) {
 			if (InputManager.keysReleased[81]) {
-				direction--;
+				rotation--;
 			}
 			if (InputManager.keysReleased[69]) {
-				direction++;
+				rotation++;
 			}
 
-			direction = Math.abs(direction % 4);
+			direction = rotation % 4;
 		}
 
 		// keybind to switch to delete mode and back to select mode

@@ -20,7 +20,7 @@ public class LaserBolt extends Projectile{
 	@Override
 	public void draw(Graphics2D g) {
 		g.setColor(Color.red);
-		Camera.toScreen(pos).fillCircle(g, (int) (7*Camera.scale));
+		Camera.toScreen(pos).fillCircle(g, (int) (12*Camera.scale));
 	}
 
 	

@@ -18,6 +18,7 @@ public class StarMap extends Scene {
 	int sY = 5;
 	
 	BufferedImage star = Misc.loadImage("/star.png");
+	BufferedImage texture = Misc.loadImage("/starfield-17.png");
 	
 	Ship player;
 
@@ -26,6 +27,7 @@ public class StarMap extends Scene {
 	public void draw(Graphics2D g) {
 		g.setColor(new Color(30,30,30));
 		g.fillRect(0, 0, Driver.screenWidth, Driver.screenHeight);
+		g.drawImage(texture, 0, 0, null);
 
 		g.setColor(Color.white);
 		for (Sector s : sectors) {
@@ -75,6 +77,9 @@ public class StarMap extends Scene {
 			g.setColor(Color.red);
 			g.drawString("Sector NOT Clear", 25, 950);
 		}
+		g.setColor(Color.white);
+		g.setFont(Misc.arialSmall);
+g.drawString("[Esc] to exit the map", 10, 60);
 		
 	}
 

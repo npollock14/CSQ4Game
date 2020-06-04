@@ -17,7 +17,7 @@ Button start;
 		
 		if(start.clicked) {
 			this.setActive(false);
-			SceneManager.ms.setActive(true);
+			SceneManager.ms.drawing = true;
 		}
 		
 		if(InputManager.mouse[2]) {

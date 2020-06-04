@@ -33,12 +33,7 @@ public class BattleScene extends Scene {
 	@Override
 	public void draw(Graphics2D g) {
 
-		if (InputManager.keys[75]) {
-			this.running = false;
-		}
-		if (InputManager.keys[76]) {
-			this.running = true;
-		}
+		
 		g.setColor(new Color(36, 36, 36));
 		g.fillRect(0, 0, Driver.screenWidth, Driver.screenHeight);
 
@@ -125,28 +120,41 @@ public class BattleScene extends Scene {
 			g.setPaint(new Color(0, 0, 0, 128));
 			g.fillRect(0, 0, Driver.screenWidth, Driver.screenHeight);
 			g.setColor(Color.white);
-			g.setFont(Misc.arialBig);
-			g.drawString("Paused - [L] to resume", Driver.screenWidth / 2 - 400, Driver.screenHeight / 2 - 400);
 			g.setFont(Misc.arialSmall);
-			g.drawString("Q and E to rotate ship", Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 350);
-			g.drawString("Arrow Keys to control ship - must have thrusters in that direction to move",
-					Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 300);
-			g.drawString("Right Click on enemy to target them and another right click on a part to target that part",
-					Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 250);
-			g.drawString("Middle Mouse Click to focus the camera on a map position or follow a ship",
-					Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 200);
-			g.drawString("Scroll Wheel to zoom camera", Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 150);
+			g.drawString("Paused - [p] to resume", 900, 50);
+			g.setColor(Color.cyan);
 			g.drawString(
-					"Destroy enemies, collect scrap and build up your ship to make your way to the end of the galaxy!",
-					Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 100);
-			g.drawString("Cannot jump to the next sector if current sector is not clear", Driver.screenWidth / 2 - 600,
-					Driver.screenHeight / 2 - 50);
-			g.drawString("Cannot go into build mode if in enemy range", Driver.screenWidth / 2 - 600,
-					Driver.screenHeight / 2 - 0);
-			g.drawString("Middle Click the 'eye' icon if a target is selected to have the camera focus in the middle of the battle", Driver.screenWidth / 2 - 600,
+					"Destroy enemies to collect scrap, build up your ship, and make your way to the end of the galaxy!",
+					Driver.screenWidth / 2 - 800, Driver.screenHeight / 2 - 400);
+			g.setColor(Color.WHITE);
+			g.drawString("CONTROL BASICS:", Driver.screenWidth / 2 - 940, Driver.screenHeight / 2 - 350);
+			
+			g.drawString("MOVEMENT: Rotation = Q and E, Translation = WASD", Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 300);
+			g.drawString("COMBAT: Right Click on enemy = set as a target: lasers will shoot target when in range",
+					Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 250);
+			g.drawString("CAMERA: Middle Mouse Click on ship = set the camera to that ship",
+					Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 200);
+			g.drawString("Scroll Wheel = zoom", Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 150);
+			g.drawString("Arrow Keys = pan", Driver.screenWidth / 2 - 600, Driver.screenHeight / 2 - 100);
+			
+			g.drawString("GAMEPLAY + STRATEGY:", Driver.screenWidth / 2 - 930, Driver.screenHeight / 2 - 0);
+			g.setColor(new Color(217, 52, 52));
+			g.drawString("If you just started, your ship is weak! Upgrade it before entering combat!", Driver.screenWidth / 2 - 600,
 					Driver.screenHeight / 2 - -50);
-			g.drawString("Spacebar to recenter camera on player", Driver.screenWidth / 2 - 600,
+			g.setColor(Color.white);
+			g.drawString("Cannot jump to the next sector if current sector is not clear", Driver.screenWidth / 2 - 600,
 					Driver.screenHeight / 2 - -100);
+			g.drawString("Enemies will attack you when in range & can't edit ship if in enemy range", Driver.screenWidth / 2 - 600,
+					Driver.screenHeight / 2 - -150);
+			
+			
+			//advanced
+			g.drawString("ADVANCED:", Driver.screenWidth / 2 - 930, Driver.screenHeight / 2 - -200);
+			g.drawImage(eye, Driver.screenWidth / 2 - 340, Driver.screenHeight / 2 + 225, eye.getWidth()/4, eye.getHeight()/4, null);
+			g.drawString("Middle Click the        icon: set the camera to focus on the center of battle", Driver.screenWidth / 2 - 600,
+					Driver.screenHeight / 2 - -250);
+			g.drawString("Spacebar = recenter camera on player", Driver.screenWidth / 2 - 600,
+					Driver.screenHeight / 2 - -300);
 		}
 
 	}
@@ -169,6 +177,9 @@ public class BattleScene extends Scene {
 
 	@Override
 	public void update() {
+		
+		
+		
 		// check if player can build
 		canBuild = true;
 		for (Ship s : SceneManager.sm.currSector.ships) {
@@ -203,30 +214,30 @@ public class BattleScene extends Scene {
 			p.cmdRotate(false);
 		if (InputManager.keys[69])
 			p.cmdRotate(true);
-		if (InputManager.keys[38])
+		if (InputManager.keys[87])
 			p.cmdMove(0, 1);
-		if (InputManager.keys[40])
+		if (InputManager.keys[83])
 			p.cmdMove(2, 1);
-		if (InputManager.keys[37])
+		if (InputManager.keys[65])
 			p.cmdMove(3, 1);
-		if (InputManager.keys[39])
+		if (InputManager.keys[68])
 			p.cmdMove(1, 1);
-		if (InputManager.keys[87]) {
+		if (InputManager.keys[38]) {
 			Camera.yOff += 10 * (1 / Camera.scale);
 			camFocus = null;
 			eyeFocused = false;
 		}
-		if (InputManager.keys[83]) {
+		if (InputManager.keys[40]) {
 			Camera.yOff -= 10 * (1 / Camera.scale);
 			camFocus = null;
 			eyeFocused = false;
 		}
-		if (InputManager.keys[68]) {
+		if (InputManager.keys[39]) {
 			camFocus = null;
 			eyeFocused = false;
 			Camera.xOff -= 10 * (1 / Camera.scale);
 		}
-		if (InputManager.keys[65]) {
+		if (InputManager.keys[37]) {
 			camFocus = null;
 			eyeFocused = false;
 			Camera.xOff += 10 * (1 / Camera.scale);
@@ -240,9 +251,9 @@ public class BattleScene extends Scene {
 			swtichToStarMap();
 		}
 		
-		// key to select a ship
+		// key to select a ship - no use atm
 		if (InputManager.mouse[1]) {
-			selected = SceneManager.sm.currSector.getClickShip();
+			//selected = SceneManager.sm.currSector.getClickShip();
 			// now have a ship selected
 		}
 		

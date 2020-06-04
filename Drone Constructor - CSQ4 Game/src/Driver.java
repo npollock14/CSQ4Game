@@ -65,6 +65,10 @@ public class Driver extends JPanel
 
 	public void update() throws InterruptedException { // main update
 		SceneManager.update();
+		
+		if (InputManager.keysReleased[80] && SceneManager.ms.drawing) {
+			SceneManager.ms.running = !SceneManager.ms.running; 
+		}
 
 	}
 

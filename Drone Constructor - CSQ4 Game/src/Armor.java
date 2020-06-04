@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 public class Armor extends Part {
 	static int width = 1; // in blocks
 	static int height = 1;
-	static int baseHealth = 10;
+	static int baseHealth = 15;
 	static double mass = 20;
 	static String type = "Armor";
 	static double deflectionChance = .3;

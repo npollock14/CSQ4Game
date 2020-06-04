@@ -79,7 +79,7 @@ if(version == 0) { //basic enemies
 }
 if(version == 1) {//boss
 	Ship boss = ShipList.megaCorp.clone();
-	boss.teleport(new Point(2000,2000));
+	boss.teleport(new Point(4000,2000));
 	ships.add(boss);
 }
 if(version == 2) { //mining station

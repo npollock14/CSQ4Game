@@ -139,8 +139,9 @@ public class StarMap extends Scene {
 				player.teleport(new Point(0,0));
 				player.vel = new Vec2(0,0);
 				player.rVel = 0.0;
-				Camera.focus(player.cm);
+				
 				currSector.ships.add(player);
+				SceneManager.ms.camFocus = player.cm;
 				this.running = false;
 				SceneManager.hs.init();
 				SceneManager.hs.setActive(true);

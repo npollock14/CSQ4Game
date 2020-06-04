@@ -12,7 +12,7 @@ public class Thruster extends Part {
 	int direction;
 	double force = 4.0;
 	double rForce = .02;
-	static int cost = 5;
+	static int cost = 4;
 	
 	
 	@Override

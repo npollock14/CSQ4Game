@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 public class Hull extends Part{
 	static int width = 1; // in blocks
 	static int height = 1;
-	static int baseHealth = 10;
+	static int baseHealth = 8;
 	static double mass = 10;
 	static String type = "Hull";
 	static int cost = 2;

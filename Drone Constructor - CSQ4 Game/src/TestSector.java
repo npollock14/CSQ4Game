@@ -1,12 +1,12 @@
 import java.awt.Graphics2D;
 
 public class TestSector extends Sector {
-	int version;
+	
 	
 	public TestSector(int version, Point pos) {
 		this.version = version;
 		this.pos = pos;
-		init();
+		
 	}
 
 	@Override

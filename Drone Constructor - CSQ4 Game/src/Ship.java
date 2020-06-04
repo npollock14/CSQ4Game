@@ -258,7 +258,7 @@ public abstract class Ship {
 	}
 
 	public void spawnScrap(Sector s) {
-		for(int i = 0; i < Misc.rBt(5, 20); i++) {
+		for(int i = 0; i < Misc.rBt(10, 25); i++) {
 			s.scrap.add(new ScrapEntity(cm));
 		}
 		

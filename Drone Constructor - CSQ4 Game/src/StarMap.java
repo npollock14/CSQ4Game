@@ -2,6 +2,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.security.spec.EncodedKeySpec;
 import java.util.ArrayList;
 
 public class StarMap extends Scene {
@@ -11,9 +12,9 @@ public class StarMap extends Scene {
 	Sector endSector;
 	Sector selected;
 	Sector hover;
-	int jumpDist = 350;
+	int jumpDist = 450;
 	double rSkipChance = .1;
-	int sX = 6;
+	int sX = 5;
 	int sY = 5;
 	
 	BufferedImage star = Misc.loadImage("/star.png");
@@ -95,9 +96,13 @@ public class StarMap extends Scene {
 			if (s.pos.x > endSector.pos.x)
 				endSector = s;
 		}
+		endSector.version = 1;
+		
+		for(Sector s : sectors) {
+			s.init();
+		}
 
 		jump = new Button(new Rect(820,860,300,100), null, 0, "JUMP", null, Color.gray, true, false);
-		currSector = endSector;
 	}
 
 	@Override
@@ -134,6 +139,7 @@ public class StarMap extends Scene {
 				player.teleport(new Point(0,0));
 				player.vel = new Vec2(0,0);
 				player.rVel = 0.0;
+				Camera.focus(player.cm);
 				currSector.ships.add(player);
 				this.running = false;
 				SceneManager.hs.init();
